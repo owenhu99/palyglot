@@ -41,10 +41,18 @@
 
 > Short (1-2 min' read max)
  * What is the technology stack? Specify any and all languages, frameworks, libraries, PaaS products or tools. 
- * How will you deploy the application?
- * Describe the architecture - what are the high level components or patterns you will use? Diagrams are useful here. 
- * Will you be using third party applications or APIs? If so, what are they?
- * What is your testing strategy?
+
+* Technology Stack
+  * Language: Javascript
+  * Frontend: React.js
+  * Backend: Node.js / Express.js
+  * Database: MongoDB
+  * Libraries: Mocha, Cloud Translation API Client, supertest,
+  * CI/CD: Github Actions
+* Our database will be deployed on MongoDB Atlas, which is a free hosting service made by MongoDB. Our frontend and backend will both be deployed on Google Cloud. We have credits for Google Cloud which we will use to host our services.
+* We are planning on using the Google Translate API to handle translating text on hover, spell checking, and dictionary lookup.
+* For our testing strategy, we are planning on writing unit tests to test for things like authentication (login), routing, profile creation, messaging etc. We are planning on using Mocha, which is a Javascript unit testing library. 
+
 
 #### Q5: What are the user stories that make up the MVP?
 

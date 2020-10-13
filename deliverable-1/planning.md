@@ -1,4 +1,4 @@
-# Penpals
+# Palygot
 > _Note:_ This document is meant to evolve throughout the planning phase of your project.   That is, it makes sense for you commit regularly to this file while working on the project (especially edits/additions/deletions to the _Highlights_ section). Most importantly, it is a reflection of all the planning you work you've done in the first iteration. 
  > **This document will serve as a master plan between your team, your partner and your TA.**
 
@@ -7,24 +7,20 @@
 #### Q1: What are you planning to build?
 
  > Short (1 - 2 min' read)
- * Start with a single sentence, high-level description of the product.
- * Be clear - Describe the problem you are solving in simple terms.
- * Be concrete. For example:
-    * What are you planning to build? Is it a website, mobile app,
-   browser extension, command-line app, etc.?      
-    * When describing the problem/need, give concrete examples of common use cases.
-    * Assume your the reader knows nothing about the problem domain and provide the necessary context. 
- * Focus on *what* your product does, and avoid discussing *how* you're going to implement it.      
-   For example: This is not the time or the place to talk about which programming language and/or framework you are planning to use.
- * **Feel free (and very much encouraged) to include useful diagrams, mock-ups and/or links**.
+ 
+We are planning on building a platform to connect people who want to have conversations in specific languages. The concept of “pen pals” is friends who regularly write to each other, usually to improve their literacy in a foreign language. Many of the online pen pal connection services today are very outdated and a lot of them use snail mail, meaning the amount of communications you can have with your penpal is very limited. Also, their UI’s are extremely outdated (example 1, example 2), creating a worse user experience. We are planning on building a website that allows you to select languages you’re interested in and get matched with others with the same languages of interest. You can then communicate with them through our online messaging service and use our suite of language tools (accent keyboard, built in dictionary, etc.) to improve your language skills. This solves our problem by providing a more modern and faster way of communicating between your “pen pal”. Some use cases could be improving your fluency in a language, meeting new people who speak a certain language and simply just making friends.
 
 
 #### Q2: Who are your target users?
 
   > Short (1 - 2 min' read max)
- * Be specific (e.g. a 'a third-year university student studying Computer Science' and not 'a student')
- * **Feel free (but not obligated) to use personas.         
-   You can create your personas as part of this Markdown file, or add a link to an external site (for example, [Xtensio](https://xtensio.com/user-persona/)).**
+ * People learning new languages
+    * A first year university students taking an introductory language course
+    * An adult in their 30’s learning a new language as a hobby
+ * An immigrant senior citizen living in the west wanting to connect with people from his home country
+ * An exchange student preparing for their semester abroad by practicing their abilities in the language used in the abroad country
+ * A businesswoman in her 30’s who moved to a new country and wants to meet new friends to improve her communication skills in her new language 
+
 
 #### Q3: Why would your users choose your product? What are they using today to solve their problem/need?
 
@@ -40,7 +36,9 @@
 #### Q4: How will you build it?
 
 > Short (1-2 min' read max)
- * What is the technology stack? Specify any and all languages, frameworks, libraries, PaaS products or tools. 
+* Our frontend will render our homepage, with authentication, then lead the user to a matchmaking component, messaging component and a profile component. The matchmaking component will communicate with the backend to retrieve new matches and to allow the user to select matches. The messaging component will communicate with the backend to retrieve matches and messages, and it will also communicate with our APIs such as the Google Translate API to run our extra features (spell checking, dictionary etc.). Lastly, the profile will also communicate with the backend to show the user their profile and allow them to edit it. For all backend requests, the backend will be retrieving data from our main server. Here is a diagram depicting the design of our system: 
+
+![](../diagram.jpg)
 
 * Technology Stack
   * Language: Javascript

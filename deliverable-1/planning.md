@@ -1,6 +1,10 @@
 # Palygot
 > _Note:_ This document is meant to evolve throughout the planning phase of your project.   That is, it makes sense for you commit regularly to this file while working on the project (especially edits/additions/deletions to the _Highlights_ section). Most importantly, it is a reflection of all the planning you work you've done in the first iteration. 
  > **This document will serve as a master plan between your team, your partner and your TA.**
+ 
+ ## Mockup
+ 
+ [Palyglot Mockup](https://www.figma.com/file/nCONeiJk8IhWaw5rTMG6Zy/PenPals-Draft?node-id=0%3A1)
 
 ## Product Details
  
@@ -54,12 +58,43 @@ We are planning on building a platform to connect people who want to have conver
 
 #### Q5: What are the user stories that make up the MVP?
 
- * At least 5 user stories concerning the main features of the application - note that this can broken down further
- * You must follow proper user story format (as taught in lecture) ```As a <user of the app>, I want to <do something in the app> in order to <accomplish some goal>```
- * If you have a partner, these must be reviewed and accepted by them
- * The user stories should be written in Github and each one must have clear acceptance criteria.
+Main features: Pen pal (talking to other people), learning languages.
 
-----
+*Note: Outer bullet points are user stories and their bullet points are the acceptance criteria
+
+* As a student learning French, I want to meet other French speakers or learners in order to hone my French skills and increase my vocabulary.
+  * Choose French as a language when matching with other users
+  * Display the languages you speak so other users can match with you
+  
+* As someone who wants a pen pal, I want to be able to speak with others who have similar interests so that we can have fun and engaging conversations about things we both like.
+  * Add interests to your profile
+  * Have a matching algorithm that finds users with similar interests
+  * Users should have a profile where they can introduce their interests and hobbies
+  
+* As a pen pal user, I want to be able to keep track of my conversations so that I can remember what I’ve been talking about with all of my pen pals.
+  * A user’s conversations should be stored so that they be read by the user on demand
+  * There must be a page where users can scroll through their conversations others (similar to fb messenger)
+  
+* As a user who values security, I want all files and links sent by others to be scanned in order to protect me from malicious users who are trying to send malware.
+  * Use a third-party scanner to scan links and files for malware
+  * Notify the user if one of their conversations contains a risky link
+  * Warn the user on click that the link may be malicious
+  * Warn the user about opening any link that was sent to them
+  
+* As a pen pal user, I want to be notified when someone sends me a letter so that I can read and respond to it as quickly as possible, and so that the ones who receive my messages will respond quickly as well.
+  * Notify the user through email or notifications when they receive an email
+  * Send reminders that the user has letters that they haven’t responded to yet
+  * The notifications show which user has sent the letter and when
+
+* As a pen pal user, I want to be able to report or block other users in order to have them punished for bad actions and so that I can stop hearing from people who are annoying me.
+  * A page with rules about using the site should be shown to all new members
+  * A user that is blocked should not be able to send anything to the other user or view the user’s profile
+  * A user that has been reported multiple times should be banned
+
+* As someone learning a new language, I want a quick and easy way to find a word in the language I’m learning so that I can easily insert it into my conversation and so I can expand my vocabulary.
+  * User should be able to look up a word in their language and find the word in their targeted language
+  * Show the definition of the new word so the user knows how to use it
+
 
 ## Process Details
 

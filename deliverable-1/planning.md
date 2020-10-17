@@ -18,7 +18,7 @@ We are planning on building a platform to connect people who want to have conver
 #### Q2: Who are your target users?
 
   > Short (1 - 2 min' read max)
- * People learning new languages
+ * People learning new languages, such as:
     * A first year university students taking an introductory language course
     * An adult in their 30’s learning a new language as a hobby
  * An immigrant senior citizen living in the west wanting to connect with people from his home country
@@ -29,13 +29,16 @@ We are planning on building a platform to connect people who want to have conver
 #### Q3: Why would your users choose your product? What are they using today to solve their problem/need?
 
 > Short (1 - 2 min' read max)
- * We want you to "connect the dots" for us - Why does your product (as described in your answer to Q1) fits the needs of your users (as described in your answer to Q2)?
- * Explain the benefits of your product explicitly & clearly. For example:
-    * Save users time (how much?)
-    * Allow users to discover new information (which information? And, why couldn't they discover it before?)
-    * Provide users with more accurate and/or informative data (what kind of data? Why is it useful to them?)
-    * Does this application exist in another form? If so, how does your differ and provide value to the users?
-    * How does this align with your partner's organization's values/mission/mandate?
+
+Utilizing a language is the proven best way to practice and improve your skills in that given language. For language learners who want to make progress, frequent communication is a must have. However, this can be a hard commodity to come by as many people don’t have access to other language learners or even any speakers of their language of interest. Popular language learning tools like Duolingo allow for users to frequently refresh their knowledge, but most don’t include a communication aspect where you have the ability to communicate with other speakers in an everyday context. There are Penpal specific websites available, but as we said in Q1, they’re outdated in terms of the technologies they use and the way they’re designed. 
+
+Our website would save users time in the long term by allowing them to use their language ability against others with similar interest and language capabilities in a real world setting. This is a very efficient way of language learning and would be much quicker than trying to do so without any others speaking the same language. It’s extremely difficult to learn languages if you don’t have anyone to have real conversations with, and our website eliminates that issue.
+
+Our website will also provide a much better interface and tools to communicate in different languages. Tools such as built in dictionaries, spell checking and accent keyboards help streamline the flow of communication and provide the users with more informative data on how many mistakes they’re making and what they can do to improve. No other penpal website has a suite of tools like this.
+
+For those who have an interest in language, Palyglot provides extensive tools to aid your language learning. For people who want to connect with people in different countries, Palyglot also provides a means of reaching out and building friendships. Palyglot puts people in touch with a whole new network of people looking for the same thing.
+
+
 
 #### Q4: How will you build it?
 

@@ -34,9 +34,9 @@ Utilizing a language is the proven best way to practice and improve your skills 
 
 Palyglot would save users time in the long term by allowing them to sharpen their language ability against others with similar interest and language capabilities in a realistic setting. This is a very efficient way of language learning and would be much quicker than trying to do so without the assistance of any others speaking the same language. It’s extremely difficult to learn languages if you don’t have anyone to have real conversations with, and our website eliminates that issue.
 
-Our website will also provide a much better interface and tools to communicate in different languages. Tools such as built in dictionaries, spell checking and accent keyboards help streamline the flow of communication and provide the users with more informative data on how many mistakes they’re making and what they can do to improve. No other penpal website has a suite of tools like this.
+Our website will also provide a much better interface and tools to communicate in different languages than other similar services. Tools such as built in dictionaries, spell checking and accent keyboards help streamline the flow of communication and provide the users with more informative data on how many mistakes they’re making and what they can do to improve. No other penpal website has a suite of tools like this.
 
-For those who have an interest in language, Palyglot provides extensive tools to aid your language learning. For people who want to connect with people in different countries, Palyglot also provides a means of reaching out and building friendships. Palyglot puts people in touch with a whole new network of people looking for the same thing.
+For those who have an interest in languages and language learning, Palyglot provides extensive tools to aid your progress. For people who want to connect with others in different countries, Palyglot also provides a means of reaching out and building new friendships. Palyglot puts people in touch with a whole new network of people looking for the same thing. Users interested in starting online friendships or learning languages will flock to Palyglot as it fills all their needs with the most up to date features available.
 
 
 

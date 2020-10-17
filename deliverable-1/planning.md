@@ -174,4 +174,10 @@ Main features: Pen pal (talking to other people), learning languages.
   * Alternative B: Additional age filter 
   * Alternative C: Additional age and gender filters
   * Option A could be somewhat dangerous, since adults could potentially be matched with minors. We discussed making the site 18+, but we felt that was too restrictive. So, we moved onto Option B, which is to add an age filter the user can select. This eliminates minors being matched to adults (unless they specifically change the filter). However, there is also the case where a woman might not want to be matched with men (she might be intimidated by them etc.). So, we decided on going with Option C, to allow users to set the age and gender filters they want.
+  
+* Tech stack: 
+  * Alternative A: Python Backend
+  * Alternative B: Node.js Backend
+  * We had a discussion on which language to build our backend with. Some of us haven't actually worked with Node.js before, so we initially considered Python for our backend. However, we saw that the APIs we wanted to use had better support on Node.js (such as Google Translate API). Also, React.js (Frontend) and Express.js (Backend) are very easy to use frameworks for web apps that are built upon Node.js. Using Node.js will allow our Frontend and Backend to be built in the same language and give us better ease of development.
+
 

@@ -148,17 +148,19 @@ Main features: Pen pal (talking to other people), learning languages.
 
 #### Q9: What are the rules regarding how your team works?
 
-Describe your team's working culture.
-
 **Communications:**
- * What is the expected frequency? What methods/channels are appropriate? 
- * If you have a partner project, what is your process (in detail) for communicating with your partner?
- 
+* We will be using a Discord server to handle all of our communications. All team members should be attending meetings, but if you are mentioned in the Discord server for a small request/question you should provide a response within 24 hours. If it’s a bigger request, you should still mention that you’ve seen the message even if you don’t currently have time to provide a complete answer. If a member is constantly ignoring small questions (such as questions about their tasks), we will have to perform the “Non responsive team members” protocol.
+
 **Meetings:**
- * How are people held accountable for attending meetings, completing action items? Is there a moderator or process?
- 
+* When we schedule meetings, we will have everyone RSVP on Discord. If someone misses a meeting without stating a reason, we will perform the “Non responsive team members” protocol. Every task will be put on our Github Projects board, and members will be assigned to tasks. If they do not complete their tasks, (which are visible to everyone on the board), we will perform the “Missing deadlines/incomplete work” protocol.
+
 **Conflict Resolution:**
- * List at least three team scenarios/conflicts you discussed in lecture and how you decided you will resolve them. Indecisions? Non-responsive team members? Any other scenarios you can think of?
+  * Indecisions: When we are deciding on something related to the project, we will have a vote, and that vote is final, unless new information is brought up at a later time. Since we have 5 members, there wouldn’t be any ties and majority vote would win.
+
+  * Non responsive team members: When dealing with non-responsive team members we will attempt to contact them and understand their situation. If they don’t respond within 48 hours, we will bring the issue up with David or any of the TAs. 
+
+  * Missing deadlines/incomplete work: If we notice that someone is behind on a certain task, as a group we will talk with them and ask if they are having difficulties and need some support on their task or if they want to be moved to a different task. If a member misses their deadlines 3 or more times, we will have to have a group discussion and possibly speak with the professors or the TAs.
+
 
 
 

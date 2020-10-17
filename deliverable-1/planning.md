@@ -103,24 +103,39 @@ Main features: Pen pal (talking to other people), learning languages.
 
 #### Q6: What are the roles & responsibilities on the team?
 
-Describe the different roles on the team and the responsibilities associated with each role. 
- * Roles should reflect the structure of your team and be appropriate for your project. Not necessarily one role to one team member.
-
-List each team member and:
- * A description of their role(s) and responsibilities including the components they'll work on and non-software related work
- * 3 technical strengths and weaknesses each (e.g. languages, frameworks, libraries, development methodologies, etc.)
+* Faraz: 
+  * Role: Front end, back end/database
+  * Responsibilities: Matchmaking, Rewards
+  * Strengths: React, Databases, Deployment
+  * Weaknesses: UI/UX Design, Testing, CI/CD
+* Owen:
+  * Role: Back end, testing
+  * Responsibilities: Authentication, unit testing, 
+  * Strengths: Back end, Testing, Code review
+  * Weaknesses: React, Database, Front end
+* Charlie:
+  * Role: Back end, testing
+  * Responsibilities: matchmaking, translation API
+  * Strengths: Testing, Databases, Back end
+  * Weaknesses: React, Front end, CI/CD
+* JJ:
+  * Role: Front end, UI design
+  * Responsibilities: Messaging, UI Design 
+  * Strengths: React, UI Design, Back End
+  * Weaknesses: Database, CI/CD, Testing
+* Dom:
+  * Role: Front end, back end
+  * Responsibilities: Messaging, Rewards
+  * Strengths: full stack web dev, Express, React
+  * Weaknesses: making pretty websites, deployment, security
 
 #### Q7: What operational events will you have as a team?
 
-Describe meetings (and other events) you are planning to have. 
- * When and where? Recurring or ad hoc? In-person or online?
- * What's the purpose of each meeting?
- * Other events could be coding sessions, code reviews, quick weekly sync meeting online, etc.
- * You must have at least 2 meetings with your project partner (if you have one) before D1 is due. Describe them here:
-   * What did you discuss during the meetings?
-   * What were the outcomes of each meeting?
-   * You must provide meeting minutes.
-   * You must have a regular meeting schedule established by the second meeting.  
+* We will have a recurring weekly meeting on Friday 5pm, online through Discord.
+* During each weekly meeting, each person will go through what they have done over the week. Then we will discuss where we are in the development cycle, and what we need to be working on. We will then assign tasks for each person to do for the week.
+* Later on in development, we can additionally have quick code reviews and discussion sessions every few days.
+* We didn’t have a project partner. We have run the proposal by the professor as well as our TA Carson. Carson gave us some ideas, such as using the Google Translate API.
+
   
 #### Q8: What artifacts will you use to self-organize?
 

@@ -168,13 +168,10 @@ Main features: Pen pal (talking to other people), learning languages.
 ----
 ### Highlights
 
-Specify 3 - 5 key decisions and/or insights that came up during your meetings
-and/or collaborative process.
+* Filters for the matchmaking service
+  * We discussed having different filters to give the user a selection on who they want to be matched with.
+  * Alternative A: No filters, matches only based on language/interests.
+  * Alternative B: Additional age filter 
+  * Alternative C: Additional age and gender filters
+  * Option A could be somewhat dangerous, since adults could potentially be matched with minors. We discussed making the site 18+, but we felt that was too restrictive. So, we moved onto Option B, which is to add an age filter the user can select. This eliminates minors being matched to adults (unless they specifically change the filter). However, there is also the case where a woman might not want to be matched with men (she might be intimidated by them etc.). So, we decided on going with Option C, to allow users to set the age and gender filters they want.
 
- * Short (5 min' read max)
- * Decisions can be related to the product and/or the team process.
-    * Mention which alternatives you were considering.
-    * Present the arguments for each alternative.
-    * Explain why the option you decided on makes the most sense for your team/product/users.
- * Essentially, we want to understand how (and why) you ended up with your current product and process plan.
- * This section is useful for important information regarding your decision making process that may not necessarily fit in other sections. 

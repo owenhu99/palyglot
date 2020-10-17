@@ -173,7 +173,11 @@ Main features: Pen pal (talking to other people), learning languages.
   * Palyglot allows users to learn a new language in an engaging way by speaking with others who know or are also learning the language. This gives you practical experience with communicating in the language that you’re learning, which we believe is a much more efficient way to learn a language than by memorizing and regurgitating your knowledge on tests.
   * Speaking with others about things you like in a language you’re learning creates a fun environment to expand your knowledge of the language and hold conversations. This plus a few other incentives in the app will encourage users to actively practice their skills in a new language and will help them become more fluent at written communication.
 
-
+* Team Communication
+  * Initially, we wanted to have at least 2-3 meetings per week. This allows us to stay in sync better and know how everybody is doing. The issues that come with this are that it is difficult to have everybody meet up for 1-2 hours, and having many mandatory meetings will be a burden with all of the other work that needs to be done.
+  * After some reflection, we decided to have only 1 mandatory 1-2 hour meeting every week. We believe that this is all we need to understand where we are in the development process and determine what needs to be done to proceed. This means that we get to spend the rest of our time working on the project.
+  * Many meetings isn't needed because most issues or questions can be answered just as easily through Discord chat. Also, many problems that arise probably won't relate to everybody's tasks (e.g. if someone is trying to fix a merge conflict, they only to talk to the other person whose code conflicts with theirs). Therefore, instead of trying to find a time that works for everyone, members can set up small calls to try to find solutions to their problems.
+  
 * Filters for the matchmaking service
   * We discussed having different filters to give the user a selection on who they want to be matched with.
   * Alternative A: No filters, matches only based on language/interests.

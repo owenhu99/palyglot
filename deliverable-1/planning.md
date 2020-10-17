@@ -139,14 +139,12 @@ Main features: Pen pal (talking to other people), learning languages.
   
 #### Q8: What artifacts will you use to self-organize?
 
-List/describe the artifacts you will produce in order to organize your team.       
+* We will use Github Projects to keep track of issues with the app, features that need to be implemented, features that are being implemented and features that have been completed. 
+* We will use labels in Github Projects in order to prioritize issues and features from highest to lowest.
+* On Github Projects we’ll assign people to specific issues/features (we’ll do this during meetings).
+* Also during meetings, we will keep a Google Doc that summarizes everything we have discussed.
+* We will track progress by how many features/issues are remaining and by testing the application during meetings.
 
- * Artifacts can be To-Do lists, Task boards, schedule(s), meeting minutes, etc.
- * We want to understand:
-   * How do you keep track of what needs to get done?
-   * How do you prioritize tasks?
-   * How do tasks get assigned to team members?
-   * How do you determine the status of work from inception to completion?
 
 #### Q9: What are the rules regarding how your team works?
 

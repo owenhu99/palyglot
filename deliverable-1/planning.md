@@ -168,6 +168,12 @@ Main features: Pen pal (talking to other people), learning languages.
 ----
 ### Highlights
 
+* Why Palyglot?
+  * Being bad at French after years of classes in school has taught us that the typical ways of teaching people a new language just don’t work. Verb tenses are cool, but we’d rather learn how to hold a conversation in a foreign language.
+  * Palyglot allows users to learn a new language in an engaging way by speaking with others who know or are also learning the language. This gives you practical experience with communicating in the language that you’re learning, which we believe is a much more efficient way to learn a language than by memorizing and regurgitating your knowledge on tests.
+  * Speaking with others about things you like in a language you’re learning creates a fun environment to expand your knowledge of the language and hold conversations. This plus a few other incentives in the app will encourage users to actively practice their skills in a new language and will help them become more fluent at written communication.
+
+
 * Filters for the matchmaking service
   * We discussed having different filters to give the user a selection on who they want to be matched with.
   * Alternative A: No filters, matches only based on language/interests.

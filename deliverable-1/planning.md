@@ -63,7 +63,7 @@ For those who have an interest in language, Palyglot provides extensive tools to
 
 Main features: Pen pal (talking to other people), learning languages.
 
-*Note: Outer bullet points are user stories and their bullet points are the acceptance criteria
+**Note: Outer bullet points are user stories and their inner bullet points are the acceptance criteria.**
 
 * As a student learning French, I want to meet other French speakers or learners in order to hone my French skills and increase my vocabulary.
   * Choose French as a language when matching with other users

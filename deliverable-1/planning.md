@@ -45,7 +45,7 @@ For those who have an interest in languages and language learning, Palyglot prov
 > Short (1-2 min' read max)
 * Our frontend will render our homepage, with authentication, then lead the user to a matchmaking component, messaging component and a profile component. The matchmaking component will communicate with the backend to retrieve new matches and to allow the user to select matches. The messaging component will communicate with the backend to retrieve matches and messages, and it will also communicate with our APIs such as the Google Translate API to run our extra features (spell checking, dictionary etc.). Lastly, the profile will also communicate with the backend to show the user their profile and allow them to edit it. For all backend requests, the backend will be retrieving data from our main server. Here is a diagram depicting the design of our system: 
 
-![](../diagram.jpg)
+![](diagram.jpg)
 
 * Technology Stack
   * Language: Javascript

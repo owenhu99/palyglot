@@ -13,6 +13,8 @@ var usersRouter = require('./routes/users');
 
 var app = express();
 
+let port = process.env.PORT || 5000;
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -26,5 +28,9 @@ mongoose.connect('mongodb+srv://admin:palyglot@cluster0.xr9zt.mongodb.net/Cluste
     { useNewUrlParser: true, useUnifiedTopology: true },
     () => console.log('Connected to MongoDB Database!')
 );
+
+app.listen(port, () => {
+	console.log(`Server is listening on port ${port}.`);
+});
 
 module.exports = app;

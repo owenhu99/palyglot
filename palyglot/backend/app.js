@@ -3,6 +3,11 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+const mongoose = require('mongoose');
+const User = require('./models/User');
+const Room = require('./models/Room');
+const Message = require('./models/Message');
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
@@ -16,5 +21,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+
+mongoose.connect('mongodb+srv://admin:palyglot@cluster0.xr9zt.mongodb.net/Cluster0?retryWrites=true&w=majority', 
+    { useNewUrlParser: true, useUnifiedTopology: true },
+    () => console.log('Connected to MongoDB Database!')
+);
 
 module.exports = app;

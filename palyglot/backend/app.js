@@ -8,8 +8,8 @@ const User = require('./models/User');
 const Room = require('./models/Room');
 const Message = require('./models/Message');
 
-var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var messagesRouter = require('./routes/messages');
 
 var app = express();
 

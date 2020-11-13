@@ -13,4 +13,18 @@ router.get("/", async (req, res) => {
 	}
 });
 
+/* POST, add a new message to the database */
+router.post("/", (req, res) => {
+	const message = new Message(req.body);
+
+	message
+		.save()
+		.then((data) => {
+			res.json(data);
+		})
+		.catch((err) => {
+			res.json({ message: err });
+		});
+});
+
 module.exports = router;

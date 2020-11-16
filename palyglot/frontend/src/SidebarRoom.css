@@ -1,0 +1,19 @@
+.sidebarRoom {
+  display: flex;
+  padding: 20px;
+  cursor: pointer;
+  border-bottom: 1px solid lightgrey;
+}
+
+.sidebarRoom:hover {
+  background-color: #fff9e6;
+}
+
+.sidebarRoom_info > h2 {
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.sidebarRoom_info {
+  margin-left: 15px;
+}

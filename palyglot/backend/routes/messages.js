@@ -2,15 +2,18 @@ var express = require('express');
 var router = express.Router();
 const Message = require('../models/Message');
 
-/* GET, returns list of all messages for given room, room ID must be passed
-in the request with the room parameter */
+/* GET, uses pagination to return at most 30 of the most recent messages in the 
+room. Room ID must be passed in the request with the room parameter. 
+The messages returned must have been sent before the date in the beforeDate
+parameter. */
 router.get("/", async (req, res) => {
-	try {
-		const messages = await Message.find({to: req.query.room});
-		res.json(messages);
-	} catch (err) {
-		res.json(err);
-	}
+	await Message.find({to: req.query.room, date: 
+		{"$lt": new Date(req.query.beforeDate)}})
+	.sort('-date').limit(30)
+	.exec((err, docs) => {
+		if (err) return res.json(err);
+		return res.json(docs);
+	})
 });
 
 /* POST, add a new message to the database */

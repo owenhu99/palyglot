@@ -1,0 +1,14 @@
+.ageSlider {
+    display: inline-block;
+    width: 40%;
+}
+
+.genderSelecter {
+    display: inline-block;
+    width: 40%;
+    padding-left: 5%;
+}
+
+.searchButton {
+    display: inline-block;
+}

@@ -13,11 +13,6 @@ router.get("/", async (req, res) => {
 	}
 });
 
-/* GET, return logged in user pofile */
-router.get('/me', auth, async(req, res) => {
-	res.send(req.user)
-})
-
 /* POST, create a new user */
 router.post("/", async (req, res) => {
 	try {
@@ -26,9 +21,38 @@ router.post("/", async (req, res) => {
 		const token = await user.generateAuthToken()
 		res.status(201).send({ user, token })
 	} catch (error) {
-		console.log(error)
 		res.status(400).send(error)
 	}
+})
+
+/* GET, return logged in user pofile */
+router.get('/me', auth, async(req, res) => {
+	res.send(req.user)
+})
+
+/* POST, log out a user */
+router.post('/me/logout', auth, async (req, res) => {
+    // Log user out of the application
+    try {
+        req.user.tokens = req.user.tokens.filter((token) => {
+            return token.token != req.token
+        })
+        await req.user.save()
+        res.send()
+    } catch (error) {
+        res.status(500).send(error)
+    }
+})
+
+/* POST, log out a user from all devices */
+router.post('/me/logoutall', auth, async(req, res) => {
+    try {
+        req.user.tokens.splice(0, req.user.tokens.length)
+        await req.user.save()
+        res.send()
+    } catch (error) {
+        res.status(500).send(error)
+    }
 })
 
 /* POST, log in a user */

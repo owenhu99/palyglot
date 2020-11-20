@@ -30,9 +30,18 @@ router.get('/me', auth, async(req, res) => {
 	res.send(req.user)
 })
 
+/* DELETE, delete user */
+router.delete('/me', auth, async(req, res) => {
+	try {
+		await req.user.remove()
+		res.send()
+	} catch (error) {
+		res.status(500).send(error)
+	}
+})
+
 /* POST, log out a user */
 router.post('/me/logout', auth, async (req, res) => {
-    // Log user out of the application
     try {
         req.user.tokens = req.user.tokens.filter((token) => {
             return token.token != req.token

@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const User = require('../models/User');
+const auth = require('../middleware/auth');
 
 /* GET, returns list of all Users */
 router.get("/", async (req, res) => {
@@ -11,6 +12,11 @@ router.get("/", async (req, res) => {
 		res.json(err);
 	}
 });
+
+/* GET, return logged in user pofile */
+router.get('/me', auth, async(req, res) => {
+	res.send(req.user)
+})
 
 /* POST, create a new user */
 router.post("/", async (req, res) => {

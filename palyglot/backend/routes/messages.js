@@ -8,8 +8,7 @@ router.get("/", async (req, res) => {
 	try {
 		const messages = await Message.find({to: req.query.room});
 		res.json(messages);
-	} catch (err) {
-		res.json(err);
+	} catch (err) { res.json(err);
 	}
 });
 

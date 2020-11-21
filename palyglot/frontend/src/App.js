@@ -1,11 +1,13 @@
 import React from "react";
-import './App.css';
+import SignUp from "./components/SignUp"
+import './css/App.css';
+import { AuthProvider } from './contexts/AuthContext'
 
 function App() {
   return (
-    <div className="App">
-      <h1>Palyglot</h1>
-    </div>
+    <AuthProvider>
+      <SignUp></SignUp>
+    </AuthProvider>
   );
 }
 

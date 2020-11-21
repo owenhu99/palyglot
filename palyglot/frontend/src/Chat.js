@@ -1,10 +1,20 @@
 import { Avatar, IconButton } from "@material-ui/core";
-import { AttachFile, InsertEmoticon, SearchOutlined } from "@material-ui/icons";
+import { AttachFile, InsertEmoticon, MessageSharp, SearchOutlined } from "@material-ui/icons";
 import {SendIcon } from "@material-ui/icons/Send";
 import React from "react";
 import "./Chat.css";
 
+// function Chat({message}) {
 function Chat() {
+
+    // const [input, setInput] = React.useState("");
+
+    // const sendMessage = (e) => {
+    //     e.preventDefault();
+        
+    //     setInput("");
+    // }
+
     return (
         <div className="chat">
             <div className="chat_header">
@@ -23,11 +33,14 @@ function Chat() {
                 </div>
             </div>
             <div className="chat_body">
-                <p className="chat_message">
-                    <span className="chat_name">Owen</span>
-                    Comment tu di sa "Pizza Parlour" en Francais?
-                    <span className="chat_timestamp">{new Date().toUTCString()}</span>
-                </p>
+                {/* { messages.map((message) => ( */}
+                    <p className="chat_message">
+                        <span className="chat_name">Owen{/*message.name*/}</span>
+                        Comment tu di sa "Pizza Parlour" en Francais? {/*message.message*/}
+                <span className="chat_timestamp">{new Date().toUTCString()} {/*message.timestamp*/} </span>
+                    </p>      
+                {/* ))} */}
+                
                 <p className="chat_message chat_receiver">
                     <span className="chat_name">JJ</span>
                     Pardon, Owen. Ma Francais c'est tres mauvais.
@@ -37,7 +50,11 @@ function Chat() {
             <div className="chat_input">
                 <IconButton><InsertEmoticon/></IconButton>
                 <form>
-                    <input placeholder="écrire un message" type="text"/>
+                    <input 
+                        // value={input}
+                        // onChange={(e)=>setInput(e.target.value)} 
+                        onChangeplaceholder="écrire un message" 
+                        type="text"/>
                     <button type="submit">
                         Send Message
                     </button>

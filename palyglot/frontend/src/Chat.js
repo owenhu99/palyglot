@@ -1,6 +1,5 @@
 import { Avatar, IconButton } from "@material-ui/core";
-import { AttachFile, InsertEmoticon, MessageSharp, SearchOutlined } from "@material-ui/icons";
-import {SendIcon } from "@material-ui/icons/Send";
+import { AttachFile, InsertEmoticon, SearchOutlined } from "@material-ui/icons";
 import React from "react";
 import "./Chat.css";
 

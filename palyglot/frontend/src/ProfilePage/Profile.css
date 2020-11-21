@@ -86,7 +86,7 @@
   margin-bottom: 5vh;
 }
 
-.profileInfo_bio > .MuiButton-root {
+.profileInfo_bio > form > .MuiButton-root {
   font-family: "Comfortaa", cursive;
   margin-top: 6px;
   margin-left: 170px;
@@ -99,7 +99,7 @@
   width: 500px;
 }
 
-.profileInfo_interests > .MuiButton-root {
+.profileInfo_interests > form > .MuiButton-root {
   font-family: "Comfortaa", cursive;
   margin-top: 6px;
   margin-left: 170px;

@@ -6,6 +6,18 @@ import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
 
 function Profile() {
+
+     function handleBioChange(e){
+         e.preventDefault();
+         console.log('Bio was changed.');
+     }
+
+     function handleInterestsChange(e){
+         e.preventDefault();
+         console.log('Interests was changed.');
+     }
+
+
     return (
         <div className="profile">
             <div className="profile_header">
@@ -23,15 +35,42 @@ function Profile() {
                     <h4>Name: JJ Kanu</h4>
                     <div className="profileInfo_bio">
                         <form noValidate autoComplete="off">
-                            <TextField className="profileInfo_bioEntry" label="Bio" variant="outlined" multiline rows={3} rowsMax={3} size= "small" inputProps={{ maxLength: 200 }}/>
+                            <TextField 
+                                className="profileInfo_bioEntry" 
+                                label="Bio" defaultValue="Pretend Bio" 
+                                variant="outlined"
+                                InputLabelProps={{
+                                    shrink: true,
+                                  }} 
+                                multiline 
+                                rows={3} 
+                                rowsMax={3} 
+                                size= "small" 
+                                inputProps={{ maxLength: 200 }}/>
+                            <Button 
+                                variant="outlined"
+                                onClick={handleBioChange} 
+                                size="small">Save Changes</Button>
                         </form>
-                        <Button variant="outlined" size="small">Save Changes</Button>
                     </div>
                     <div className="profileInfo_interests">
                         <form noValidate autoComplete="off">
-                            <TextField className="profileInfo_interestsEntry" label="Interests" variant="outlined"  size= "small" inputProps={{ maxLength: 75 }}/>
+                            <TextField 
+                                className="profileInfo_interestsEntry" 
+                                InputLabelProps={{
+                                    shrink: true,
+                                  }} 
+                                label="Interests" 
+                                variant="outlined"  
+                                size= "small" 
+                                inputProps={{ maxLength: 75 }}/>
+                            <Button 
+                                variant="outlined" 
+                                onClick={handleInterestsChange}
+                                size="small">
+                                    Save Changes
+                            </Button>
                         </form>
-                        <Button variant="outlined" size="small">Save Changes</Button>
                     </div>
                 </div>
             </div>

@@ -1,7 +1,6 @@
 import React from "react";
 import "./Profile.css";
 import TextField from '@material-ui/core/TextField';
-import EditIcon from '@material-ui/icons/Edit';
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
 
@@ -28,7 +27,10 @@ function Profile() {
                 <div className="profilePicContainer">
                     <input accept="image/*" id="enterNewPic" type="file" />
                     <label htmlFor="enterNewPic">
-                            <img className="profilePic" src="https://vignette.wikia.nocookie.net/emojimovie/images/5/56/Poop.png/revision/latest?cb=20170726175404"/>
+                            <img 
+                                className="profilePic" 
+                                src="https://vignette.wikia.nocookie.net/emojimovie/images/5/56/Poop.png/revision/latest?cb=20170726175404"
+                                alt=""/>
                     </label>
                 </div>
                 <div className="profileInfo">

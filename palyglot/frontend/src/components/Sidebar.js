@@ -4,7 +4,7 @@ import {Avatar} from "@material-ui/core";
 import {SearchOutlined} from "@material-ui/icons";
 import SidebarRoom from "./SidebarRoom"
 
-function Sidebar() {
+function Sidebar(props) {
     return (
         <div className="sidebar">
             <div className="sidebar_header">

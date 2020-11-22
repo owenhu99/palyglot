@@ -8,19 +8,57 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import Input from '@material-ui/core/Input';
+import Button from '@material-ui/core/Button';
+import { Link, useHistory } from 'react-router-dom';
 
 export default function SignUp() {
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
     const [gender, setGender] = useState("");
     const [age, setAge] = useState(18);
     const [knownLanguages, setKnownLanguages] = useState([]);
     const [targetLanguages, setTargetLanguages] = useState([]);
     const { signup } = useAuth();
+    const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
+    const history = useHistory();
 
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
         e.preventDefault();
 
-        signup(emailRef.current.value, passwordRef.current.value);
+        if (password !== confirmPassword) {
+            return setError("Passwords do not match.");
+        }
+
+        try {
+            setError("");
+            setLoading(true);
+            await signup(email, password);
+            history.push("/");
+        } catch {
+            setError("Failed to create an account");
+        }
+
+        setLoading(false);
     }
+
+    const handleNameChange = (event) => {
+        setName(event.target.value);
+    };
+
+    const handleEmailChange = (event) => {
+        setEmail(event.target.value);
+    };
+
+    const handlePasswordChange = (event) => {
+        setPassword(event.target.value);
+    };
+
+    const handleConfirmPasswordChange = (event) => {
+        setConfirmPassword(event.target.value);
+    };
 
     const handleGenderChange = (event) => {
         setGender(event.target.value);
@@ -44,30 +82,72 @@ export default function SignUp() {
     return (
         <>
             <Container maxWidth="sm">
+                <h1>
+                    Sign Up
+                </h1>
+                {error && <h3>{error}</h3>}
                 <Card>
-                    <form noValidate>
+                    <form onSubmit={handleSubmit} noValidate>
                         <Grid container spacing={2}>
                             <Grid item xs={12}>
                                 <TextField 
+                                    required
+                                    fullWidth
+                                    id="name"
+                                    variant="outlined"
+                                    margin="normal"
                                     name="name"
                                     label="Name"
+                                    value={name}
+                                    onChange={handleNameChange}
                                 />
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField 
+                                    required
+                                    fullWidth
+                                    id="email"
+                                    variant="outlined"
+                                    margin="normal"
                                     name="email"
                                     label="Email"
+                                    value={email}
+                                    onChange={handleEmailChange}
                                 />
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField 
+                                    required
+                                    fullWidth
+                                    id="password"
+                                    variant="outlined"
+                                    margin="normal"
                                     name="password"
                                     label="Password"
+                                    type="password"
+                                    value={password}
+                                    onChange={handlePasswordChange}
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField 
+                                    required
+                                    fullWidth
+                                    id="confirmPassword"
+                                    variant="outlined"
+                                    margin="normal"
+                                    name="confirmPassword"
+                                    label="Confirm Password"
+                                    type="password"
+                                    value={confirmPassword}
+                                    onChange={handleConfirmPasswordChange}
                                 />
                             </Grid>
                             <Grid item xs={12}>
                                 <InputLabel>Gender</InputLabel>
                                 <Select
+                                    required
+                                    fullWidth
                                     value={gender}
                                     onChange={handleGenderChange}
                                 >
@@ -79,7 +159,9 @@ export default function SignUp() {
                             <Grid item xs={12}>
                                 <InputLabel>Known Languages</InputLabel>
                                 <Select
+                                    required
                                     multiple
+                                    fullWidth
                                     value={knownLanguages}
                                     onChange={handleKnownLanguagesChange}
                                     input={<Input />}
@@ -94,6 +176,8 @@ export default function SignUp() {
                             <Grid item xs={12}>
                                 <InputLabel>Target Languages</InputLabel>
                                 <Select
+                                    required
+                                    fullWidth
                                     multiple
                                     value={targetLanguages}
                                     onChange={handleTargetLanguagesChange}
@@ -107,10 +191,19 @@ export default function SignUp() {
                                 </Select>
                             </Grid>
                         </Grid>
+                        <Button
+                        fullWidth
+                        type="submit"
+                        variant="contained"
+                        color="primary"
+                        disabled={loading}
+                        >
+                        Sign Up
+                    </Button>
                     </form>
                 </Card>
                 <div>
-                    Already have an account? Log in!
+                    Already have an account? <Link to="/login">Log in!</Link>
                 </div>
             </Container>
         </>

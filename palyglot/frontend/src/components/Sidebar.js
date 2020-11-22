@@ -1,5 +1,5 @@
 import React from "react";
-import "./Sidebar.css";
+import "../css/Sidebar.css";
 import {Avatar} from "@material-ui/core";
 import {SearchOutlined} from "@material-ui/icons";
 import SidebarRoom from "./SidebarRoom"

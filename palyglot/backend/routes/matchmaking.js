@@ -12,6 +12,16 @@ router.get("/matchmaking", async (req, res) => {
         var target_languages = req.body.languages;
         var previous_matches = req.body.previous_matches;
         var potential_matches = req.body.potential_matches;
+        var num_results = req.query.display_count;
+        const MAX_RESULTS = 20;
+
+        if (num_results < 0) {
+                res.send([]);
+        }
+
+        else if (!num_results || num_results > 20) {
+                num_results = MAX_RESULTS;
+        }
 
         if (!minAge) {
                 minAge = 0;
@@ -39,36 +49,40 @@ router.get("/matchmaking", async (req, res) => {
 
 	try {
                 switch (req.query.sortType) {
-                        case 'recent': break;
+                        case 'youngest': break;
+		          const users = await User.find({ $and [ 
+                            { _id: { $nin: previous_matches } },  
+                            { age: { $gte: minAge } }, 
+                            { age: { $lte: maxAge } }, 
+                            { gender: { $in: genders } }, 
+                            { targetLanguages: { $elemMatch: 
+                              { $in: target_languages }}}]}).sort({ "age" : 1 })
+                                .limit(num_results);
+                          res.json(users);
+                        case 'oldest': break;
+		          const users = await User.find({ $and [ 
+                            { _id: { $nin: previous_matches } },  
+                            { age: { $gte: minAge } }, 
+                            { age: { $lte: maxAge } }, 
+                            { gender: { $in: genders } }, 
+                            { targetLanguages: { $elemMatch: 
+                              { $in: target_languages }}}]}).sort({ "age" : -1 })
+                                .limit(num_results);
+                          res.json(users);
                         default: 
 		          const users = await User.find({ $and [ 
-                          { _id: { $nin: previous_matches } },  
-                          { age: { $gte: minAge } }, 
-                          { age: { $lte: maxAge } }, 
-                          { gender: { $in: genders } }, 
-                          { targetLanguages: { $elemMatch: 
-                            { $in: target_languages }}}]});
-                          users.toArray().sort(function(a, b){ return a - b });
+                            { _id: { $nin: previous_matches } },  
+                            { age: { $gte: minAge } }, 
+                            { age: { $lte: maxAge } }, 
+                            { gender: { $in: genders } }, 
+                            { targetLanguages: { $elemMatch: 
+                              { $in: target_languages }}}]}).limit(num_results);
                           res.json(users);
                 }
           
 	} catch (err) {
 		res.json(err);
 	}
-});
-
-/* POST, add a user as a potential match to the database */
-router.post("/", (req, res) => {
-	const message = new Message(req.body);
-
-	message
-		.save()
-		.then((data) => {
-			res.json(data);
-		})
-		.catch((err) => {
-			res.json({ message: err });
-		});
 });
 
 module.exports = router;

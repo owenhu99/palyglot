@@ -21,10 +21,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
+//app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
-mongoose.connect('mongodb+srv://admin:palyglot@cluster0.xr9zt.mongodb.net/Cluster0?retryWrites=true&w=majority', 
+mongoose.connect(process.env.MONGODB_URL, 
     { useNewUrlParser: true, useUnifiedTopology: true },
     () => console.log('Connected to MongoDB Database!')
 );

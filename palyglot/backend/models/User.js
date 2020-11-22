@@ -1,4 +1,6 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
+const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
 
 const UserSchema = new mongoose.Schema({
     email: {
@@ -12,52 +14,97 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    tokens: [{
+        token: {
+            type: String,
+            required: true
+        }
+    }],
     name: {
         type: String,
         required: true
     },
     age: {
         type: Number,
-        required: true
+        required: false
     },
     gender: {
         type: String,
-        required: true,
+        required: false,
         enum: ["male", "female", "non-binary"]
     },
     profilePicture: {
         type: String,
-        required: true,
+        required: false,
         default: ""
     },
     bio: {
         type: String,
-        required: true,
+        required: false,
         default: ""
     },
     interests: {
         type: [String],
-        required: true,
+        required: false,
         default: []
     },
     knownLanguages: {
         type: [String],
-        required: true
+        required: false
     },
     targetLanguages: {
         type: [String],
-        required: true
+        required: false
     },
     matches: {
         type: [mongoose.Schema.ObjectId],
-        required: true,
+        required: false,
         default: []
     } ,
     rooms: {
         type: [mongoose.Schema.ObjectId],
-        required: true,
+        required: false,
         default: []
     }
 });
 
-module.exports = mongoose.model('User', UserSchema);
+UserSchema.pre('save', async function (next) {
+    // Hashing password before saving the user model
+    const user = this
+    if (user.isModified('password')) {
+        user.password = await bcrypt.hash(user.password, 8)
+    }
+    next()
+})
+
+UserSchema.methods.generateAuthToken = async function() {
+    // Generate an auth token for the user
+    const user = this
+    const token = jwt.sign({_id: user._id}, process.env.JWT_KEY)
+    user.tokens = user.tokens.concat({token})
+    await user.save()
+    return token
+}
+
+UserSchema.statics.findByCredentials = async (email, password) => {
+    // Search for a user by email and password
+    const user = await User.findOne({email})
+    if (!user) {
+        throw new Error({ error: 'Invalid login credentials' })
+    }
+    const isPasswordMatch = await bcrypt.compare(password, user.password)
+    if (!isPasswordMatch) {
+        throw new Error({ error: 'Invalid login credentials' })
+    }
+    return user
+}
+
+const User = mongoose.model('User', UserSchema)
+
+module.exports = User
+
+/**
+ * Source citation:
+ * https://medium.com/swlh/jwt-authentication-authorization-in-nodejs-express
+ * -mongodb-rest-apis-2019-ad14ec818122
+ */

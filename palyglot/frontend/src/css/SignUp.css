@@ -1,0 +1,46 @@
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&display=swap");
+
+.alert {
+    padding-bottom: 1%;
+}
+
+.signUpTitle {
+  color: white;
+  font-family: "Comfortaa", cursive;
+  padding-top: 2%;
+  padding-bottom: 2%;
+  font-size: 30px;
+}
+
+.logInText {
+    color: white;
+    font-family: "Comfortaa", cursive;
+    padding-top: 2%;
+    font-size: 20px;
+}
+
+.cardItem {
+    padding: 10px;
+}
+
+.cardItemButton {
+    padding-left: 10px;
+    padding-bottom: 20px;
+    padding-right: 10px;
+    padding-top: 10px;
+}
+
+.cardExtraPadding {
+    padding-top: 10px;
+}
+
+.cardExtraExtraPadding {
+    padding-top: 20px;
+}
+
+.signupContainer {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

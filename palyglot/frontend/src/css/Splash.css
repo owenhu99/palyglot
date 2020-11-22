@@ -1,0 +1,43 @@
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&display=swap");
+
+.splashTitle {
+  color: white;
+  font-family: "Comfortaa", cursive;
+  font-size: 90px;
+  text-align: center;
+  padding-top: 2%;
+  position: relative;
+}
+
+.splashHeadline {
+  color: white;
+  font-family: "Comfortaa", cursive;
+  text-align: center;
+  font-size: 30px;
+  padding-top: 1%;
+  position: relative;
+  z-index: 10;
+}
+
+.splashImage {
+  display: flex;
+  width: 100vw;
+  position: absolute;
+  justify-content: center;
+  margin-top: 0px;
+}
+
+.splashButtonsGroup {
+  display: flex;
+  width: 100vw;
+  position: relative;
+  justify-content: center;
+  /* bottom: 0;
+  padding-bottom: 7%; */
+}
+
+.splashButton {
+  margin-top: 47vh;
+  padding: 50px;
+  display: inline-block;
+}

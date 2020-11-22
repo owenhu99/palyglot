@@ -10,9 +10,10 @@ const UserSchema = new mongoose.Schema({
         trim: true,
         match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please enter a valid email address'] 
     },
-    password: {
+    userId: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     tokens: [{
         token: {
@@ -31,7 +32,7 @@ const UserSchema = new mongoose.Schema({
     gender: {
         type: String,
         required: false,
-        enum: ["male", "female", "non-binary"]
+        enum: ["Male", "Female", "Non-Binary"]
     },
     profilePicture: {
         type: String,
@@ -56,13 +57,13 @@ const UserSchema = new mongoose.Schema({
         type: [String],
         required: false
     },
-    matches: {
-        type: [mongoose.Schema.ObjectId],
+    sentMatches: {
+        type: [String],
         required: false,
         default: []
     } ,
     rooms: {
-        type: [mongoose.Schema.ObjectId],
+        type: [String],
         required: false,
         default: []
     }

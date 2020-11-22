@@ -1,0 +1,57 @@
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&display=swap");
+
+.security {
+  display: grid;
+  width: 80vw;
+  align-self: center;
+  place-items: center;
+  background-color: #fff9e6;
+  margin-top: 7vh;
+}
+
+.security_header {
+  display: flex;
+  width: 80vw;
+  background-color: #fff9e6;
+}
+
+.security_header > h2 {
+  font-family: "Comfortaa", cursive;
+}
+
+.security_emailContainer {
+  display: flex;
+  align-content: center;
+  margin-top: 10px;
+  background-color: #fff9e6;
+  width: 80vw;
+  height: 60px;
+}
+
+.security_email > .MuiTextField-root {
+  margin-top: 10px;
+  margin-left: 20vw;
+  margin-right: 50px;
+}
+
+.security_email > .MuiButton-root {
+  margin-top: 15px;
+}
+
+.security_passwordContainer {
+  display: flex;
+  /* background-color: orange; */
+  width: 80vw;
+  height: 60px;
+  padding-bottom: 10px;
+}
+
+.security_password > .MuiTextField-root {
+  margin-top: 10px;
+  margin-left: 20vw;
+  margin-right: 50px;
+}
+
+.security_password > .MuiButton-root {
+  margin-top: 15px;
+}

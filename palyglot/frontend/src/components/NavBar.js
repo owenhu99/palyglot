@@ -6,8 +6,8 @@ import { Button, Toolbar } from "@material-ui/core";
 
 function NavBar() {
     return (
-        <div className="navBar">
-            <AppBar position="static" style={{ background: '#ffd85f', fontFamily: "Comfortaa" }}>
+        <div className="navBar" style={{ width: "100%"}}>
+            <AppBar position="static" style={{ background: '#ffd85f', fontFamily: "Comfortaa"}}>
                 <Toolbar variant="dense" style={{justifyContent: "space-between"}}>
                     <h2>palyglot</h2>
                     <div className="navBar_right">

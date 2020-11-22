@@ -1,5 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&display=swap");
 
+.alert {
+    padding-bottom: 1%;
+}
+
 .signUpTitle {
   color: white;
   font-family: "Comfortaa", cursive;

@@ -5,6 +5,7 @@ import Card from '@material-ui/core/Card';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import Alert from '@material-ui/lab/Alert';
 import { Link, useHistory } from 'react-router-dom';
 import '../css/LogIn.css';
 import { withStyles } from '@material-ui/core/styles';
@@ -61,7 +62,7 @@ export default function SignUp() {
                 <h1 className="loginTitle">
                     Log In
                 </h1>
-                {error && <h3>{error}</h3>}
+                {error && <div className="alert"><Alert severity="warning">{error}</Alert></div>}
                 <Card>
                     <form onSubmit={handleSubmit} noValidate>
                         <div className="cardItem">

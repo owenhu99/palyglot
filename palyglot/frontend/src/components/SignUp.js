@@ -9,6 +9,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import Input from '@material-ui/core/Input';
 import Button from '@material-ui/core/Button';
+import Alert from '@material-ui/lab/Alert';
 import { Link, useHistory } from 'react-router-dom';
 import '../css/SignUp.css';
 import { withStyles } from '@material-ui/core/styles';
@@ -113,7 +114,7 @@ export default function SignUp() {
                 <h1 className="signUpTitle">
                     Sign Up
                 </h1>
-                {error && <h3>{error}</h3>}
+                {error && <div className="alert"><Alert severity="warning">{error}</Alert></div>}
                 <Card>
                     <form onSubmit={handleSubmit} noValidate>
                         <div className="cardItem">

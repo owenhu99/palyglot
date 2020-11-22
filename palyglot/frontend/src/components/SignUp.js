@@ -9,7 +9,10 @@ import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import Input from '@material-ui/core/Input';
 import Button from '@material-ui/core/Button';
+import Alert from '@material-ui/lab/Alert';
 import { Link, useHistory } from 'react-router-dom';
+import '../css/SignUp.css';
+import { withStyles } from '@material-ui/core/styles';
 const axios = require('axios').default;
 
 export default function SignUp() {
@@ -46,8 +49,7 @@ export default function SignUp() {
                 knownLanguages: knownLanguages,
                 targetLanguages: targetLanguages
               });
-            
-            history.push("/");
+            history.push("/profile");
         } catch {
             setError("Failed to create an account");
         }
@@ -90,16 +92,32 @@ export default function SignUp() {
     const languages = ["English", "French", "Spanish",
                        "Hindi", "Russian", "Mandarin"];
 
+    const StyledButton = withStyles({
+        root: {
+            background: 'linear-gradient(45deg, #f2452b 30%, #fb8264 90%)',
+            borderRadius: 3,
+            border: 0,
+            color: 'white',
+            height: 48,
+            padding: '0 30px',
+            boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+        },
+        label: {
+            textTransform: 'capitalize',
+        },
+    })(Button);
+
     return (
-        <>
+        <div className="signupContainer">
             <Container maxWidth="sm">
-                <h1>
+                <h1 className="signUpTitle">
                     Sign Up
                 </h1>
-                {error && <h3>{error}</h3>}
+                {error && <div className="alert"><Alert severity="warning">{error}</Alert></div>}
                 <Card>
                     <form onSubmit={handleSubmit} noValidate>
-                        <Grid container spacing={2}>
+                        <div className="cardItem">
+                        <Grid container spacing={0}>
                             <Grid item xs={12}>
                                 <TextField 
                                     required
@@ -155,7 +173,9 @@ export default function SignUp() {
                                 />
                             </Grid>
                             <Grid item xs={12}>
+                                <div className="cardExtraPadding">
                                 <InputLabel>Gender</InputLabel>
+                                </div>
                                 <Select
                                     required
                                     fullWidth
@@ -168,7 +188,9 @@ export default function SignUp() {
                                 </Select>
                             </Grid>
                             <Grid item xs={12}>
-                                <InputLabel>Known Languages</InputLabel>
+                                <div className="cardExtraExtraPadding">
+                                    <InputLabel>Known Languages</InputLabel>
+                                </div>
                                 <Select
                                     required
                                     multiple
@@ -185,7 +207,9 @@ export default function SignUp() {
                                 </Select>
                             </Grid>
                             <Grid item xs={12}>
-                                <InputLabel>Target Languages</InputLabel>
+                                <div className="cardExtraExtraPadding">
+                                    <InputLabel>Target Languages</InputLabel>
+                                </div>
                                 <Select
                                     required
                                     fullWidth
@@ -202,21 +226,24 @@ export default function SignUp() {
                                 </Select>
                             </Grid>
                         </Grid>
-                        <Button
-                        fullWidth
-                        type="submit"
-                        variant="contained"
-                        color="primary"
-                        disabled={loading}
-                        >
-                        Sign Up
-                    </Button>
+                        </div>
+                        <div className="cardItemButton">
+                            <StyledButton
+                                fullWidth
+                                type="submit"
+                                variant="contained"
+                                color="primary"
+                                disabled={loading}
+                            >
+                                Sign Up
+                            </StyledButton>
+                        </div>
                     </form>
                 </Card>
-                <div>
+                <div className="logInText">
                     Already have an account? <Link to="/login">Log in!</Link>
                 </div>
             </Container>
-        </>
+        </div>
     )
 }

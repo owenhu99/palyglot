@@ -2,7 +2,7 @@ import React from "react";
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import "./Security.css";
+import "../css/Security.css";
 
 function Security() {
 

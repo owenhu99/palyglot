@@ -10,6 +10,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Input from '@material-ui/core/Input';
 import Button from '@material-ui/core/Button';
 import { Link, useHistory } from 'react-router-dom';
+const axios = require('axios').default;
 
 export default function SignUp() {
     const [name, setName] = useState("");
@@ -20,14 +21,14 @@ export default function SignUp() {
     const [age, setAge] = useState(18);
     const [knownLanguages, setKnownLanguages] = useState([]);
     const [targetLanguages, setTargetLanguages] = useState([]);
-    const { signup } = useAuth();
+    const { signup, currentUser } = useAuth();
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const history = useHistory();
 
     async function handleSubmit(e) {
         e.preventDefault();
-
+        console.log(process.env.REACT_APP_BACKEND_URL + "users");
         if (password !== confirmPassword) {
             return setError("Passwords do not match.");
         }
@@ -36,6 +37,16 @@ export default function SignUp() {
             setError("");
             setLoading(true);
             await signup(email, password);
+            await axios.post(process.env.REACT_APP_BACKEND_URL + "users", {
+                userId: currentUser.uid,
+                name: name,
+                email: email,
+                gender: gender,
+                age: age,
+                knownLanguages: knownLanguages,
+                targetLanguages: targetLanguages
+              });
+            
             history.push("/");
         } catch {
             setError("Failed to create an account");

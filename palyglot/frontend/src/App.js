@@ -5,8 +5,10 @@ import SignUp from "./components/SignUp";
 import LogIn from "./components/LogIn";
 import Splash from "./components/Splash";
 import ChatPage from "./components/ChatPage";
+import ProfilePage from "./components/ProfilePage";
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import PrivateRoute from './components/PrivateRoute';
 
 
 function App() {
@@ -28,6 +30,7 @@ function App() {
               <Route path="/signup" component={SignUp} />
               <Route path="/login" component={LogIn} />
               <Route path="/chat" component={ChatPage} />
+              <PrivateRoute path="/profile" component={ProfilePage} />
             </Switch>
           </AuthProvider>
         </Router>

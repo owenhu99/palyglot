@@ -40,7 +40,7 @@ export default function SignUp() {
             setError("");
             setLoading(true);
             await login(email, password);
-            history.push("/");
+            history.push("/profile");
         } catch {
             setError("Failed to log in.");
         }

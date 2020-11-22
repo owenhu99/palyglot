@@ -49,8 +49,7 @@ export default function SignUp() {
                 knownLanguages: knownLanguages,
                 targetLanguages: targetLanguages
               });
-            
-            history.push("/");
+            history.push("/profile");
         } catch {
             setError("Failed to create an account");
         }

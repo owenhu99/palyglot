@@ -24,7 +24,12 @@ export default function Splash() {
         <>
             <h1 className="splashTitle">palyglot</h1>
             <h2 className="splashHeadline">Learn a New Language. Make Some Friends.</h2>
-            <div className="splashButtonsGroup">
+            <div className="splashImage">
+                <img 
+                    src="https://image.freepik.com/vector-gratis/gente-saltando-diseno-dia-juventud_23-2148572045.jpg"
+                    alt=""/>
+            </div>
+            <div className="splashButtonsGroup" >
                 <div className="splashButton">
                     <StyledButton component={Link} to={'/login'} variant="contained" color="white" className="splashLogIn">
                         Log In

@@ -7,13 +7,6 @@ room. Room ID must be passed in the request with the room parameter.
 The messages returned must have been sent before the date in the beforeDate
 parameter. */
 router.get("/", async (req, res) => {
-<<<<<<< HEAD
-	try {
-		const messages = await Message.find({to: req.query.room});
-		res.json(messages);
-	} catch (err) { res.json(err);
-	}
-=======
 	await Message.find({to: req.query.room, date: 
 		{"$lt": new Date(req.query.beforeDate)}})
 	.sort('-date').limit(30)
@@ -21,7 +14,6 @@ router.get("/", async (req, res) => {
 		if (err) return res.json(err);
 		return res.json(docs);
 	})
->>>>>>> 3a91624d7372b18bfcbd1ca891f68333c07e7e24
 });
 
 /* POST, add a new message to the database */

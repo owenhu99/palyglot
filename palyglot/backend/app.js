@@ -9,6 +9,7 @@ const User = require('./models/User');
 const Room = require('./models/Room');
 
 var usersRouter = require('./routes/users');
+var roomsRouter = require('./routes/rooms')
 
 var app = express();
 
@@ -23,6 +24,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/rooms', roomsRouter)
 
 mongoose.connect(process.env.MONGODB_URL, 
     { useNewUrlParser: true, useUnifiedTopology: true },

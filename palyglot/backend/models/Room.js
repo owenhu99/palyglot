@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const RoomSchema = new mongoose.Schema({
     participants: {
-        type: [mongoose.Schema.ObjectId],
+        type: [String],
         required: true,
         default: []
     },

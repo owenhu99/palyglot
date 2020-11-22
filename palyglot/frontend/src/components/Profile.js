@@ -5,10 +5,10 @@ import Button from '@material-ui/core/Button';
 const axios = require('axios').default;
 
 function Profile(props) {
-    const [bio, setBio] = useState(props.userDetails.bio);
     const [interests, setInterests] = useState(props.userDetails.interests);
-
-     function handleBioChange(e){
+    const [bio, setBio] = useState(props.userDetails.bio);
+    
+    function handleBioChange(e){
          e.preventDefault();
          setBio(e.target.value);
      }

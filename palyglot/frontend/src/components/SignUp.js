@@ -31,7 +31,7 @@ export default function SignUp() {
 
     async function handleSubmit(e) {
         e.preventDefault();
-        console.log(process.env.REACT_APP_BACKEND_URL + "users");
+
         if (password !== confirmPassword) {
             return setError("Passwords do not match.");
         }
@@ -39,9 +39,9 @@ export default function SignUp() {
         try {
             setError("");
             setLoading(true);
-            await signup(email, password);
+            let signupresult = await signup(email, password);
             await axios.post(process.env.REACT_APP_BACKEND_URL + "users", {
-                userId: currentUser.uid,
+                userId: signupresult.user.uid,
                 name: name,
                 email: email,
                 gender: gender,

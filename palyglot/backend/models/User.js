@@ -57,13 +57,13 @@ const UserSchema = new mongoose.Schema({
         type: [String],
         required: false
     },
-    matches: {
-        type: [mongoose.Schema.ObjectId],
+    sentMatches: {
+        type: [String],
         required: false,
         default: []
     } ,
     rooms: {
-        type: [mongoose.Schema.ObjectId],
+        type: [String],
         required: false,
         default: []
     }

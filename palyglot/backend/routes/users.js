@@ -38,7 +38,7 @@ router.get('/:userId', async(req, res) => {
 })
 
 /* [TEMPORARY] PUT, update user details by userId */
-router.get('/:userId', async(req, res) => {
+router.put('/:userId', async(req, res) => {
 	console.log(req.params.userId)
 	try {
 		const user = await User.findOneAndUpdate({userId: req.params.userId}, req.body)

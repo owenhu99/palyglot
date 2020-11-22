@@ -4,20 +4,16 @@ import NavBar from "./NavBar"
 import Security from "./Security"
 import Profile from "./Profile"
 import { useAuth } from '../contexts/AuthContext';
+const axios = require('axios').default;
 
 function ProfilePage() {
   const { currentUser } = useAuth();
   const [userDetails, setUserDetails] = useState({});
 
   useEffect(() => {
-    axios.get(process.env.REACT_APP_BACKEND_URL + "users", {
-      userId: currentUser.uid,
-      name: name,
-      email: email,
-      gender: gender,
-      age: age,
-      knownLanguages: knownLanguages,
-      targetLanguages: targetLanguages
+    axios.get(process.env.REACT_APP_BACKEND_URL + "users/" + currentUser.uid)
+    .then((response) => {
+      setUserDetails(response.data);
     });
   }, []);
 
@@ -25,8 +21,7 @@ function ProfilePage() {
     <div className="page" style={{width: "100%", marginTop: "0"}}>
       <NavBar/>
       <div className="body">
-        <Profile uid={currentUser.uid}/>
-        <Security uid={currentUser.uid}/>
+        <Profile userDetails={userDetails}/>
       </div>
     </div>
   );

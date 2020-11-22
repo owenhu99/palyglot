@@ -1,0 +1,28 @@
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&display=swap");
+
+.splashTitle {
+    color: white;
+    font-family: "Comfortaa", cursive;
+    font-size:100px;
+    text-align: center;
+    padding-top: 2%;
+}
+
+.splashHeadline {
+    color: white;
+    font-family: "Comfortaa", cursive;
+    text-align: center;
+    font-size:40px;
+    padding-top: 1%;
+}
+
+.splashButtonsGroup {
+    position: absolute;
+    bottom: 0;
+    padding-bottom: 7%;
+}
+
+.splashButton {
+    padding: 10px;
+    display:inline-block;
+}

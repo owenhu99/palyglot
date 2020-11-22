@@ -13,7 +13,7 @@ function App() {
   const theme = createMuiTheme({
     palette: {
       primary: {
-        main: '#E33E7F'
+        main: '#ffd85f'
       }
     }
   });

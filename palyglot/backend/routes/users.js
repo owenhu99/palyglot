@@ -40,6 +40,16 @@ router.delete('/me', auth, async(req, res) => {
 	}
 })
 
+/* PUT, edit user info */
+router.put('/me', auth, async(req, res) => {
+	try {
+		await User.updateOne({_id: req.user['_id']}, req.body)
+		res.send()
+	} catch (error) {
+		res.status(500).send(error)
+	}
+})
+
 /* POST, log out a user */
 router.post('/me/logout', auth, async (req, res) => {
     try {

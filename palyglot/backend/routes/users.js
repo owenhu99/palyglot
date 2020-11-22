@@ -80,6 +80,18 @@ router.post('/login', async(req, res) => {
     }
 })
 
+/* [TEMPORARY] POST, return user details by userId */
+router.get('/:userId', async(req, res) => {
+	console.log(req.params.userId)
+	try {
+		const user = await User.findOne({userId: req.params.userId})
+		res.send(user)
+	} catch (error) {
+		console.log(error)
+		res.status(400).send(error)
+	}
+})
+
 module.exports = router;
 
 /**

@@ -7,10 +7,8 @@ var cors = require('cors')
 const mongoose = require('mongoose');
 const User = require('./models/User');
 const Room = require('./models/Room');
-const Message = require('./models/Message');
 
 var usersRouter = require('./routes/users');
-var messagesRouter = require('./routes/messages');
 
 var app = express();
 

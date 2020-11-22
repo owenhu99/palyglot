@@ -17,6 +17,10 @@ const MessageSchema = new mongoose.Schema({
     to: {
         type: mongoose.Schema.ObjectId,
         required: true
+    },
+    roomId: {
+        type: mongoose.Schema.ObjectId,
+        required: true
     }
 });
 

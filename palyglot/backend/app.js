@@ -8,6 +8,7 @@ const mongoose = require('mongoose');
 const User = require('./models/User');
 const Room = require('./models/Room');
 const Message = require('./models/Message');
+const Pusher = require('pusher');
 
 var usersRouter = require('./routes/users');
 var messagesRouter = require('./routes/messages');
@@ -30,6 +31,27 @@ mongoose.connect(process.env.MONGODB_URL,
     { useNewUrlParser: true, useUnifiedTopology: true },
     () => console.log('Connected to MongoDB Database!')
 );
+
+const db = mongoose.connection;
+
+db.once('open', () => {
+    console.log("DB connected");
+
+    let filter = [{
+        $match: {
+            $and: [
+                {"updateDescription.updatedFields.messages": {$exists: true}},
+                {operationType: "update"}
+            ]
+        }
+    }];
+
+    let options = { fullDocument: 'updateLookup'};
+    db.collection('rooms').watch(filter, options).on('change', (change) => {
+        console.log("A change occurred.");
+        console.log(change);
+    })
+})
 
 app.listen(port, () => {
 	console.log(`Server is listening on port ${port}.`);

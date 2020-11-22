@@ -1,0 +1,45 @@
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  flex: 0.3;
+}
+
+.sidebar_header {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  border-right: 1px solid lightgoldenrodyellow;
+}
+
+.sidebar_search {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  height: 40px;
+  background-color: lightgray;
+}
+
+.sidebar_searchContainer {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 35px;
+  background-color: white;
+}
+
+.sidebar_searchContainer > .MuiSvgIcon-root {
+  color: lightslategray;
+  padding: 10px;
+}
+
+.sidebar_searchContainer > input {
+  border: none;
+  margin-left: 10px;
+  outline-width: 0;
+}
+
+.sidebar_rooms {
+  flex: 1;
+  background-color: white;
+  overflow: scroll;
+}

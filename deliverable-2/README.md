@@ -20,14 +20,51 @@ Palyglot is an application that provides language learners and those just trying
    - Chats are kept updated and users can view previous messages
 
 ## Instructions
- * Clear instructions for how to use the application from the end-user's perspective
- * How do you access it? Are accounts pre-created or does a user register? Where do you start? etc. 
- * Provide clear steps for using each feature described above
- * This section is critical to testing your application and must be done carefully and thoughtfully
+The user access the application by going [the URL](https://palyglot-frontend.herokuapp.com/) for the deployed application. 
+
+They are led to the splash page, where they can choose to log in or sign up. If they choose to sign up, they enter their details such as name, email, password, gender, languages. If they choose to log in, they can simply enter their email and password. 
+
+After login or sign up, the user is led to the profile screen. Here they can edit their bio and interests to customize their profiles by typing the in text fields and clicking the submit buttons.
+
+Using the navigation bar at the top, the user can go to the matchmaking page and the chat page by clicking on the buttons "Find a Pal" and "My Pals" respectively.
+
+On the matchmaking page, a user can view possible matches and their profiles and click on the users they want to match with.
+
+On the chat page, users can select users to chat with on the left side and open up the chat screen on the right. They can send messages using the text box.
  
  ## Development requirements
- * If a developer were to set this up on their machine or a remote server, what are the technical requirements (e.g. OS, libraries, etc.)?
- * Briefly describe instructions for setting up and running the application (think a true README).
+You can access the app through the [Heroku link](https://palyglot-frontend.herokuapp.com/). The following are instructions to run the app locally.
+
+You need Node.js installed on your machine. You also need npm installed. The following are packages we used:
+   - Frontend:
+     - @material-ui/core
+     - @material-ui/icons
+     - @material-ui/lab
+     - @testing-library/react
+     - axios
+     - firebase
+     - react
+     - react-dom
+     - react-router-dom
+     - react-scripts
+   - Backend:
+     - bcryptjs
+     - cookie-parser
+     - cors
+     - debug
+     - express
+     - jsonwebtoken
+     - mongoose
+     - morgan
+
+Note: For specific details and version numbers, check the package.json files in the respective frontend/backend directory.
+
+Steps to run application:
+ 1. Open a terminal window. Go to the backend directory.
+ 2. Run `npm i` and then `npm start`. This should start the backend on your local machine.
+ 3. Open another terminal window. Go to the frontend directory.
+ 4. Run `npm i` and then `npm start`. This should start the web app on your local machine.
+ 5. Go to http://localhost:3000/ to view the web application.
  
  ## Deployment and Github Workflow
  

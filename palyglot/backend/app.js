@@ -10,6 +10,7 @@ const Room = require('./models/Room');
 const Pusher = require('pusher');
 
 var usersRouter = require('./routes/users');
+var roomsRouter = require('./routes/rooms');
 var messagesRouter = require('./routes/messages');
 
 var app = express();
@@ -33,6 +34,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/rooms', roomsRouter);
+app.use('/messages', messagesRouter);
 
 mongoose.connect(process.env.MONGODB_URL, 
     { useNewUrlParser: true, useUnifiedTopology: true },
@@ -57,8 +60,7 @@ db.once('open', () => {
     db.collection('rooms').watch(filter, options).on('change', (change) => {
         console.log("A change occurred.");
         console.log(change);
-
-        // const roomDetails = change.fullDocument;
+        const roomDetails = change.fullDocument;
         // pusher.trigger('messages', 'inserted', {
         // })
     })

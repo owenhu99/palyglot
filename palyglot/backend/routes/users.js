@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const User = require('../models/User');
-const auth = require('../middleware/auth');
+// const auth = require('../middleware/auth');
 
 /* GET, returns list of all Users */
 router.get("/", async (req, res) => {
@@ -25,44 +25,68 @@ router.post("/", async (req, res) => {
 	}
 })
 
-/* GET, return logged in user pofile */
-router.get('/me', auth, async(req, res) => {
-	res.send(req.user)
-})
-
-/* DELETE, delete user */
-router.delete('/me', auth, async(req, res) => {
+/* [TEMPORARY] GET, return user details by userId */
+router.get('/:userId', async(req, res) => {
+	console.log(req.params.userId)
 	try {
-		await req.user.remove()
-		res.send()
+		const user = await User.findOne({userId: req.params.userId})
+		res.send(user)
 	} catch (error) {
-		res.status(500).send(error)
+		console.log(error)
+		res.status(400).send(error)
 	}
 })
 
-/* POST, log out a user */
-router.post('/me/logout', auth, async (req, res) => {
-    try {
-        req.user.tokens = req.user.tokens.filter((token) => {
-            return token.token != req.token
-        })
-        await req.user.save()
-        res.send()
-    } catch (error) {
-        res.status(500).send(error)
-    }
+/* [TEMPORARY] PUT, update user details by userId */
+router.put('/:userId', async(req, res) => {
+	console.log(req.params.userId)
+	try {
+		const user = await User.findOneAndUpdate({userId: req.params.userId}, req.body)
+		res.send(user)
+	} catch (error) {
+		console.log(error)
+		res.status(400).send(error)
+	}
 })
 
-/* POST, log out a user from all devices */
-router.post('/me/logoutall', auth, async(req, res) => {
-    try {
-        req.user.tokens.splice(0, req.user.tokens.length)
-        await req.user.save()
-        res.send()
-    } catch (error) {
-        res.status(500).send(error)
-    }
-})
+// /* GET, return logged in user pofile */
+// router.get('/me', auth, async(req, res) => {
+// 	res.send(req.user)
+// })
+
+// /* DELETE, delete user */
+// router.delete('/me', auth, async(req, res) => {
+// 	try {
+// 		await req.user.remove()
+// 		res.send()
+// 	} catch (error) {
+// 		res.status(500).send(error)
+// 	}
+// })
+
+// /* POST, log out a user */
+// router.post('/me/logout', auth, async (req, res) => {
+//     try {
+//         req.user.tokens = req.user.tokens.filter((token) => {
+//             return token.token != req.token
+//         })
+//         await req.user.save()
+//         res.send()
+//     } catch (error) {
+//         res.status(500).send(error)
+//     }
+// })
+
+// /* POST, log out a user from all devices */
+// router.post('/me/logoutall', auth, async(req, res) => {
+//     try {
+//         req.user.tokens.splice(0, req.user.tokens.length)
+//         await req.user.save()
+//         res.send()
+//     } catch (error) {
+//         res.status(500).send(error)
+//     }
+// })
 
 /* POST, log in a user */
 router.post('/login', async(req, res) => {

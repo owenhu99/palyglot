@@ -21,13 +21,19 @@ function ProfilePage() {
   //     targetLanguages: targetLanguages
   //   });
   // }, []);
+  
+  useEffect(() => {
+    axios.get(process.env.REACT_APP_BACKEND_URL + "users/" + currentUser.uid)
+    .then((response) => {
+      setUserDetails(response.data);
+    });
+  }, []);
 
   return (
     <div className="page" style={{width: "100%", marginTop: "0"}}>
       <NavBar/>
       <div className="body">
-        <Profile uid={currentUser.uid}/>
-        <Security uid={currentUser.uid}/>
+        <Profile userDetails={userDetails}/>
       </div>
     </div>
   );

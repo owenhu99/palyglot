@@ -21,8 +21,11 @@ parameter. */
 /* get all of the stored messages for a room */
 router.get("/", async (req, res) => {
 	let roomId = req.query.roomId;
-	await  Room.findOne({id: roomId}).exec((err, room) => {
+	await  Room.findOne({_id: roomId}).exec((err, room) => {
 		if (err) return res.json(err);
+		if (room === null) {
+			return res.json({"error": "room could not be found"})
+		}
 		let messages = room.messages;
 		messages.sort(function(a,b) {
 			return new Date(b.date) - new Date(a.date);
@@ -33,16 +36,19 @@ router.get("/", async (req, res) => {
 /* POST, add a new message to the room */
 router.post("/", async (req, res) => {
 	const message = {
-		text: req.body.text,
-		date: req.body.date,
-		from: req.body.from,
-		to: req.body.to
+		text: req.body['text'],
+		date: new Date(req.body['date']),
+		from: req.body['from'],
+		to: req.body['to']
 	};
 
-	let roomId = req.body.roomId;
-	await Room.findOne({id: roomId}).exec((err, room) => {
+	let roomId = req.body['roomId'];
+	await Room.findOne({_id: roomId}).exec((err, room) => {
 		if (err) return res.json(err);
-		room.messages = [...room.messages, message];
+		if (room === null) {
+			return res.json({"error": "room could not be found"})
+		}
+		room.messages.push(message);
 		room.save();
 		res.json({msg: "success"});
 	})

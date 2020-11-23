@@ -24,7 +24,7 @@ router.get("/", async (req, res) => {
 	await  Room.findOne({_id: roomId}).exec((err, room) => {
 		if (err) return res.json(err);
 		if (room === null) {
-			return res.json({"error": "room could not be found"})
+			return res.json({"error": "room could not be found"}, 404)
 		}
 		let messages = room.messages;
 		messages.sort(function(a,b) {
@@ -46,7 +46,7 @@ router.post("/", async (req, res) => {
 	await Room.findOne({_id: roomId}).exec((err, room) => {
 		if (err) return res.json(err);
 		if (room === null) {
-			return res.json({"error": "room could not be found"})
+			return res.json({"error": "room could not be found"}, 404)
 		}
 		room.messages.push(message);
 		room.save();

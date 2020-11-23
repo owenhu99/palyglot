@@ -10,6 +10,7 @@ export default function ChatPage() {
 
     const { currentUser } = useAuth();
     console.log(currentUser);
+    const userId = currentUser.uid;
     const [currentRoom, setCurrentRoom] = React.useState({});
     const [rooms, setRooms] = React.useState([]);
     const [messages, setMessages] = React.useState([]);
@@ -18,7 +19,7 @@ export default function ChatPage() {
      * latest conversation, and get the past messages for that conversation.
      */
     useEffect(() => {
-        axios.get("GET_ROOMS")
+        axios.get("")
             .then(res => {
                 setRooms(res.data);
             })

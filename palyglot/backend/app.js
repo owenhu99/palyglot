@@ -23,7 +23,7 @@ const pusher = new Pusher({
     secret: "41cfd5478b78016dbbb7",
     cluster: "us2",
     useTLS: true
-  });
+});
 
 app.use(cors())
 app.use(logger('dev'));
@@ -37,7 +37,7 @@ app.use('/users', usersRouter);
 app.use('/rooms', roomsRouter);
 app.use('/messages', messagesRouter);
 
-mongoose.connect(process.env.MONGODB_URL, 
+mongoose.connect(process.env.MONGODB_URL,
     { useNewUrlParser: true, useUnifiedTopology: true },
     () => console.log('Connected to MongoDB Database!')
 );
@@ -50,24 +50,27 @@ db.once('open', () => {
     let filter = [{
         $match: {
             $and: [
-                {"updateDescription.updatedFields.messages": {$exists: true}},
-                {operationType: "update"}
+                { "updateDescription.updatedFields": { $exists: { $regex: /^messages.*/ } } },
+                { operationType: "update" }
             ]
         }
     }];
 
-    let options = { fullDocument: 'updateLookup'};
+    let options = { fullDocument: 'updateLookup' };
     db.collection('rooms').watch(filter, options).on('change', (change) => {
         console.log("A change occurred.");
         console.log(change);
+        console.log(change['updateDescription']['updatedFields']['messages'])
         const roomDetails = change.fullDocument;
-        // pusher.trigger('messages', 'inserted', {
-        // })
-    })
-})
+        pusher.trigger('messages', 'updated', {
+            id: roomDetails._id,
+            messages: change['updateDescription']['updatedFields']['messages']
+        });
+    });
+});
 
 app.listen(port, () => {
-	console.log(`Server is listening on port ${port}.`);
+    console.log(`Server is listening on port ${port}.`);
 });
 
 module.exports = app;

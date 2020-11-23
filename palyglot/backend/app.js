@@ -31,6 +31,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.disable('etag');
 
 //app.use('/', indexRouter);
 app.use('/users', usersRouter);
@@ -60,11 +61,17 @@ db.once('open', () => {
     db.collection('rooms').watch(filter, options).on('change', (change) => {
         console.log("A change occurred.");
         console.log(change);
-        console.log(change['updateDescription']['updatedFields']['messages'])
-        const roomDetails = change.fullDocument;
+        let updatedFields = change['updateDescription']['updatedFields'];
+        let message = [];
+        for (let key in updatedFields) {
+            if (/^messages.*/.test(key)) {
+                message = updatedFields[key];
+            }
+        }
+        let roomDetails = change.fullDocument;
         pusher.trigger('messages', 'updated', {
             id: roomDetails._id,
-            messages: change['updateDescription']['updatedFields']['messages']
+            message: message
         });
     });
 });

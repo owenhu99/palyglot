@@ -28,7 +28,7 @@ router.get("/", async (req, res) => {
 		}
 		let messages = room.messages;
 		messages.sort(function(a,b) {
-			return new Date(b.date) - new Date(a.date);
+			return new Date(a.date) - new Date(b.date);
 		})
 		return res.json(messages);
 	});
@@ -37,7 +37,7 @@ router.get("/", async (req, res) => {
 router.post("/", async (req, res) => {
 	const message = {
 		text: req.body['text'],
-		date: new Date(req.body['date']),
+		date: new Date(Date.now()),
 		from: req.body['from'],
 		to: req.body['to']
 	};

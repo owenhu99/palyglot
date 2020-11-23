@@ -5,13 +5,12 @@ import NavBar from './NavBar';
 import '../css/App_Chat.css';
 import { useAuth } from '../contexts/AuthContext';
 import axios from 'axios';
+import Pusher from 'pusher-js';
 
 export default function ChatPage() {
 
     const { currentUser } = useAuth();
-    console.log(currentUser);
-    const userId = currentUser.uid;
-    const [currentRoom, setCurrentRoom] = React.useState({});
+    const [currentRoom, setCurrentRoom] = React.useState("-1");
     const [rooms, setRooms] = React.useState([]);
     const [messages, setMessages] = React.useState([]);
 
@@ -19,20 +18,46 @@ export default function ChatPage() {
      * latest conversation, and get the past messages for that conversation.
      */
     useEffect(() => {
-        axios.get("")
+        fetchData();
+    }, []);
+
+
+    useEffect(() => {
+        const pusher = new Pusher('a4e914a09d88628d31df', {
+            cluster: 'us2'
+        });
+
+        const channel = pusher.subscribe('messages');
+        channel.bind('updated', function (data) {
+            console.log('updated');
+            if (data.id === currentRoom) {
+                setMessages([...messages, data.message]);
+            }
+        });
+
+        return () => {
+            channel.unbind_all();
+            channel.unsubscribe();
+        }
+        
+    }, [messages, currentRoom]);
+
+    function fetchData() {
+        axios.get(`http://localhost:5000/users/${currentUser.uid}`)
             .then(res => {
-                setRooms(res.data);
+                console.log("rooms are " + res.data.rooms);
+                setRooms(res.data.rooms);
+                if (res.data.rooms.length > 0) {
+                    setCurrentRoom(res.data.rooms[0]);
+                }
+                if (res.data.rooms[0] !== "-1") {
+                    axios.get(`http://localhost:5000/messages?roomId=${res.data.rooms[0]}`)
+                        .then(res => {
+                            setMessages(res.data);
+                        })
+                }
             })
-            .then(() => {
-                setCurrentRoom(rooms[0]);
-            })
-            .then(() => {
-                axios.get("GET_ROOM_MESSAGE")
-                    .then(res => {
-                        setMessages(res.data);
-                    })
-            })
-    }, [rooms]);
+    }
 
     function changeRoom(roomId) {
         getRoomMessages(roomId);
@@ -40,7 +65,7 @@ export default function ChatPage() {
     }
 
     function getRoomMessages(roomId) {
-        axios.get("GET_ROOM_MESSAGE")
+        axios.get(`http://localhost:5000/messages?roomId=${roomId}`)
             .then(res => {
                 setMessages(res.data);
             })

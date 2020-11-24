@@ -47,6 +47,7 @@ You need Node.js installed on your machine. You also need npm installed. The fol
      - react-dom
      - react-router-dom
      - react-scripts
+     - pusher-js
    - Backend:
      - bcryptjs
      - cookie-parser
@@ -56,6 +57,7 @@ You need Node.js installed on your machine. You also need npm installed. The fol
      - jsonwebtoken
      - mongoose
      - morgan
+     - pusher
 
 Note: For specific details and version numbers, check the package.json files in the respective frontend/backend directory.
 

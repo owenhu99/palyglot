@@ -4,12 +4,24 @@ import NavBar from "./NavBar"
 import Security from "./Security"
 import Profile from "./Profile"
 import { useAuth } from '../contexts/AuthContext';
-const axios = require('axios').default;
+import axios from 'axios';
 
 function ProfilePage() {
   const { currentUser } = useAuth();
   const [userDetails, setUserDetails] = useState({});
 
+  // useEffect(() => {
+  //   axios.get(process.env.REACT_APP_BACKEND_URL + "users", {
+  //     userId: currentUser.uid,
+  //     name: name,
+  //     email: email,
+  //     gender: gender,
+  //     age: age,
+  //     knownLanguages: knownLanguages,
+  //     targetLanguages: targetLanguages
+  //   });
+  // }, []);
+  
   useEffect(() => {
     axios.get(process.env.REACT_APP_BACKEND_URL + "users/" + currentUser.uid)
     .then((response) => {

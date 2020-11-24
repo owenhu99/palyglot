@@ -61,9 +61,12 @@ function Profile(props) {
                                 value={bio}
                                 onChange={handleBioChange}/>
                             <Button 
-                                variant="outlined"
-                                onClick={submitBioChange} 
-                                size="small">Save Changes</Button>
+                                variant="contained"
+                                color="primary" 
+                                onClick={submitBioChange}
+                                size="small">
+                                    Save Changes
+                            </Button>
                         </form>
                     </div>
                     <div className="profileInfo_interests">
@@ -81,7 +84,8 @@ function Profile(props) {
                                 value={interests}
                                 onChange={handleInterestsChange}/>
                             <Button 
-                                variant="outlined" 
+                                variant="contained"
+                                color="primary" 
                                 onClick={submitInterestsChange}
                                 size="small">
                                     Save Changes

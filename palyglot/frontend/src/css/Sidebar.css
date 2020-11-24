@@ -2,6 +2,8 @@
   display: flex;
   flex-direction: column;
   flex: 0.3;
+  border-right: 2px solid #ffd85f;
+  border-left: 2px solid #ffd85f;
 }
 
 .sidebar_header {
@@ -9,6 +11,7 @@
   justify-content: space-between;
   padding: 20px;
   border-right: 1px solid lightgoldenrodyellow;
+  background-color: #fff2cc;
 }
 
 .sidebar_search {
@@ -16,7 +19,7 @@
   align-items: center;
   padding: 10px;
   height: 40px;
-  background-color: lightgray;
+  background-color: #fff2cc;
 }
 
 .sidebar_searchContainer {
@@ -41,5 +44,5 @@
 .sidebar_rooms {
   flex: 1;
   background-color: white;
-  overflow: scroll;
+  overflow: auto;
 }

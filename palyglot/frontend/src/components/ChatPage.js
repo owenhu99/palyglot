@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import Chat from './Chat';
 import Sidebar from './Sidebar';
 import NavBar from './NavBar';
-import '../css/App_Chat.css';
+import '../css/ChatPage.css';
 import { useAuth } from '../contexts/AuthContext';
 import axios from 'axios';
 import Pusher from 'pusher-js';
@@ -80,9 +80,9 @@ export default function ChatPage() {
     }
 
     return (
-        <div className="App">
+        <div className="chatPage">
             <NavBar></NavBar>
-            <div className="body">
+            <div className="chatPageBody" style={{ flexDirection: "row"}}>
                 <Sidebar rooms={rooms} currentRoom={currentRoom}
                     onChangeRoom={changeRoom}
                     userId={currentUser}

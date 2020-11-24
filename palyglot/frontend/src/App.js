@@ -14,6 +14,7 @@ import PrivateRoute from './components/PrivateRoute';
 
 function App() {
   const theme = createMuiTheme({
+    shadows:["none"],
     palette: {
       primary: {
         main: '#ffd85f'

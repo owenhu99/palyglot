@@ -76,7 +76,9 @@ export default function ChatPage() {
             <NavBar></NavBar>
             <div className="body">
                 <Sidebar rooms={rooms} currentRoom={currentRoom}
-                    onChangeRoom={changeRoom}>
+                    onChangeRoom={changeRoom}
+                    userId={currentUser}
+                    >
                 </Sidebar>
                 <Chat room={currentRoom} messages={messages}></Chat>
             </div>

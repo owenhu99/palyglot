@@ -14,6 +14,7 @@ function Chat(props) {
     const [receiver, setReceiver] = React.useState("");
     const [senderName, setSenderName] = React.useState("");
     const [receiverName, setReceiverName] = React.useState("");
+    const [imgLink, setImgLink] = React.useState("");
 
     useEffect(() => {
         if (props.room !== "-1") {
@@ -46,6 +47,7 @@ function Chat(props) {
         axios.get(`http://localhost:5000/users/${receiver}`)
         .then((res) => {
             setReceiverName(res.data.name);
+            setImgLink(res.data.profilePicture);
         })
     }
 
@@ -58,25 +60,27 @@ function Chat(props) {
 
     const sendMessage = async (e) => {
         e.preventDefault();
-        await axios({
-            method: 'post',
-            url: `http://localhost:5000/messages`,
-            headers: {},
-            data: {
-                text: input,
-                from: sender,
-                to: receiver,
-                roomId: props.room
-            }
-        })
-        setInput("");
+        if (input.replace(/\s/g, '').length) {
+            await axios({
+                method: 'post',
+                url: `http://localhost:5000/messages`,
+                headers: {},
+                data: {
+                    text: input,
+                    from: sender,
+                    to: receiver,
+                    roomId: props.room
+                }
+            })
+            setInput("");
+        }
     }
 
     if (props.room === "-1") {
         return (
             <div className="chat">
                 <div className="chat_header">
-                    <Avatar />
+                    <Avatar/>
                     <div className="chat_headerInfo">
                         <h3>Nobody</h3>
                     </div>
@@ -99,7 +103,8 @@ function Chat(props) {
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
                             placeholder="écrire un message"
-                            type="text" />
+                            type="text"
+                            disabled />
                         <button onClick={sendMessage} type="submit">
                             Send Message
                     </button>
@@ -111,10 +116,10 @@ function Chat(props) {
     return (
         <div className="chat">
             <div className="chat_header">
-                <Avatar />
+                <Avatar src={imgLink}/>
                 <div className="chat_headerInfo">
-                    <h3>Name</h3>
-                    <p>Last seen at...</p>
+                    <h3>{receiverName}</h3>
+                    {/* <p>Last seen at...</p> */}
                 </div>
                 <div className="chat_headerRight">
                     <IconButton>

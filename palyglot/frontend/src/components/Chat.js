@@ -40,21 +40,24 @@ function Chat(props) {
     })
 
     function setParticipantNames(sender, receiver) {
+        /* set the names for the sender (the current user) and the receiver
+         * (the user that the current user is talking to). 
+         */
         axios.get(`http://localhost:5000/users/${sender}`)
-        .then((res) => {
-            setSenderName(res.data.name);
-        })
+            .then((res) => {
+                setSenderName(res.data.name);
+            })
         axios.get(`http://localhost:5000/users/${receiver}`)
-        .then((res) => {
-            setReceiverName(res.data.name);
-            setImgLink(res.data.profilePicture);
-        })
+            .then((res) => {
+                setReceiverName(res.data.name);
+                setImgLink(res.data.profilePicture);
+            })
     }
 
     function getParticipantName(id) {
         if (id === sender) {
             return senderName;
-        } 
+        }
         return receiverName;
     }
 
@@ -76,11 +79,12 @@ function Chat(props) {
         }
     }
 
+    // check if the user currently does not have any active conversations.
     if (props.room === "-1") {
         return (
             <div className="chat">
                 <div className="chat_header">
-                    <Avatar/>
+                    <Avatar />
                     <div className="chat_headerInfo">
                         <h3>Nobody</h3>
                     </div>
@@ -113,10 +117,11 @@ function Chat(props) {
             </div>
         );
     }
+    // else, render the messages for the current room.
     return (
         <div className="chat">
             <div className="chat_header">
-                <Avatar src={imgLink}/>
+                <Avatar src={imgLink} />
                 <div className="chat_headerInfo">
                     <h3>{receiverName}</h3>
                     {/* <p>Last seen at...</p> */}

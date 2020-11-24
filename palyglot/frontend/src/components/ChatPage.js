@@ -23,6 +23,10 @@ export default function ChatPage() {
 
 
     useEffect(() => {
+        /* Use Pusher to watch the database for changes in messages. When an
+         * update occurs, check if the message was added to the current room.
+         * If it was, add the message and re-render the chat page.
+         */
         const pusher = new Pusher('a4e914a09d88628d31df', {
             cluster: 'us2'
         });
@@ -39,10 +43,13 @@ export default function ChatPage() {
             channel.unbind_all();
             channel.unsubscribe();
         }
-        
+
     }, [messages, currentRoom]);
 
     function fetchData() {
+        /* Fetch the rooms that the user is in. Place "focus" on the first room
+         * and retrieve the messages for that room.
+         */
         axios.get(`http://localhost:5000/users/${currentUser.uid}`)
             .then(res => {
                 console.log("rooms are " + res.data.rooms);
@@ -60,6 +67,7 @@ export default function ChatPage() {
     }
 
     function changeRoom(roomId) {
+        /* update the current room and get the messages for the new room*/
         getRoomMessages(roomId);
         setCurrentRoom(roomId);
     }
@@ -78,7 +86,7 @@ export default function ChatPage() {
                 <Sidebar rooms={rooms} currentRoom={currentRoom}
                     onChangeRoom={changeRoom}
                     userId={currentUser}
-                    >
+                >
                 </Sidebar>
                 <Chat room={currentRoom} messages={messages}></Chat>
             </div>

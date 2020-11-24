@@ -12,9 +12,9 @@ function NavBar() {
                 <Toolbar variant="dense" style={{ justifyContent: "space-between" }}>
                     <h2 className="whiteText">palyglot</h2>
                     <div className="navBar_right">
-                        <Button component={Link} to={'/matchmaker'} color="inherit" style={{fontFamily: "Comfortaa", marginRight: "10px", color: "white" }}>Find a Pal</Button>
-                        <Button component={Link} to={'/chat'} color="inherit" style={{fontFamily: "Comfortaa", marginRight: "10px", color: "white"  }}>My Pals</Button>
-                        <Button component={Link} to={'/profile'} color="inherit" style={{fontFamily: "Comfortaa", marginRight: "10px", color: "white" }}>My Account</Button>
+                        <Button component={Link} to={'/matchmaker'} color="inherit" style={{ fontFamily: "Comfortaa", marginRight: "10px", color: "white" }}>Find a Pal</Button>
+                        <Button component={Link} to={'/chat'} color="inherit" style={{ fontFamily: "Comfortaa", marginRight: "10px", color: "white" }}>My Pals</Button>
+                        <Button component={Link} to={'/profile'} color="inherit" style={{ fontFamily: "Comfortaa", marginRight: "10px", color: "white" }}>My Account</Button>
                     </div>
                 </Toolbar>
             </AppBar>

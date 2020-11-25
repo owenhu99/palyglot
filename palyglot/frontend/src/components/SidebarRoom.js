@@ -1,10 +1,12 @@
 import { Avatar } from "@material-ui/core";
 import axios from "axios";
 import React, { useEffect } from "react";
+import { useAuth } from '../contexts/AuthContext';
 import "../css/SidebarRoom.css";
 
 function SidebarRoom(props) {
 
+    const { currentUser } = useAuth();
     const [name, setName] = React.useState("");
     const [imgLink, setImgLink] = React.useState("");
 
@@ -20,7 +22,8 @@ function SidebarRoom(props) {
                     // there are two participants in a room. Check which userId
                     // does not belong to the current user and get the information
                     // tied to that userId.
-                    if (res.data.participants[0] !== props.userId) {
+                    let p1 = res.data.participants[0];
+                    if (p1 !== currentUser.uid) {
                         axios.get(`http://localhost:5000/users/${res.data.participants[0]}`)
                             .then((res) => {
                                 setName(res.data.name);
@@ -34,7 +37,7 @@ function SidebarRoom(props) {
                             })
                     }
                 } else {
-                    throw "status code is not 200";
+                    throw new Error("status code is not 200");
                 }
             })
             .catch((err) => {

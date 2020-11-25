@@ -35,13 +35,20 @@ export default function ChatPage() {
         channel.bind('updated', function (data) {
             console.log('updated');
             if (data.id === currentRoom) {
-                setMessages([...messages, data.message]);
+                console.log(data);
+                if (Array.isArray(data.message)) {
+                    setMessages([...messages, data.message[0]]);
+                } else {
+                    setMessages([...messages, data.message]);
+                }
             }
         });
 
         return () => {
             channel.unbind_all();
             channel.unsubscribe();
+            channel.disconnect();
+            console.log("waduhek");
         }
 
     }, [messages, currentRoom]);
@@ -85,7 +92,6 @@ export default function ChatPage() {
             <div className="chatPageBody" style={{ flexDirection: "row"}}>
                 <Sidebar rooms={rooms} currentRoom={currentRoom}
                     onChangeRoom={changeRoom}
-                    userId={currentUser}
                 >
                 </Sidebar>
                 <Chat room={currentRoom} messages={messages}></Chat>

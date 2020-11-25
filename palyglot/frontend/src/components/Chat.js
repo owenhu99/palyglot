@@ -74,9 +74,9 @@ function Chat(props) {
                     to: receiver,
                     roomId: props.room
                 }
-            })
-            setInput("");
+            });
         }
+        setInput("");
     }
 
     // check if the user currently does not have any active conversations.

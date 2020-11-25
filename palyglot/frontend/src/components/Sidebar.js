@@ -18,8 +18,7 @@ function Sidebar(props) {
             <div className="sidebar_rooms">
                 {props.rooms.map((room, i) => {
                     return (
-                        <SidebarRoom key={i} room={room} onChangeRoom={props.onChangeRoom}
-                            userId={props.currentUser} />
+                        <SidebarRoom key={i} room={room} onChangeRoom={props.onChangeRoom}/>
                     )
                 })}
             </div>

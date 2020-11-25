@@ -1,17 +1,16 @@
-.App {
-  display: grid;
-  place-items: center;
-  height: 100%;
+.page {
   margin-top: 0;
   width: 100%;
   overflow: hidden;
-  position: relative;
 }
 
-.body {
+.pageBody {
   display: flex;
+  background-color: white;
   flex-direction: column;
   height: 90vh;
   width: 100%;
   border: 0px;
+  bottom: -1px;
+  right: -1px;
 }

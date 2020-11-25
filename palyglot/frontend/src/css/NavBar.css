@@ -1,0 +1,17 @@
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&display=swap");
+
+.navBar {
+  font-family: "Comfortaa", cursive;
+  /*display: flex;*/
+  flex-grow: 0.8;
+  justify-content: "space-between";
+  padding: 2px;
+}
+
+.navBar_right {
+  align-items: center;
+}
+
+.whiteText { 
+  color: white;
+}

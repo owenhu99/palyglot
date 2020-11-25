@@ -1,0 +1,112 @@
+/*
+  Styles to improve:
+  TextField for Bio and interests allow for infinite enters; max rows only limits number of visible rows.
+*/
+
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&display=swap");
+
+.profile {
+  display: grid;
+  width: 80vw;
+  align-self: center;
+  place-items: center;
+  background-color: #fff9e6;
+  margin-top: 7vh;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.profile_header {
+  display: flex;
+  width: 80vw;
+  /* background-color: red; */
+  border-bottom: 1px solid black;
+}
+
+.profile_header > h2 {
+  font-family: "Comfortaa", cursive;
+  align-self: flex-start;
+}
+
+.profileBody {
+  display: flex;
+  height: 45vh;
+  width: 80vw;
+  /* background-color: lightpink; */
+  padding-bottom: 30px;
+}
+
+.profilePicContainer {
+  display: flex;
+  flex: 0.4;
+  /* background-color: lightpink; */
+}
+
+.profilePicContainer > input {
+  display: none;
+}
+
+.profilePic {
+  opacity: 1;
+  transition: 0.5s ease;
+  backface-visibility: hidden;
+  display: block;
+  width: 240px;
+  height: 240px;
+  border-radius: 5px;
+  margin-left: 34%;
+  margin-top: 30px;
+  border: 1px solid black;
+}
+
+.profilePic:hover {
+  opacity: 0.3;
+  cursor: pointer;
+}
+
+.profileInfo {
+  display: flex;
+  flex-direction: column;
+  flex: 0.6;
+  margin-top: 30px;
+}
+
+.profileInfo > h4 {
+  font-family: "Comfortaa", cursive;
+  text-transform: uppercase;
+  margin-bottom: 2vh;
+}
+
+.profileInfo_bio {
+  margin-top: 5px;
+}
+
+.profileInfo_bioEntry {
+  font-family: "Comfortaa", cursive;
+  width: 500px;
+  overflow-wrap: normal;
+  margin-bottom: 5vh;
+}
+
+.profileInfo_bio > form > .MuiButton-root {
+  font-family: "Comfortaa", cursive;
+  margin-top: 6px;
+  margin-left: 170px;
+  margin-bottom: 15px;
+  size: "small";
+  box-shadow: none;
+}
+
+.profileInfo_interestsEntry {
+  width: 500px;
+}
+
+.profileInfo_interests > form > .MuiButton-root {
+  font-family: "Comfortaa", cursive;
+  margin-top: 6px;
+  margin-left: 170px;
+  size: "small";
+  box-shadow: none;
+}

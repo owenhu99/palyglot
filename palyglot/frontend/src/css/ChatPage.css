@@ -1,17 +1,17 @@
-.App {
+.chatPage {
   display: grid;
   place-items: center;
   height: 100%;
   margin-top: 0;
   width: 100%;
   overflow: hidden;
-  position: relative;
+  background-color: white;
 }
 
-.body {
+.chatPageBody {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  margin-top: 2px;
   height: 90vh;
   width: 100%;
-  border: 0px;
 }

@@ -29,7 +29,10 @@ router.post("/", async (req, res) => {
 router.get('/:userId', async(req, res) => {
 	console.log(req.params.userId);
 	try {
-		const user = await User.findOne({userId: req.params.userId});
+    const user = await User.findOne({userId: req.params.userId});
+    if (!user) {
+      return res.status(204).send()
+    }
 		return res.status(200).json(user);
 	} catch (error) {
 		console.log(error)
@@ -42,7 +45,10 @@ router.put('/:userId', async(req, res) => {
 	console.log(req.params.userId)
 	try {
 		const user = await User.findOneAndUpdate({userId: req.params.userId}, req.body)
-		return res.send(user)
+    if (!user) {
+      return res.status(204).send()
+    }
+    return res.send(user)
 	} catch (error) {
 		console.log(error)
 		return res.status(400).send(error)

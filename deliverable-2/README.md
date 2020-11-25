@@ -20,7 +20,7 @@ Palyglot is an application that provides language learners and those just trying
    - Chats are kept updated and users can view previous messages
 
 ## Instructions
-The user access the application by going [the URL](https://palyglot-frontend.herokuapp.com/) for the deployed application. 
+The user access the application by going [the URL](https://csc301-a1-frontend.ue.r.appspot.com/) for the deployed application. 
 
 They are led to the splash page, where they can choose to log in or sign up. If they choose to sign up, they enter their details such as name, email, password, gender, languages. If they choose to log in, they can simply enter their email and password. 
 
@@ -33,7 +33,7 @@ On the matchmaking page, a user can view possible matches and their profiles and
 On the chat page, users can select users to chat with on the left side and open up the chat screen on the right. They can send messages using the text box.
  
  ## Development requirements
-You can access the app through the [Heroku link](https://palyglot-frontend.herokuapp.com/). The following are instructions to run the app locally.
+You can access the app through the [Heroku link](https://csc301-a1-frontend.ue.r.appspot.com/). The following are instructions to run the app locally.
 
 You need Node.js installed on your machine. You also need npm installed. The following are packages we used:
    - Frontend:

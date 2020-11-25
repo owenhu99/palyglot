@@ -31,14 +31,6 @@ The way we divided team roles was also very successful. We initially started wit
 
 So in the end, we had two people dedicated on the backend, one person dedicated on the front end, and two people working on both frontend and backend. This decision allowed us to get lots of code written quickly by the people with one dedicated job and the two people working on both sides were able to connect the frontend and backend smoothly as they have a better picture of the overall application. This improved abstraction on the code base and helped signficantly with coupling and compatibility. It also made debugging a lot more efficient.
 
-> List **process-related** (i.e. team organization and how you work)
-> decisions that, in retrospect, turned out to be successful.
-> 
-> 
->  * 2 - 4 decisions.  
->  * Ordered from most to least important.  
->  * Explain why (i.e. give a supporting argument) you consider a decision to be successful.  
-> * Feel free to refer/link to process artifact(s).
 
 ### Q2. Decisions that did not turn out as well as we hoped
 
@@ -58,15 +50,6 @@ Our group members all liked to work on their own and try to implement their feat
 
 We initially set up CI with GitHub Actions and meant to use it as an integral part of our development. However, during development, we failed to write any meaningful tests that would help with development and this resulted in a lot of revisiting of completed features to fix bugs that were not caught when the pull requests were merged.
 
-> List **process-related** (i.e. team organization and how you work)
-> decisions that, in retrospect, were not as successful as you thought
-> they would be.
-> 
->  * 2 - 4 decisions.  
->  * Ordered from most to least important.  
->  * Explain why (i.e. give a supporting argument) you consider a decision to be unsuccessful  
-> * Feel free to refer/link to process artifact(s).
-
 
 ### Q3. Planned changes
 
@@ -77,13 +60,6 @@ Our group has had issues properly abstracting our features which compounded any 
 #### 2. Group Meeting Timing
 
 Our team's original plan for meeting and conversing as a group was flawed and we hope to fix the underlying issues going forward. We were meeting semi-regularly and having longer sessions, mainly going over what needed to be done in the future and possible issues and plans for the layout of the project. This was flawed in that having meetings that were not often enough caused us to lose touch with eachother's progress and turned what could be quickly solvable issues into longer running problems that people were not made aware of. Having more frequent and shorter meetings will fix these problems by giving us a space to talk over these issues as they come up and solve them as a group using our varied experience.
-
-
-> List any **process-related** (i.e. team organization and how you work)
-> changes you are planning to make (if there are any)
-> 
->  * Ordered from most to least important.  
->  * Explain why you are making a change.
 
 
 ## Product - Review

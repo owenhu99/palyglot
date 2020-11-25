@@ -5,7 +5,6 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
 import '../css/Matchmaker.css'
 import NavBar from './NavBar';
 import { useAuth } from '../contexts/AuthContext';
@@ -22,11 +21,6 @@ function Matchmaker() {
     });
   }, []);
 
-  function matchUserotherUser(otherUser) {
-    console.log(otherUser)
-    axios.post(process.env.REACT_APP_BACKEND_URL + "rooms/", {participants: [otherUser, currentUser.uid]});
-  } 
-
   return (
     <div>
       <NavBar></NavBar>
@@ -42,6 +36,7 @@ function Matchmaker() {
             if (match.userId !== currentUser.uid) {
             return(
               <Grid item xs={12} sm={6} md={3} key={match["id"]}>
+                <div onClick={() => {axios.post(process.env.REACT_APP_BACKEND_URL + "rooms/", {participants: [match.userId, currentUser.uid]})}}>
                 <Card>
                   <CardActionArea>
                     <CardMedia
@@ -65,6 +60,7 @@ function Matchmaker() {
                     </CardContent>
                   </CardActionArea>
                 </Card>
+                </div>
               </Grid>
             )
           }

@@ -6,20 +6,27 @@ const User = require('../models/User')
 /* POST, creating a new room */
 router.post('/', async(req, res) => {
     try {
-        if (await Room.findOne({participants: req.body["participants"]})) {
-            res.status(400).send({error: "room already exists"})
-            return
-        }
-        await User.findOne({userId: req.body["participants"][0]})
-        await User.findOne({userId: req.body["participants"][1]})
+        const participants = req.body["participants"]
+
+        if (!await User.findOne({userId: participants[0]}) || 
+            !await User.findOne({userId: participants[1]}))
+        return res.status(400).send({error: "invalid userId"})
+
+        if (await Room.findOne({
+            $or: [
+                { participants: [participants[0], participants[1]] },
+                { participants: [participants[1], participants[0]] }
+            ]
+        })) return res.status(400).send({error: "room already exists"})
+
         const room = new Room(req.body)
         await room.save()
         await User.findOneAndUpdate(
-            { userId: req.body["participants"][0] },
+            { userId: participants[0] },
             { $addToSet: { rooms: room["_id"] } }
         )
         await User.findOneAndUpdate(
-            { userId: req.body["participants"][1] },
+            { userId: participants[1] },
             { $addToSet: { rooms: room["_id"] } }
         )
         res.send({roomId: room["_id"]})

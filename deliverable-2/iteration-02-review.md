@@ -52,7 +52,7 @@ Similar to the problem with regular team meeting, we lacked a rigid framework th
 
 #### 2. Communications
 
-(changes/package dependencies etc.)
+Our group members all liked to work on their own and try to implement their feature with what they considered the ideal dependancy uses and design choices. While this led us to getting lots of work done quickly, it also created miscommunication where changes would be made to previously agreed upon and implemented features without everybody becoming aware. There were multiple instances where a dependancy was changed or a class was redisigned only later for somebody to realize and mention that our code no longer works due to a change nobody realized even occured. We realize that our willingness to leave each of us to our own ends leaves some much needed planning and information out of the development process.
 
 #### 3. CI/CD
 
@@ -69,6 +69,15 @@ We initially set up CI with GitHub Actions and meant to use it as an integral pa
 
 
 ### Q3. Planned changes
+
+#### 1. Object Abstraction
+
+Our group has had issues properly abstracting our features which compounded any communication issues we were having. Many of our designs' usage required specific knowledge of the code's innerworkings to use and required unneccesary back and forth as one person waited for another to finish their code or asked them to change an implementation to work around their own change. Because we chose to each design our own feature instead of designing the whole thing properly as a team from the base up, we didn't abstract our design enough and had far too much confusing information and commands that did not fit with the rest of the project as a whole. We plan to improve on this moving forward by being more conscious with our abstraction and spending time more frequently to go over design together, as we will show in the following section.
+
+#### 2. Group Meeting Timing
+
+Our team's original plan for meeting and conversing as a group was flawed and we hope to fix the underlying issues going forward. We were meeting semi-regularly and having longer sessions, mainly going over what needed to be done in the future and possible issues and plans for the layout of the project. This was flawed in that having meetings that were not often enough caused us to lose touch with eachother's progress and turned what could be quickly solvable issues into longer running problems that people were not made aware of. Having more frequent and shorter meetings will fix these problems by giving us a space to talk over these issues as they come up and solve them as a group using our varied experience.
+
 
 > List any **process-related** (i.e. team organization and how you work)
 > changes you are planning to make (if there are any)

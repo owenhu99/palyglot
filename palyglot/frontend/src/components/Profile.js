@@ -19,11 +19,11 @@ function Profile(props) {
      }
 
     function submitBioChange() {
-        axios.put(process.env.REACT_APP_BACKEND_URL + "users/" + props.userDetails.userId, {bio: bio});
+        axios.put("https://palyglot-backend.herokuapp.com/users/" + props.userDetails.userId, {bio: bio});
     }
 
     function submitInterestsChange() {
-        axios.put(process.env.REACT_APP_BACKEND_URL + "users/" + props.userDetails.userId, {interests: interests});
+        axios.put("https://palyglot-backend.herokuapp.com/users/" + props.userDetails.userId, {interests: interests});
     }
 
     return (

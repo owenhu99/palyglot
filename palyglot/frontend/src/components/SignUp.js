@@ -40,7 +40,7 @@ export default function SignUp() {
             setError("");
             setLoading(true);
             let signupresult = await signup(email, password);
-            await axios.post(process.env.REACT_APP_BACKEND_URL + "users", {
+            await axios.post("https://palyglot-backend.herokuapp.com/users", {
                 userId: signupresult.user.uid,
                 name: name,
                 email: email,

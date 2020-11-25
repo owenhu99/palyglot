@@ -18,7 +18,7 @@ function Chat(props) {
 
     useEffect(() => {
         if (props.room !== "-1") {
-            axios.get(`http://localhost:5000/rooms/${props.room}`)
+            axios.get(`https://palyglot-backend.herokuapp.com/rooms/${props.room}`)
                 .then((res) => {
                     if (res.status === 200) {
                         if (res.data.participants[0] === currentUser.uid) {
@@ -43,11 +43,11 @@ function Chat(props) {
         /* set the names for the sender (the current user) and the receiver
          * (the user that the current user is talking to). 
          */
-        axios.get(`http://localhost:5000/users/${sender}`)
+        axios.get(`https://palyglot-backend.herokuapp.com/users/${sender}`)
             .then((res) => {
                 setSenderName(res.data.name);
             })
-        axios.get(`http://localhost:5000/users/${receiver}`)
+        axios.get(`https://palyglot-backend.herokuapp.com/users/${receiver}`)
             .then((res) => {
                 setReceiverName(res.data.name);
                 setImgLink(res.data.profilePicture);
@@ -66,7 +66,7 @@ function Chat(props) {
         if (input.replace(/\s/g, '').length) {
             await axios({
                 method: 'post',
-                url: `http://localhost:5000/messages`,
+                url: `https://palyglot-backend.herokuapp.com/messages`,
                 headers: {},
                 data: {
                     text: input,

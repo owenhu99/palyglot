@@ -23,7 +23,7 @@ function ProfilePage() {
   // }, []);
   
   useEffect(() => {
-    axios.get(process.env.REACT_APP_BACKEND_URL + "users/" + currentUser.uid)
+    axios.get("https://palyglot-backend.herokuapp.com/users/" + currentUser.uid)
     .then((response) => {
       setUserDetails(response.data);
     });

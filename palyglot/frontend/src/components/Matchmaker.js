@@ -15,7 +15,7 @@ function Matchmaker() {
   const { currentUser } = useAuth();
   
   useEffect(() => {
-    axios.get(process.env.REACT_APP_BACKEND_URL + "users/")
+    axios.get("https://palyglot-backend.herokuapp.com/users/")
     .then((response) => {
         setMatches(response.data);
     });
@@ -36,7 +36,7 @@ function Matchmaker() {
             if (match.userId !== currentUser.uid) {
             return(
               <Grid item xs={12} sm={6} md={3} key={match["id"]}>
-                <div onClick={() => {axios.post(process.env.REACT_APP_BACKEND_URL + "rooms/", {participants: [match.userId, currentUser.uid]})}}>
+                <div onClick={() => {axios.post("https://palyglot-backend.herokuapp.com/rooms/", {participants: [match.userId, currentUser.uid]})}}>
                 <Card>
                   <CardActionArea>
                     <CardMedia

@@ -57,7 +57,7 @@ export default function ChatPage() {
         /* Fetch the rooms that the user is in. Place "focus" on the first room
          * and retrieve the messages for that room.
          */
-        axios.get(`http://localhost:5000/users/${currentUser.uid}`)
+        axios.get(`https://palyglot-backend.herokuapp.com/users/${currentUser.uid}`)
             .then(res => {
                 console.log("rooms are " + res.data.rooms);
                 setRooms(res.data.rooms);
@@ -65,7 +65,7 @@ export default function ChatPage() {
                     setCurrentRoom(res.data.rooms[0]);
                 }
                 if (res.data.rooms[0] !== "-1") {
-                    axios.get(`http://localhost:5000/messages?roomId=${res.data.rooms[0]}`)
+                    axios.get(`https://palyglot-backend.herokuapp.com/messages?roomId=${res.data.rooms[0]}`)
                         .then(res => {
                             setMessages(res.data);
                         })
@@ -80,7 +80,7 @@ export default function ChatPage() {
     }
 
     function getRoomMessages(roomId) {
-        axios.get(`http://localhost:5000/messages?roomId=${roomId}`)
+        axios.get(`https://palyglot-backend.herokuapp.com/messages?roomId=${roomId}`)
             .then(res => {
                 setMessages(res.data);
             })

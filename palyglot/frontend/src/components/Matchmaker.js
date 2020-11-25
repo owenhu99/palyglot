@@ -36,7 +36,7 @@ function Matchmaker() {
             if (match.userId !== currentUser.uid) {
             return(
               <Grid item xs={12} sm={6} md={3} key={match["id"]}>
-                <div onClick={() => {axios.post("https://palyglot-backend.herokuapp.com/rooms/", {participants: [match.userId, currentUser.uid]})}}>
+                <div onClick={() => {axios.post("https://palyglot-backend.herokuapp.com/rooms/", {participants: [match.userId, currentUser.uid]}); alert("Room created! Go to My Pals!");}}>
                 <Card>
                   <CardActionArea>
                     <CardMedia

@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "env-cmd nodemon app.js && node ./bin/www",
-    "test": "jest"
+    "test": "env-cmd mocha -R spec --exit"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "env-cmd": "^10.1.0",
-    "jest": "^26.6.3",
+    "mocha": "^8.2.1",
     "nodemon": "^2.0.6",
     "supertest": "^6.0.1"
   },

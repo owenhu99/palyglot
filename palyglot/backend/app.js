@@ -39,7 +39,7 @@ app.use('/rooms', roomsRouter);
 app.use('/messages', messagesRouter);
 
 mongoose.connect(process.env.MONGODB_URL,
-    { useNewUrlParser: true, useUnifiedTopology: true },
+    { useNewUrlParser: true, useUnifiedTopology: true , useFindAndModify: false },
     () => console.log('Connected to MongoDB Database!')
 );
 

@@ -8,18 +8,21 @@ admin.initializeApp({
 })
 
 const auth = async(req, res, next) => {
-    const token = req.header('Authorization').replace('Bearer ', '')
-    //console.log(token)
-    if (token) {
-        admin.auth().verifyIdToken(token)
-            .then((decodedToken) => {
-                req.userId = decodedToken.uid
-                next()
-            }).catch(() => {
-                res.status(403).send('Unauthorized')
-            });
-    } else {
-        res.status(403).send('Unauthorized')
+    try {
+        const token = req.header('Authorization').replace('Bearer ', '')
+        if (token) {
+            admin.auth().verifyIdToken(token)
+                .then((decodedToken) => {
+                    req.userId = decodedToken.uid
+                    next()
+                }).catch(() => {
+                    res.status(403).send('Unauthorized')
+                });
+        } else {
+            res.status(403).send('Unauthorized')
+        }
+    } catch(error) {
+        res.status(400).send(error)
     }
 }
 module.exports = auth

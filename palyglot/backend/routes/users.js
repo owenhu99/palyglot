@@ -1,9 +1,9 @@
 var express = require('express');
 var router = express.Router();
 const User = require('../models/User');
-// const auth = require('../middleware/auth');
+const auth = require('../middleware/auth');
 
-/* GET, returns list of all Users */
+/* FOR DEV PURPOSES, TO BE REMOVED FOR DEPLOYMENT */
 router.get("/", async (req, res) => {
 	try {
 		const users = await User.find();
@@ -13,7 +13,7 @@ router.get("/", async (req, res) => {
 	}
 });
 
-/* POST, create a new user */
+/* FOR DEV PURPOSES, TO BE REMOVED FOR DEPLOYMENT */
 router.post("/", async (req, res) => {
 	try {
 		const user = new User(req.body)
@@ -25,89 +25,45 @@ router.post("/", async (req, res) => {
 	}
 })
 
-/* [TEMPORARY] GET, return user details by userId */
-router.get('/:userId', async(req, res) => {
-	console.log(req.params.userId);
+/* PUT, update current user details */
+router.put('/me', auth, async(req, res) => {
 	try {
-    const user = await User.findOne({userId: req.params.userId});
-    if (!user) {
-      return res.status(204).send()
-    }
-		return res.status(200).json(user);
-	} catch (error) {
-		console.log(error)
-		return res.status(400).send(error);
-	}
-})
-
-/* [TEMPORARY] PUT, update user details by userId */
-router.put('/:userId', async(req, res) => {
-	console.log(req.params.userId)
-	try {
-		const user = await User.findOneAndUpdate({userId: req.params.userId}, req.body)
-    if (!user) {
-      return res.status(204).send()
-    }
-    return res.send(user)
+		const user = await User.findOneAndUpdate({userId: req.userId}, req.body, {new: true})
+		if (!user) {
+			return res.status(204).send()
+		}
+		return res.send(user)
 	} catch (error) {
 		console.log(error)
 		return res.status(400).send(error)
 	}
 })
 
-// /* GET, return logged in user pofile */
-// router.get('/me', auth, async(req, res) => {
-// 	res.send(req.user)
-// })
-
-// /* DELETE, delete user */
-// router.delete('/me', auth, async(req, res) => {
-// 	try {
-// 		await req.user.remove()
-// 		res.send()
-// 	} catch (error) {
-// 		res.status(500).send(error)
-// 	}
-// })
-
-// /* POST, log out a user */
-// router.post('/me/logout', auth, async (req, res) => {
-//     try {
-//         req.user.tokens = req.user.tokens.filter((token) => {
-//             return token.token != req.token
-//         })
-//         await req.user.save()
-//         res.send()
-//     } catch (error) {
-//         res.status(500).send(error)
-//     }
-// })
-
-// /* POST, log out a user from all devices */
-// router.post('/me/logoutall', auth, async(req, res) => {
-//     try {
-//         req.user.tokens.splice(0, req.user.tokens.length)
-//         await req.user.save()
-//         res.send()
-//     } catch (error) {
-//         res.status(500).send(error)
-//     }
-// })
-
-/* POST, log in a user */
-router.post('/login', async(req, res) => {
-    try {
-		const { email, password } = req.body
-		const user = await User.findByCredentials(email, password)
-        if (!user) {
-            return res.status(401).send({error: 'Login failed! Check authentication credentials'})
+/* GET, return logged in user pofile */
+router.get('/me', auth, async(req, res) => {
+	try {
+		const user = await User.findOne({userId: req.userId})
+		if (!user) {
+			throw new Error()
 		}
-        const token = await user.generateAuthToken()
-        res.send({ user, token })
-    } catch (error) {
+		res.send(user)
+	} catch (error) {
 		console.log(error)
-        res.status(400).send(error)
-    }
+		return res.status(400).send(error)
+	}
+})
+
+/* DELETE, delete current user */
+router.delete('/me', auth, async(req, res) => {
+	try {
+		const user = await User.findOneAndDelete({userId: req.userId})
+		if (!user) {
+			throw new Error()
+		}
+		res.send(user)
+	} catch (error) {
+		res.status(500).send(error)
+	}
 })
 
 module.exports = router;

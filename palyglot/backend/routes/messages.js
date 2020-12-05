@@ -9,7 +9,7 @@ parameter. */
 router.get("/", async (req, res) => {
 	await Message.find({to: req.query.room, date: 
 		{"$lt": new Date(req.query.beforeDate)}})
-	.sort('-date').limit(30)
+	.sort('-date').limit(40)
 	.exec((err, docs) => {
 		if (err) return res.json(err);
 		return res.json(docs);

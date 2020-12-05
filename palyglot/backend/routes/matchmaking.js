@@ -8,8 +8,6 @@ const User = require('../models/User');
  * sortType must be passed in the request query. */
 router.get("/matchmaking", async (req, res) => {
 
-        // TODO: need previous matches
-
         // match users with same target language first, sort by interests
         // match target language of request with known languages of users next,
         // sort by number of common interests. append to the first query results.
@@ -18,6 +16,8 @@ router.get("/matchmaking", async (req, res) => {
                 const target_languages = user.targetLanguages;
                 const interests = user.interests;
 
+                // match users who have the same target languages as the current
+                // user.
                 const users_with_same_target_langs =
                         await User.find({
                                 $and: [{
@@ -25,11 +25,17 @@ router.get("/matchmaking", async (req, res) => {
                                                 $elemMatch: { $in: target_languages }
                                         }
                                 },
+                                // only match users who haven't already matched
+                                // with the current user. leave out users who
+                                // have already sent a match request to the 
+                                // current user.
                                 { userId: { $nin: user.matches } },
                                 { userId: { $nin: user.matchInvites } },
                                 { userId: { $nin: user.sentMatches } }
                                 ]
                         }).sort(function (doc1, doc2) {
+                                // sort the matches by the number of matching
+                                // interests.
                                 let num_common_arr1 = countCommonArrayElements(
                                         interests, doc1.interests);
                                 let num_common_arr2 = countCommonArrayElements(
@@ -37,6 +43,9 @@ router.get("/matchmaking", async (req, res) => {
                                 return num_common_arr1 - num_common_arr2;
                         }).limit(20);
 
+                // match users who know the languages that the current user is 
+                // learning. These take less priority over people who have the 
+                // same target language as the current user.
                 const users_with_same_known_langs =
                         await User.find({
                                 $and: [{
@@ -82,7 +91,12 @@ router.post("/matchmaking/requestMatch", async (req, res) => {
                         );
                         fromUser.matches.push(toUserId);
                         toUser.matches.push(fromUserId);
-                        return res.json({ msg: "match was created" });
+                        // create a new room for the matched users
+                        const room = new Room({ "participants": [fromUserId, toUserId] });
+                        await room.save();
+                        fromUser.rooms.push(room["_id"]);
+                        toUser.rooms.push(room["_id"]);
+                        return res.json({ roomId: room["_id"] });
                 } else {
                         fromUser.sentMatches.push(toUserId);
                         toUser.matchInvites.push(fromUserId);
@@ -107,6 +121,7 @@ router.post("/matchmaking/acceptMatch", async (req, res) => {
                 );
                 accepter.matches.append(senderId);
                 sender.matches.append(accepterId);
+                // create a new room for the matched users
                 const room = new Room({ "participants": [accepterId, senderId] });
                 await room.save();
                 accepter.rooms.push(room["_id"]);

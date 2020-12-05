@@ -20,27 +20,39 @@ router.get("/matchmaking", async (req, res) => {
 
                 const users_with_same_target_langs =
                         await User.find({
-                                targetLanguages: {
-                                        $elemMatch: { $in: target_languages }
-                                }
-                        }).sort(function (arr1, arr2) {
+                                $and: [{
+                                        targetLanguages: {
+                                                $elemMatch: { $in: target_languages }
+                                        }
+                                },
+                                { userId: { $nin: user.matches } },
+                                { userId: { $nin: user.matchInvites } },
+                                { userId: { $nin: user.sentMatches } }
+                                ]
+                        }).sort(function (doc1, doc2) {
                                 let num_common_arr1 = countCommonArrayElements(
-                                        interests, arr1);
+                                        interests, doc1.interests);
                                 let num_common_arr2 = countCommonArrayElements(
-                                        interests, arr2);
+                                        interests, doc2.interests);
                                 return num_common_arr1 - num_common_arr2;
                         }).limit(20);
 
                 const users_with_same_known_langs =
                         await User.find({
-                                knownLanguages: {
-                                        $elemMatch: { $in: target_languages }
-                                }
-                        }).sort(function (arr1, arr2) {
+                                $and: [{
+                                        knownLanguages: {
+                                                $elemMatch: { $in: target_languages }
+                                        }
+                                },
+                                { userId: { $nin: user.matches } },
+                                { userId: { $nin: user.matchInvites } },
+                                { userId: { $nin: user.sentMatches } }
+                                ]
+                        }).sort(function (doc1, doc2) {
                                 let num_common_arr1 = countCommonArrayElements(
-                                        interests, arr1);
+                                        interests, doc1.interests);
                                 let num_common_arr2 = countCommonArrayElements(
-                                        interests, arr2);
+                                        interests, doc2.interests);
                                 return num_common_arr1 - num_common_arr2;
                         }).limit(20 - users_with_same_target_langs.length);
 
@@ -118,7 +130,7 @@ router.post("/matchmaking/declineMatch", async (req, res) => {
                 sender.sentMatches.splice(
                         sender.sentMatches.indexOf(declinerId), 1
                 );
-                return res.json({msg: "match invite declined successfully"});
+                return res.json({ msg: "match invite declined successfully" });
         } catch (err) {
                 return res.status(400).json({ msg: err });
         }

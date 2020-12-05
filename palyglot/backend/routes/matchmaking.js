@@ -1,4 +1,5 @@
 var express = require('express');
+const Room = require('../models/Room');
 var router = express.Router();
 const User = require('../models/User');
 
@@ -48,7 +49,7 @@ router.get("/matchmaking", async (req, res) => {
                 );
                 return res.json({ matches: matches });
         } catch (err) {
-                return res.status(500).json({ message: err });
+                return res.status(400).json({ message: err });
         }
 
 });
@@ -69,23 +70,23 @@ router.post("/matchmaking/requestMatch", async (req, res) => {
                         );
                         fromUser.matches.push(toUserId);
                         toUser.matches.push(fromUserId);
-                        return res.json({msg: "match was created"});
+                        return res.json({ msg: "match was created" });
                 } else {
                         fromUser.sentMatches.push(toUserId);
                         toUser.matchInvites.push(fromUserId);
-                        return res.json({msg: "match invite was sent"});
+                        return res.json({ msg: "match invite was sent" });
                 }
         } catch (err) {
-                return res.status(500).json({ message: err });
+                return res.status(400).json({ message: err });
         }
 });
 
 router.post("/matchmaking/acceptMatch", async (req, res) => {
         try {
                 const accepterId = req.body.accepter;
-                const senderId = req.body.acceptee;
-                const accepter = await User.findOne({ userId: fromUserId });
-                const sender = await User.findOne({ userId: toUserId });
+                const senderId = req.body.sender;
+                const accepter = await User.findOne({ userId: accepterId });
+                const sender = await User.findOne({ userId: senderId });
                 accepter.matchInvites.splice(
                         accepter.matchInvites.indexOf(senderId), 1
                 );
@@ -94,7 +95,32 @@ router.post("/matchmaking/acceptMatch", async (req, res) => {
                 );
                 accepter.matches.append(senderId);
                 sender.matches.append(accepterId);
+                const room = new Room({ "participants": [accepterId, senderId] });
+                await room.save();
+                accepter.rooms.push(room["_id"]);
+                sender.rooms.push(room["_id"]);
+                return res.json({ roomId: room["_id"] });
+        } catch (err) {
+                return res.status(400).json({ msg: err });
+        }
+});
 
+router.post("/matchmaking/declineMatch", async (req, res) => {
+        try {
+                const declinerId = req.body.decliner;
+                const senderId = req.body.sender;
+                const decliner = await User.findOne({ userId: declinerId });
+                const sender = await User.findOne({ userId: senderId });
+
+                decliner.matchInvites.splice(
+                        decliner.matchInvites.indexOf(senderId), 1
+                );
+                sender.sentMatches.splice(
+                        sender.sentMatches.indexOf(declinerId), 1
+                );
+                return res.json({msg: "match invite declined successfully"});
+        } catch (err) {
+                return res.status(400).json({ msg: err });
         }
 })
 

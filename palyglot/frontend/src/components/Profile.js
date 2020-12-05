@@ -1,21 +1,30 @@
-import React from "react";
-import "../css/Profile.css";
+import React, { useState } from "react";import "../css/Profile.css";
 import TextField from '@material-ui/core/TextField';
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
+const axios = require('axios').default;
 
-function Profile() {
-
-     function handleBioChange(e){
+function Profile(props) {
+    const [interests, setInterests] = useState(props.userDetails.interests);
+    const [bio, setBio] = useState(props.userDetails.bio);
+    
+    function handleBioChange(e){
          e.preventDefault();
-         console.log('Bio was changed.');
+         setBio(e.target.value);
      }
 
      function handleInterestsChange(e){
          e.preventDefault();
-         console.log('Interests was changed.');
+         setInterests(e.target.value);
      }
 
+    function submitBioChange() {
+        axios.put("https://palyglot-backend.herokuapp.com/users/" + props.userDetails.userId, {bio: bio});
+    }
+
+    function submitInterestsChange() {
+        axios.put("https://palyglot-backend.herokuapp.com/users/" + props.userDetails.userId, {interests: interests});
+    }
 
     return (
         <div className="profile">
@@ -29,17 +38,17 @@ function Profile() {
                     <label htmlFor="enterNewPic">
                             <img 
                                 className="profilePic" 
-                                src="https://vignette.wikia.nocookie.net/emojimovie/images/5/56/Poop.png/revision/latest?cb=20170726175404"
+                                src={props.userDetails.profilePicture}
                                 alt=""/>
                     </label>
                 </div>
                 <div className="profileInfo">
-                    <h4>Name: JJ Kanu</h4>
+                    <h4>{props.userDetails.name}</h4>
                     <div className="profileInfo_bio">
                         <form noValidate autoComplete="off">
                             <TextField 
                                 className="profileInfo_bioEntry" 
-                                label="Bio" defaultValue="Pretend Bio" 
+                                label="Bio" defaultValue={props.userDetails.bio} 
                                 variant="outlined"
                                 InputLabelProps={{
                                     shrink: true,
@@ -48,11 +57,16 @@ function Profile() {
                                 rows={3} 
                                 rowsMax={3} 
                                 size= "small" 
-                                inputProps={{ maxLength: 200 }}/>
+                                inputProps={{ maxLength: 200 }}
+                                value={bio}
+                                onChange={handleBioChange}/>
                             <Button 
-                                variant="outlined"
-                                onClick={handleBioChange} 
-                                size="small">Save Changes</Button>
+                                variant="contained"
+                                color="primary" 
+                                onClick={submitBioChange}
+                                size="small">
+                                    Save Changes
+                            </Button>
                         </form>
                     </div>
                     <div className="profileInfo_interests">
@@ -65,10 +79,14 @@ function Profile() {
                                 label="Interests" 
                                 variant="outlined"  
                                 size= "small" 
-                                inputProps={{ maxLength: 75 }}/>
+                                inputProps={{ maxLength: 75 }}
+                                defaultValue={props.userDetails.interests}
+                                value={interests}
+                                onChange={handleInterestsChange}/>
                             <Button 
-                                variant="outlined" 
-                                onClick={handleInterestsChange}
+                                variant="contained"
+                                color="primary" 
+                                onClick={submitInterestsChange}
                                 size="small">
                                     Save Changes
                             </Button>

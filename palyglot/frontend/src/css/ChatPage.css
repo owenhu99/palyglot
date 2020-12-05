@@ -1,0 +1,17 @@
+.chatPage {
+  display: grid;
+  place-items: center;
+  height: 100%;
+  margin-top: 0;
+  width: 100%;
+  overflow: hidden;
+  background-color: white;
+}
+
+.chatPageBody {
+  display: flex;
+  flex-direction: row;
+  margin-top: 2px;
+  height: 90vh;
+  width: 100%;
+}

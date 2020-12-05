@@ -31,13 +31,13 @@ const UserSchema = new mongoose.Schema({
     },
     gender: {
         type: String,
-        required: false,
+        required: true,
         enum: ["Male", "Female", "Non-Binary"]
     },
     profilePicture: {
         type: String,
         required: false,
-        default: ""
+        default: "https://i.stack.imgur.com/34AD2.jpg"
     },
     bio: {
         type: String,
@@ -45,17 +45,19 @@ const UserSchema = new mongoose.Schema({
         default: ""
     },
     interests: {
+        type: String,
+        required: false,
+        default: ""
+    },
+    knownLanguages: {
         type: [String],
         required: false,
         default: []
     },
-    knownLanguages: {
-        type: [String],
-        required: false
-    },
     targetLanguages: {
         type: [String],
-        required: false
+        required: false,
+        default: []
     },
     rooms: {
         type: [String],

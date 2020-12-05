@@ -7,9 +7,9 @@ const User = require('../models/User');
 router.get("/", async (req, res) => {
 	try {
 		const users = await User.find();
-		res.json(users);
+		return res.json(users);
 	} catch (err) {
-		res.json(err);
+		return res.json(err);
 	}
 });
 
@@ -19,33 +19,39 @@ router.post("/", async (req, res) => {
 		const user = new User(req.body)
 		await user.save()
 		const token = await user.generateAuthToken()
-		res.status(201).send({ user, token })
+		return res.status(201).send({ user, token })
 	} catch (error) {
-		res.status(400).send(error)
+		return res.status(400).send(error)
 	}
 })
 
 /* [TEMPORARY] GET, return user details by userId */
 router.get('/:userId', async(req, res) => {
-	console.log(req.params.userId)
+	console.log(req.params.userId);
 	try {
-		const user = await User.findOne({userId: req.params.userId})
-		res.send(user)
+    const user = await User.findOne({userId: req.params.userId});
+    if (!user) {
+      return res.status(204).send()
+    }
+		return res.status(200).json(user);
 	} catch (error) {
 		console.log(error)
-		res.status(400).send(error)
+		return res.status(400).send(error);
 	}
 })
 
 /* [TEMPORARY] PUT, update user details by userId */
-router.get('/:userId', async(req, res) => {
+router.put('/:userId', async(req, res) => {
 	console.log(req.params.userId)
 	try {
 		const user = await User.findOneAndUpdate({userId: req.params.userId}, req.body)
-		res.send(user)
+    if (!user) {
+      return res.status(204).send()
+    }
+    return res.send(user)
 	} catch (error) {
 		console.log(error)
-		res.status(400).send(error)
+		return res.status(400).send(error)
 	}
 })
 

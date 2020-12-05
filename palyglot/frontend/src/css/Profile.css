@@ -12,12 +12,17 @@
   place-items: center;
   background-color: #fff9e6;
   margin-top: 7vh;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .profile_header {
   display: flex;
   width: 80vw;
   /* background-color: red; */
+  border-bottom: 1px solid black;
 }
 
 .profile_header > h2 {
@@ -54,7 +59,6 @@
   margin-left: 34%;
   margin-top: 30px;
   border: 1px solid black;
-  src: "https://vignette.wikia.nocookie.net/emojimovie/images/5/56/Poop.png/revision/latest?cb=20170726175404";
 }
 
 .profilePic:hover {
@@ -92,7 +96,7 @@
   margin-left: 170px;
   margin-bottom: 15px;
   size: "small";
-  background: "#ffd85f";
+  box-shadow: none;
 }
 
 .profileInfo_interestsEntry {
@@ -104,5 +108,5 @@
   margin-top: 6px;
   margin-left: 170px;
   size: "small";
-  background: "#ffd85f";
+  box-shadow: none;
 }

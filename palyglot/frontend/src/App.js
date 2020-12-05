@@ -6,6 +6,7 @@ import LogIn from "./components/LogIn";
 import Splash from "./components/Splash";
 import ChatPage from "./components/ChatPage";
 import ProfilePage from "./components/ProfilePage";
+import Matchmaker from "./components/Matchmaker";
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import PrivateRoute from './components/PrivateRoute';
@@ -13,6 +14,7 @@ import PrivateRoute from './components/PrivateRoute';
 
 function App() {
   const theme = createMuiTheme({
+    shadows:["none"],
     palette: {
       primary: {
         main: '#ffd85f'
@@ -29,7 +31,8 @@ function App() {
               <Route exact path="/" component={Splash} />
               <Route path="/signup" component={SignUp} />
               <Route path="/login" component={LogIn} />
-              <Route path="/chat" component={ChatPage} />
+              <PrivateRoute path="/chat" component={ChatPage} />
+              <PrivateRoute path="/matchmaker" component={Matchmaker} />
               <PrivateRoute path="/profile" component={ProfilePage} />
             </Switch>
           </AuthProvider>

@@ -57,12 +57,22 @@ const UserSchema = new mongoose.Schema({
         type: [String],
         required: false
     },
+    rooms: {
+        type: [String],
+        required: false,
+        default: []
+    } ,
     sentMatches: {
         type: [String],
         required: false,
         default: []
     } ,
-    rooms: {
+    matchInvites : {
+        type: [String],
+        required: false,
+        default: []
+    } ,
+    matches : {
         type: [String],
         required: false,
         default: []

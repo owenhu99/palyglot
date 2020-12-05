@@ -23,10 +23,10 @@ router.post("/", (req, res) => {
 	message
 		.save()
 		.then((data) => {
-			res.json(data);
+			return res.json(data);
 		})
 		.catch((err) => {
-			res.json({ message: err });
+			return res.json({ message: err });
 		});
 });
 

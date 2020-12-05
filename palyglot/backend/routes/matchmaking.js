@@ -1,4 +1,3 @@
-const { compare } = require('bcryptjs');
 var express = require('express');
 var router = express.Router();
 const User = require('../models/User');
@@ -17,6 +16,7 @@ router.get("/matchmaking", async (req, res) => {
                 const user = await User.findOne({ userId: req.params.userId });
                 const target_languages = user.targetLanguages;
                 const interests = user.interests;
+
                 const users_with_same_target_langs =
                         await User.find({
                                 targetLanguages: {
@@ -46,13 +46,57 @@ router.get("/matchmaking", async (req, res) => {
                 const matches = users_with_same_target_langs.concat(
                         users_with_same_known_langs
                 );
-                res.json({ matches: matches });
+                return res.json({ matches: matches });
         } catch (err) {
-                res.status(500);
-                res.json({ message: err });
+                return res.status(500).json({ message: err });
         }
 
 });
+
+router.post("/matchmaking/requestMatch", async (req, res) => {
+        try {
+                const fromUserId = req.body.fromUser;
+                const toUserId = req.body.toUser;
+                const fromUser = await User.findOne({ userId: fromUserId });
+                const toUser = await User.findOne({ userId: toUserId });
+                // toUser has already sent an invite to fromUser, so create a match
+                if (fromUser.matchInvites.includes(toUserId)) {
+                        fromUser.matchInvites.splice(
+                                fromUser.matchInvites.indexOf(toUserId), 1
+                        );
+                        toUser.sentMatches.splice(
+                                toUser.sentMatches.indexOf(fromUserId), 1
+                        );
+                        fromUser.matches.push(toUserId);
+                        toUser.matches.push(fromUserId);
+                        return res.json({msg: "match was created"});
+                } else {
+                        fromUser.sentMatches.push(toUserId);
+                        toUser.matchInvites.push(fromUserId);
+                        return res.json({msg: "match invite was sent"});
+                }
+        } catch (err) {
+                return res.status(500).json({ message: err });
+        }
+});
+
+router.post("/matchmaking/acceptMatch", async (req, res) => {
+        try {
+                const accepterId = req.body.accepter;
+                const senderId = req.body.acceptee;
+                const accepter = await User.findOne({ userId: fromUserId });
+                const sender = await User.findOne({ userId: toUserId });
+                accepter.matchInvites.splice(
+                        accepter.matchInvites.indexOf(senderId), 1
+                );
+                sender.sentMatches.splice(
+                        sender.sentMatches.indexOf(accepterId), 1
+                );
+                accepter.matches.append(senderId);
+                sender.matches.append(accepterId);
+
+        }
+})
 
 // returns the number of matching elements in arr1 and arr2
 function countCommonArrayElements(arr1, arr2) {

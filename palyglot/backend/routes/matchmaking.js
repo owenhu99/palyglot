@@ -7,27 +7,16 @@ const User = require('../models/User');
  * Sorting parameters must be passed in the request body and 
  * sortType must be passed in the request query. */
 router.get("/matchmaking", async (req, res) => {
-        var target_languages = req.body.languages;
-        var previous_matches = req.body.previous_matches;
-        var potential_matches = req.body.potential_matches;
-        var interests = req.query.interests;
-        
-        if (!target_languages) {
-                target_languages = [];
-        }
 
-        if (!previous_matches) {
-                previous_matches = [];
-        }
-
-        if (!potential_matches) {
-                potential_matches = [];
-        }
+        // TODO: need previous matches
 
         // match users with same target language first, sort by interests
         // match target language of request with known languages of users next,
-        // sort by interest. append to the first query results.
+        // sort by number of common interests. append to the first query results.
         try {
+                const user = await User.findOne({ userId: req.params.userId });
+                const target_languages = user.targetLanguages;
+                const interests = user.interests;
                 const users_with_same_target_langs =
                         await User.find({
                                 targetLanguages: {
@@ -52,8 +41,7 @@ router.get("/matchmaking", async (req, res) => {
                                 let num_common_arr2 = countCommonArrayElements(
                                         interests, arr2);
                                 return num_common_arr1 - num_common_arr2;
-                        })
-                                .limit(20 - users_with_same_target_langs.length);
+                        }).limit(20 - users_with_same_target_langs.length);
 
                 const matches = users_with_same_target_langs.concat(
                         users_with_same_known_langs

@@ -6,7 +6,7 @@ const User = require('../models/User');
 /* GET, returns list of all possible new matches for the current user. 
  * Sorting parameters must be passed in the request body and 
  * sortType must be passed in the request query. */
-router.get("/matchmaking", async (req, res) => {
+router.get("/:userId", async (req, res) => {
 
         // match users with same target language first, sort by interests
         // match target language of request with known languages of users next,
@@ -18,7 +18,7 @@ router.get("/matchmaking", async (req, res) => {
 
                 // match users who have the same target languages as the current
                 // user.
-                const users_with_same_target_langs =
+                const arr1 =
                         await User.find({
                                 $and: [{
                                         targetLanguages: {
@@ -31,22 +31,34 @@ router.get("/matchmaking", async (req, res) => {
                                 // current user.
                                 { userId: { $nin: user.matches } },
                                 { userId: { $nin: user.matchInvites } },
-                                { userId: { $nin: user.sentMatches } }
+                                { userId: { $nin: user.sentMatches } },
+                                { userId: { $nin: [req.params.userId] } }
                                 ]
-                        }).sort(function (doc1, doc2) {
+                        });
+                
+                const users_with_same_target_langs = arr1
+                        .sort((doc1, doc2) => {
                                 // sort the matches by the number of matching
                                 // interests.
+                                let i1 = [];
+                                let i2 = [];
+                                if (Array.isArray(doc1.interests)) {
+                                        i1 = doc1.interests;
+                                }
+                                if (Array.isArray(doc2.interests)) {
+                                        i2 = doc2.interests;
+                                }
                                 let num_common_arr1 = countCommonArrayElements(
-                                        interests, doc1.interests);
+                                        interests, i1);
                                 let num_common_arr2 = countCommonArrayElements(
-                                        interests, doc2.interests);
-                                return num_common_arr1 - num_common_arr2;
-                        }).limit(20);
+                                        interests, i2);
+                                return num_common_arr2 - num_common_arr1;
+                        });
 
                 // match users who know the languages that the current user is 
                 // learning. These take less priority over people who have the 
                 // same target language as the current user.
-                const users_with_same_known_langs =
+                const arr2 =
                         await User.find({
                                 $and: [{
                                         knownLanguages: {
@@ -55,22 +67,38 @@ router.get("/matchmaking", async (req, res) => {
                                 },
                                 { userId: { $nin: user.matches } },
                                 { userId: { $nin: user.matchInvites } },
-                                { userId: { $nin: user.sentMatches } }
+                                { userId: { $nin: user.sentMatches } },
+                                { userId: { $nin: [req.params.userId] } }
                                 ]
-                        }).sort(function (doc1, doc2) {
+                        });
+
+                const users_with_same_known_langs = arr2
+                        .sort((doc1, doc2) => {
+                                // sort the matches by the number of matching
+                                // interests.
+                                let i1 = [];
+                                let i2 = [];
+                                if (Array.isArray(doc1.interests)) {
+                                        i1 = doc1.interests;
+                                }
+                                if (Array.isArray(doc2.interests)) {
+                                        i2 = doc2.interests;
+                                }
                                 let num_common_arr1 = countCommonArrayElements(
-                                        interests, doc1.interests);
+                                        interests, i1);
                                 let num_common_arr2 = countCommonArrayElements(
-                                        interests, doc2.interests);
-                                return num_common_arr1 - num_common_arr2;
-                        }).limit(20 - users_with_same_target_langs.length);
+                                        interests, i2);
+                                return num_common_arr2 - num_common_arr1;
+                        });
 
                 const matches = users_with_same_target_langs.concat(
                         users_with_same_known_langs
                 );
+
+                console.log(matches.length);
                 return res.json({ matches: matches });
         } catch (err) {
-                return res.status(400).json({ message: err });
+                return res.status(400).send(err);
         }
 
 });

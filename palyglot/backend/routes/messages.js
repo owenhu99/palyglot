@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const Room = require('../models/Room');
+const auth = require('../middleware/auth')
 
 
 /* GET, uses pagination to return at most 30 of the most recent messages in the 
@@ -19,12 +20,15 @@ parameter. */
 // });
 
 /* get all of the stored messages for a room */
-router.get("/", async (req, res) => {
+router.get("/", auth, async (req, res) => {
 	let roomId = req.query.roomId;
-	await  Room.findOne({_id: roomId}).exec((err, room) => {
+	await Room.findOne({_id: roomId}).exec((err, room) => {
 		if (err) return res.json(err);
 		if (room === null) {
 			return res.json({"error": "room could not be found"}, 404)
+		}
+		if (!room.participants.includes(req.userId)) {
+			return res.status(403).send('Unauthorized')
 		}
 		let messages = room.messages;
 		messages.sort(function(a,b) {
@@ -34,7 +38,7 @@ router.get("/", async (req, res) => {
 	});
 })
 /* POST, add a new message to the room */
-router.post("/", async (req, res) => {
+router.post("/", auth, async (req, res) => {
 	const message = {
 		text: req.body['text'],
 		date: new Date(Date.now()),
@@ -47,6 +51,9 @@ router.post("/", async (req, res) => {
 		if (err) return res.json(err);
 		if (room === null) {
 			return res.json({"error": "room could not be found"}, 404)
+		}
+		if (!room.participants.includes(req.userId)) {
+			return res.status(403).send('Unauthorized')
 		}
 		room.messages.push(message);
 		room.save();

@@ -32,41 +32,27 @@ function Chat(props) {
     
     useEffect(() => {
         if (props.room !== "-1") {
-            axios.get(`https://palyglot-backend.herokuapp.com/rooms/${props.room}`)
-                .then((res) => {
+            currentUser.getIdToken(true).then((idToken) => {
+                axios.get(`http://localhost:5000/rooms/${props.room}`, {
+                    headers: {
+                        'Authorization': `Bearer ${idToken}`
+                    }
+                }).then((res) => {
                     if (res.status === 200) {
-                        if (res.data.participants[0] === currentUser.uid) {
-                            setSender(res.data.participants[0]);
-                            setReceiver(res.data.participants[1]);
-                            setParticipantNames(res.data.participants[0],
-                                res.data.participants[1]);
-                        } else {
-                            setSender(res.data.participants[1]);
-                            setReceiver(res.data.participants[0]);
-                            setParticipantNames(res.data.participants[1],
-                                res.data.participants[0]);
-                        }
+                        setSender(currentUser.uid);
+                        setSenderName(currentUser.displayName);
+                        setReceiver(res.data.user.userId);
+                        setReceiverName(res.data.user.name);
+                        setImgLink(res.data.user.profilePicture);
                     }
                 }).catch((err) => {
                     console.log(err);
-                })
+                });
+            }).catch((error) => {
+                console.log(error);
+            })
         }
     })
-
-    function setParticipantNames(sender, receiver) {
-        /* set the names for the sender (the current user) and the receiver
-         * (the user that the current user is talking to). 
-         */
-        axios.get(`https://palyglot-backend.herokuapp.com/users/${sender}`)
-            .then((res) => {
-                setSenderName(res.data.name);
-            })
-        axios.get(`https://palyglot-backend.herokuapp.com/users/${receiver}`)
-            .then((res) => {
-                setReceiverName(res.data.name);
-                setImgLink(res.data.profilePicture);
-            })
-    }
 
     function getParticipantName(id) {
         if (id === sender) {
@@ -99,13 +85,14 @@ function Chat(props) {
 
     const sendMessage = async (e) => {
         e.preventDefault();
-
-        if (checkMessagesNotMalicious()) {
-            if (input.replace(/\s/g, '').length) {
+        currentUser.getIdToken(true).then(async (idToken) => {
+            if (checkMessagesNotMalicious() && input.replace(/\s/g, '').length) {
                 await axios({
                     method: 'post',
-                    url: `https://palyglot-backend.herokuapp.com/messages`,
-                    headers: {},
+                    url: `http://localhost:5000/messages`,
+                    headers: {
+                        'Authorization': `Bearer ${idToken}`
+                    },
                     data: {
                         text: input,
                         from: sender,
@@ -114,8 +101,9 @@ function Chat(props) {
                     }
                 });
             }
-        }
-
+        }).catch((error) => {
+            console.log(error);
+        })
         setInput("");
     }
 

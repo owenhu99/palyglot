@@ -3,6 +3,7 @@ import '../css/ProfilePage.css';
 import NavBar from "./NavBar"
 import Security from "./Security"
 import Profile from "./Profile"
+import Achievements from "./Achievements"
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
@@ -25,10 +26,19 @@ function ProfilePage() {
   // }, []);
   
   useEffect(() => {
-    axios.get("https://palyglot-backend.herokuapp.com/users/" + currentUser.uid)
-    .then((response) => {
-      setUserDetails(response.data);
-    });
+    currentUser.getIdToken(true).then((idToken) => {
+      axios.get("http://localhost:5000/users/me", {
+        headers: {
+          'Authorization': `Bearer ${idToken}`
+        }
+      })
+      .then((response) => {
+        setUserDetails(response.data);
+        //console.log(currentUser.getIdToken());
+      });
+    }).catch((error) => {
+      console.log(error);
+    })
   }, []);
 
   return (
@@ -36,6 +46,7 @@ function ProfilePage() {
       <NavBar/>
       <div className="pageBody" >
         <Profile userDetails={userDetails}/>
+        <Achievements />
         <div className="logOut">
           <Button 
             variant="contained"

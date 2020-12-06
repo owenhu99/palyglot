@@ -26,10 +26,19 @@ function ProfilePage() {
   // }, []);
   
   useEffect(() => {
-    axios.get("https://palyglot-backend.herokuapp.com/users/" + currentUser.uid)
-    .then((response) => {
-      setUserDetails(response.data);
-    });
+    currentUser.getIdToken(true).then((idToken) => {
+      axios.get("http://127.0.0.1:5000/users/me", {
+        headers: {
+          'Authorization': `Bearer ${idToken}`
+        }
+      })
+      .then((response) => {
+        setUserDetails(response.data);
+        //console.log(currentUser.getIdToken());
+      });
+    }).catch((error) => {
+      console.log(error);
+    })
   }, []);
 
   return (

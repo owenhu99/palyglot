@@ -57,7 +57,12 @@ export default function ChatPage() {
         /* Fetch the rooms that the user is in. Place "focus" on the first room
          * and retrieve the messages for that room.
          */
-        axios.get(`https://palyglot-backend.herokuapp.com/users/${currentUser.uid}`)
+        currentUser.getIdToken(true).then((idToken) => {
+            axios.get(`http://127.0.0.1:5000/users/me`, {
+                headers: {
+                    'Authorization': `Bearer ${idToken}`
+                }
+            })
             .then(res => {
                 console.log("rooms are " + res.data.rooms);
                 setRooms(res.data.rooms);
@@ -65,12 +70,19 @@ export default function ChatPage() {
                     setCurrentRoom(res.data.rooms[0]);
                 }
                 if (res.data.rooms[0] !== "-1") {
-                    axios.get(`https://palyglot-backend.herokuapp.com/messages?roomId=${res.data.rooms[0]}`)
-                        .then(res => {
-                            setMessages(res.data);
-                        })
+                    axios.get(`http://127.0.0.1:5000/messages?roomId=${res.data.rooms[0]}`, {
+                        headers: {
+                            'Authorization': `Bearer ${idToken}`
+                        }
+                    })
+                    .then(res => {
+                        setMessages(res.data);
+                    })
                 }
             })
+        }).catch((error) => {
+            console.log(error);
+        })
     }
 
     function changeRoom(roomId) {
@@ -80,10 +92,18 @@ export default function ChatPage() {
     }
 
     function getRoomMessages(roomId) {
-        axios.get(`https://palyglot-backend.herokuapp.com/messages?roomId=${roomId}`)
+        currentUser.getIdToken(true).then((idToken) => {
+            axios.get(`http://127.0.0.1:5000/messages?roomId=${roomId}`, {
+                headers: {
+                    'Authorization': `Bearer ${idToken}`
+                }
+            })
             .then(res => {
                 setMessages(res.data);
-            })
+            })  
+        }).catch((error) => {
+            console.log(error);
+        })
     }
 
     return (

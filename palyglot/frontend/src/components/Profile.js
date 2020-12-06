@@ -2,11 +2,8 @@ import React, { useState } from "react";import "../css/Profile.css";
 import TextField from '@material-ui/core/TextField';
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
-<<<<<<< HEAD
 import Grid from '@material-ui/core/Grid';
-=======
 import { useAuth } from '../contexts/AuthContext';
->>>>>>> issue 60: update axios calls for new routes on profile page
 const axios = require('axios').default;
 
 function Profile(props) {

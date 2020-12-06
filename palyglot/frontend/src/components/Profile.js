@@ -3,6 +3,7 @@ import TextField from '@material-ui/core/TextField';
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
 const axios = require('axios').default;
 
 function Profile(props) {
@@ -34,23 +35,29 @@ function Profile(props) {
             </div>
             <Divider variant="middle" orientation="horizontal"/>
             <div className="profileBody">
-                <Grid className="achievementsBody_grid" container spacing={3}>
+                <Grid className="profileBody_grid" container spacing={3}>
                     <Grid item xs={5}>
-                        <div className="profilePicContainer">
-                            <input accept="image/*" id="enterNewPic" type="file" />
-                            <label htmlFor="enterNewPic">
-                                    <img 
-                                        className="profilePic" 
-                                        src={props.userDetails.profilePicture}
-                                        alt=""/>
-                            </label>
-                        </div>
+                        <Paper style={{backgroundColor:"inherit"}}>
+                            <div className="profilePicContainer">
+                                <input accept="image/*" id="enterNewPic" type="file" />
+                                <label htmlFor="enterNewPic">
+                                        <img 
+                                            className="profilePic" 
+                                            src={props.userDetails.profilePicture}
+                                            alt=""/>
+                                </label>
+                            </div>
+                        </Paper>
                     </Grid>
                     <Grid item xs={7}>
-                        <Grid container direction="column">
+                        <Grid 
+                            container spacing={4} 
+                            direction="column" 
+                            border="1px solid black" 
+                            style={{padding: "25px", paddingRight:"8%"}}>
                             <div className="profileInfo">
                                 <Grid item>
-                                <h4>{props.userDetails.name}</h4>
+                                <h3>{props.userDetails.name}</h3>
                                 </Grid>
                                 <Grid item>
                                 <div className="profileInfo_bio">
@@ -65,7 +72,8 @@ function Profile(props) {
                                             multiline 
                                             rows={3} 
                                             rowsMax={3} 
-                                            size= "small" 
+                                            size= "small"
+                                            fullWidth 
                                             inputProps={{ maxLength: 200 }}
                                             value={bio}
                                             onChange={handleBioChange}/>
@@ -90,6 +98,7 @@ function Profile(props) {
                                             label="Interests" 
                                             variant="outlined"  
                                             size= "small" 
+                                            fullWidth
                                             inputProps={{ maxLength: 75 }}
                                             defaultValue={props.userDetails.interests}
                                             value={interests}

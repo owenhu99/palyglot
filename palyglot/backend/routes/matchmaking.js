@@ -103,7 +103,7 @@ router.get("/:userId", async (req, res) => {
 
 });
 
-router.post("/matchmaking/requestMatch", async (req, res) => {
+router.post("/requestMatch", async (req, res) => {
         try {
                 const fromUserId = req.body.fromUser;
                 const toUserId = req.body.toUser;
@@ -124,10 +124,14 @@ router.post("/matchmaking/requestMatch", async (req, res) => {
                         await room.save();
                         fromUser.rooms.push(room["_id"]);
                         toUser.rooms.push(room["_id"]);
+                        await fromUser.save();
+                        await toUser.save();
                         return res.json({ roomId: room["_id"] });
                 } else {
                         fromUser.sentMatches.push(toUserId);
                         toUser.matchInvites.push(fromUserId);
+                        await fromUser.save();
+                        await toUser.save();
                         return res.json({ msg: "match invite was sent" });
                 }
         } catch (err) {
@@ -135,7 +139,7 @@ router.post("/matchmaking/requestMatch", async (req, res) => {
         }
 });
 
-router.post("/matchmaking/acceptMatch", async (req, res) => {
+router.post("/acceptMatch", async (req, res) => {
         try {
                 const accepterId = req.body.accepter;
                 const senderId = req.body.sender;
@@ -154,13 +158,15 @@ router.post("/matchmaking/acceptMatch", async (req, res) => {
                 await room.save();
                 accepter.rooms.push(room["_id"]);
                 sender.rooms.push(room["_id"]);
+                await accepter.save();
+                await sender.save();
                 return res.json({ roomId: room["_id"] });
         } catch (err) {
                 return res.status(400).json({ msg: err });
         }
 });
 
-router.post("/matchmaking/declineMatch", async (req, res) => {
+router.post("/declineMatch", async (req, res) => {
         try {
                 const declinerId = req.body.decliner;
                 const senderId = req.body.sender;
@@ -173,6 +179,8 @@ router.post("/matchmaking/declineMatch", async (req, res) => {
                 sender.sentMatches.splice(
                         sender.sentMatches.indexOf(declinerId), 1
                 );
+                sender.save();
+                decliner.save();
                 return res.json({ msg: "match invite declined successfully" });
         } catch (err) {
                 return res.status(400).json({ msg: err });

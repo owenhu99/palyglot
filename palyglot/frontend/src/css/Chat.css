@@ -69,6 +69,11 @@
   border-top: 1px solid #ffd85f;
 }
 
+.accent_keyboard {
+  border-top: 1px solid #ffd85f;
+  margin: auto;
+}
+
 .chat_input > .MuiSvgIcon-root {
   padding: 10px;
   color: grey;
@@ -89,4 +94,8 @@
 
 .chat_input > form > button {
   display: none;
+}
+
+.accent_button {
+  text-transform: none;
 }

@@ -14,3 +14,10 @@
   bottom: -1px;
   right: -1px;
 }
+
+.logOut {
+  display: flex;
+  margin-top: 10vh;
+  width: 100%;
+  justify-content: center;
+}

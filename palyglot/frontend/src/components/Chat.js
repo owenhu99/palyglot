@@ -4,6 +4,9 @@ import { useAuth } from '../contexts/AuthContext';
 import React, { useEffect } from "react";
 import axios from "axios";
 import "../css/Chat.css";
+import Button from '@material-ui/core/Button';
+import { withStyles } from '@material-ui/core/styles';
+const lookup = require('safe-browse-url-lookup')({ apiKey: 'AIzaSyCnqThoiLedqZesnVf0KFQRHCbbcvNuWvQ' });
 
 // function Chat({message}) {
 function Chat(props) {
@@ -15,7 +18,18 @@ function Chat(props) {
     const [senderName, setSenderName] = React.useState("");
     const [receiverName, setReceiverName] = React.useState("");
     const [imgLink, setImgLink] = React.useState("");
+    const [useUppercaseAccents, setUseUppercaseAccents] = React.useState(false);
 
+    const lowercaseAccents = ["é", "è", "ê", "ë", "à", "â", "æ", "ë", "ù", "û", "ü", "ç", "ï", "î", "ô", "ÿ"];
+    const uppercaseAccents = ["É", "È", "Ê", "Ë", "À", "Â", "Æ", "Ë", "Ù", "Û", "Ü", "Ç", "Ï", "Î", "Ô", "Ÿ"];
+    const hyperlinkRegex = /(https?:\/\/(?:www\.|(?!www))[^\s\.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,})/gi;
+
+    const StyledButton = withStyles({
+        label: {
+          textTransform: 'none',
+        },
+      })(Button);
+    
     useEffect(() => {
         if (props.room !== "-1") {
             axios.get(`https://palyglot-backend.herokuapp.com/rooms/${props.room}`)
@@ -61,21 +75,47 @@ function Chat(props) {
         return receiverName;
     }
 
+    const checkMessagesNotMalicious = () => {
+        var matches = input.match(hyperlinkRegex);
+
+        if (matches == null) {
+            return true;
+        }
+
+        lookup.checkMulti(matches)
+        .then(urlMap => {
+            for (let url in urlMap) {
+                if (urlMap[url]) {
+                    return false;
+                }
+            }
+        })
+        .catch(err => {
+            return true;
+        });
+
+        return true;
+    }
+
     const sendMessage = async (e) => {
         e.preventDefault();
-        if (input.replace(/\s/g, '').length) {
-            await axios({
-                method: 'post',
-                url: `https://palyglot-backend.herokuapp.com/messages`,
-                headers: {},
-                data: {
-                    text: input,
-                    from: sender,
-                    to: receiver,
-                    roomId: props.room
-                }
-            });
+
+        if (checkMessagesNotMalicious()) {
+            if (input.replace(/\s/g, '').length) {
+                await axios({
+                    method: 'post',
+                    url: `https://palyglot-backend.herokuapp.com/messages`,
+                    headers: {},
+                    data: {
+                        text: input,
+                        from: sender,
+                        to: receiver,
+                        roomId: props.room
+                    }
+                });
+            }
         }
+
         setInput("");
     }
 
@@ -148,6 +188,20 @@ function Chat(props) {
                                 {message.date}
                             </span>
                         </p>
+                    )
+                })}
+            </div>
+            <div className="accent_keyboard">
+                <Button onClick={() => setUseUppercaseAccents(!useUppercaseAccents)}>↑↓</Button>
+                {lowercaseAccents.map((accent, i) => {
+                    if (useUppercaseAccents) {
+                        return (
+                            <StyledButton className="accent_button" onClick={() => setInput(input + uppercaseAccents[i])}>{uppercaseAccents[i]}</StyledButton>
+                        )
+                    }
+
+                    return (
+                        <StyledButton className="accent_button" onClick={() => setInput(input + lowercaseAccents[i])}>{lowercaseAccents[i]}</StyledButton>
                     )
                 })}
             </div>

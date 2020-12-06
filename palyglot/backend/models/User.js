@@ -45,9 +45,9 @@ const UserSchema = new mongoose.Schema({
         default: ""
     },
     interests: {
-        type: String,
+        type: [String],
         required: false,
-        default: ""
+        default: []
     },
     knownLanguages: {
         type: [String],

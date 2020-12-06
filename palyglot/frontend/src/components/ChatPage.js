@@ -92,10 +92,18 @@ export default function ChatPage() {
     }
 
     function getRoomMessages(roomId) {
-        axios.get(`https://palyglot-backend.herokuapp.com/messages?roomId=${roomId}`)
+        currentUser.getIdToken(true).then((idToken) => {
+            axios.get(`http://127.0.0.1:5000/messages?roomId=${roomId}`, {
+                headers: {
+                    'Authorization': `Bearer ${idToken}`
+                }
+            })
             .then(res => {
                 setMessages(res.data);
-            })
+            })  
+        }).catch((error) => {
+            console.log(error);
+        })
     }
 
     return (

@@ -3,6 +3,7 @@ import '../css/ProfilePage.css';
 import NavBar from "./NavBar"
 import Security from "./Security"
 import Profile from "./Profile"
+import Achievements from "./Achievements"
 import { useAuth } from '../contexts/AuthContext';
 import axios from 'axios';
 
@@ -34,6 +35,7 @@ function ProfilePage() {
       <NavBar/>
       <div className="pageBody" >
         <Profile userDetails={userDetails}/>
+        <Achievements />
       </div>
     </div>
   );

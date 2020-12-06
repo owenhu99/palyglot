@@ -2,6 +2,7 @@ import React, { useState } from "react";import "../css/Profile.css";
 import TextField from '@material-ui/core/TextField';
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
 const axios = require('axios').default;
 
 function Profile(props) {
@@ -33,66 +34,80 @@ function Profile(props) {
             </div>
             <Divider variant="middle" orientation="horizontal"/>
             <div className="profileBody">
-                <div className="profilePicContainer">
-                    <input accept="image/*" id="enterNewPic" type="file" />
-                    <label htmlFor="enterNewPic">
-                            <img 
-                                className="profilePic" 
-                                src={props.userDetails.profilePicture}
-                                alt=""/>
-                    </label>
-                </div>
-                <div className="profileInfo">
-                    <h4>{props.userDetails.name}</h4>
-                    <div className="profileInfo_bio">
-                        <form noValidate autoComplete="off">
-                            <TextField 
-                                className="profileInfo_bioEntry" 
-                                label="Bio" defaultValue={props.userDetails.bio} 
-                                variant="outlined"
-                                InputLabelProps={{
-                                    shrink: true,
-                                  }} 
-                                multiline 
-                                rows={3} 
-                                rowsMax={3} 
-                                size= "small" 
-                                inputProps={{ maxLength: 200 }}
-                                value={bio}
-                                onChange={handleBioChange}/>
-                            <Button 
-                                variant="contained"
-                                color="primary" 
-                                onClick={submitBioChange}
-                                size="small">
-                                    Save Changes
-                            </Button>
-                        </form>
-                    </div>
-                    <div className="profileInfo_interests">
-                        <form noValidate autoComplete="off">
-                            <TextField 
-                                className="profileInfo_interestsEntry" 
-                                InputLabelProps={{
-                                    shrink: true,
-                                  }} 
-                                label="Interests" 
-                                variant="outlined"  
-                                size= "small" 
-                                inputProps={{ maxLength: 75 }}
-                                defaultValue={props.userDetails.interests}
-                                value={interests}
-                                onChange={handleInterestsChange}/>
-                            <Button 
-                                variant="contained"
-                                color="primary" 
-                                onClick={submitInterestsChange}
-                                size="small">
-                                    Save Changes
-                            </Button>
-                        </form>
-                    </div>
-                </div>
+                <Grid className="achievementsBody_grid" container spacing={3}>
+                    <Grid item xs={5}>
+                        <div className="profilePicContainer">
+                            <input accept="image/*" id="enterNewPic" type="file" />
+                            <label htmlFor="enterNewPic">
+                                    <img 
+                                        className="profilePic" 
+                                        src={props.userDetails.profilePicture}
+                                        alt=""/>
+                            </label>
+                        </div>
+                    </Grid>
+                    <Grid item xs={7}>
+                        <Grid container direction="column">
+                            <div className="profileInfo">
+                                <Grid item>
+                                <h4>{props.userDetails.name}</h4>
+                                </Grid>
+                                <Grid item>
+                                <div className="profileInfo_bio">
+                                    <form noValidate autoComplete="off">
+                                        <TextField 
+                                            className="profileInfo_bioEntry" 
+                                            label="Bio" defaultValue={props.userDetails.bio} 
+                                            variant="outlined"
+                                            InputLabelProps={{
+                                                shrink: true,
+                                            }} 
+                                            multiline 
+                                            rows={3} 
+                                            rowsMax={3} 
+                                            size= "small" 
+                                            inputProps={{ maxLength: 200 }}
+                                            value={bio}
+                                            onChange={handleBioChange}/>
+                                        <Button 
+                                            variant="contained"
+                                            color="primary" 
+                                            onClick={submitBioChange}
+                                            size="small">
+                                                Save Changes
+                                        </Button>
+                                    </form>
+                                </div>
+                                </Grid>
+                                <Grid item>
+                                <div className="profileInfo_interests">
+                                    <form noValidate autoComplete="off">
+                                        <TextField 
+                                            className="profileInfo_interestsEntry" 
+                                            InputLabelProps={{
+                                                shrink: true,
+                                            }} 
+                                            label="Interests" 
+                                            variant="outlined"  
+                                            size= "small" 
+                                            inputProps={{ maxLength: 75 }}
+                                            defaultValue={props.userDetails.interests}
+                                            value={interests}
+                                            onChange={handleInterestsChange}/>
+                                        <Button 
+                                            variant="contained"
+                                            color="primary" 
+                                            onClick={submitInterestsChange}
+                                            size="small">
+                                                Save Changes
+                                        </Button>
+                                    </form>
+                                </div>
+                                </Grid>
+                            </div>
+                        </Grid>
+                    </Grid>
+                </Grid>
             </div>
         </div>
     );

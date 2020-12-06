@@ -85,7 +85,7 @@
 
 .profileInfo_bioEntry {
   font-family: "Comfortaa", cursive;
-  width: 500px;
+  width: inherit;
   overflow-wrap: normal;
   margin-bottom: 5vh;
 }

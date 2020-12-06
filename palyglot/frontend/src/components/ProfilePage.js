@@ -3,6 +3,7 @@ import '../css/ProfilePage.css';
 import NavBar from "./NavBar"
 import Security from "./Security"
 import Profile from "./Profile"
+import Achievements from "./Achievements"
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
@@ -36,6 +37,7 @@ function ProfilePage() {
       <NavBar/>
       <div className="pageBody" >
         <Profile userDetails={userDetails}/>
+        <Achievements />
         <div className="logOut">
           <Button 
             variant="contained"

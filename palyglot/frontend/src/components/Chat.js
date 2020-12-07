@@ -33,7 +33,7 @@ function Chat(props) {
     useEffect(() => {
         if (props.room !== "-1") {
             currentUser.getIdToken(true).then((idToken) => {
-                axios.get(`http://127.0.0.1:5000/rooms/${props.room}`, {
+                axios.get(`http://localhost:5000/rooms/${props.room}`, {
                     headers: {
                         'Authorization': `Bearer ${idToken}`
                     }
@@ -89,7 +89,7 @@ function Chat(props) {
             if (checkMessagesNotMalicious() && input.replace(/\s/g, '').length) {
                 await axios({
                     method: 'post',
-                    url: `http://127.0.0.1:5000/messages`,
+                    url: `http://localhost:5000/messages`,
                     headers: {
                         'Authorization': `Bearer ${idToken}`
                     },

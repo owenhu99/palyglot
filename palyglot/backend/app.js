@@ -12,6 +12,7 @@ const Pusher = require('pusher');
 var usersRouter = require('./routes/users');
 var roomsRouter = require('./routes/rooms');
 var messagesRouter = require('./routes/messages');
+var matchmakingRouter = require('./routes/matchmaking');
 
 var app = express();
 
@@ -37,6 +38,7 @@ app.disable('etag');
 app.use('/users', usersRouter);
 app.use('/rooms', roomsRouter);
 app.use('/messages', messagesRouter);
+app.use('/matchmaking', matchmakingRouter);
 
 mongoose.connect(process.env.MONGODB_URL,
     { useNewUrlParser: true, useUnifiedTopology: true , useFindAndModify: false },

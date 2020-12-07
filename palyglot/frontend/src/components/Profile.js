@@ -23,7 +23,7 @@ function Profile(props) {
 
     function submitBioChange() {
         currentUser.getIdToken(true).then((idToken) => {
-            axios.put("http://127.0.0.1:5000/users/me", {bio: bio}, {
+            axios.put("http://localhost:5000/users/me", {bio: bio}, {
                 headers: {
                     'Authorization': `Bearer ${idToken}`
                 }
@@ -35,7 +35,7 @@ function Profile(props) {
 
     function submitInterestsChange() {
         currentUser.getIdToken(true).then((idToken) => {
-            axios.put("http://127.0.0.1:5000/users/me", {interests: interests}, {
+            axios.put("http://localhost:5000/users/me", {interests: interests}, {
                 headers: {
                     'Authorization': `Bearer ${idToken}`
                 }

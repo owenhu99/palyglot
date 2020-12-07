@@ -58,7 +58,7 @@ export default function ChatPage() {
          * and retrieve the messages for that room.
          */
         currentUser.getIdToken(true).then((idToken) => {
-            axios.get(`http://127.0.0.1:5000/users/me`, {
+            axios.get(`http://localhost:5000/users/me`, {
                 headers: {
                     'Authorization': `Bearer ${idToken}`
                 }
@@ -70,7 +70,7 @@ export default function ChatPage() {
                     setCurrentRoom(res.data.rooms[0]);
                 }
                 if (res.data.rooms[0] !== "-1") {
-                    axios.get(`http://127.0.0.1:5000/messages?roomId=${res.data.rooms[0]}`, {
+                    axios.get(`http://localhost:5000/messages?roomId=${res.data.rooms[0]}`, {
                         headers: {
                             'Authorization': `Bearer ${idToken}`
                         }
@@ -93,7 +93,7 @@ export default function ChatPage() {
 
     function getRoomMessages(roomId) {
         currentUser.getIdToken(true).then((idToken) => {
-            axios.get(`http://127.0.0.1:5000/messages?roomId=${roomId}`, {
+            axios.get(`http://localhost:5000/messages?roomId=${roomId}`, {
                 headers: {
                     'Authorization': `Bearer ${idToken}`
                 }

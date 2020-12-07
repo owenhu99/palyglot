@@ -27,7 +27,7 @@ function ProfilePage() {
   
   useEffect(() => {
     currentUser.getIdToken(true).then((idToken) => {
-      axios.get("http://127.0.0.1:5000/users/me", {
+      axios.get("http://localhost:5000/users/me", {
         headers: {
           'Authorization': `Bearer ${idToken}`
         }

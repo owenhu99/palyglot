@@ -24,6 +24,16 @@ router.post("/", async (req, res) => {
 	}
 })
 
+// dev
+router.put("/updateInterests", async (req, res) => {
+	try {
+		const user = await User.findOneAndUpdate({userId: req.body.userId}, {"interests": req.body.interests});
+		return res.send(user);
+	} catch (err) {
+		res.status(400).send(err);
+	}
+})
+
 /* PUT, update current user details */
 router.put('/me', auth, async(req, res) => {
 	try {

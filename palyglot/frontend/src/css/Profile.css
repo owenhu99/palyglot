@@ -83,13 +83,11 @@
   font-family: "Comfortaa", cursive;
   width: 100%;
   overflow-wrap: normal;
-  margin-top: 2%;
-  margin-bottom: 2%;
 }
 
 .profileInfo_bio > form > .MuiButton-root {
   font-family: "Comfortaa", cursive;
-  margin-top: 6px;
+  margin-top: 2%;
   margin-left: 40%;
   margin-right: 40%;
   margin-bottom: 15px;
@@ -101,13 +99,11 @@
   font-family: "Comfortaa", cursive;
   width: 100%;
   overflow-wrap: normal;
-  margin-top: 2%;
-  margin-bottom: 2%;
 }
 
 .profileInfo_interests > form > .MuiButton-root {
   font-family: "Comfortaa", cursive;
-  margin-top: 6px;
+  margin-top: 2%;
   margin-left: 40%;
   margin-right: 40%;
   size: "small";

@@ -51,15 +51,18 @@ function Profile(props) {
                     </Grid>
                     <Grid item xs={7}>
                         <Grid 
-                            container spacing={4} 
+                            container 
+                            spacing={4} 
                             direction="column" 
                             border="1px solid black" 
                             style={{padding: "25px", paddingRight:"8%"}}>
                             <div className="profileInfo">
-                                <Grid item>
-                                <h3>{props.userDetails.name}</h3>
+                                <Grid item style={{paddingBottom:"2%"}}>
+                                    <h3 style={{fontFamily: "Comfortaa, cursive", textTransform:"uppercase"}}>
+                                        {props.userDetails.name}
+                                    </h3>
                                 </Grid>
-                                <Grid item>
+                                <Grid item style={{paddingBottom:"4%"}}>
                                 <div className="profileInfo_bio">
                                     <form noValidate autoComplete="off">
                                         <TextField 
@@ -87,7 +90,7 @@ function Profile(props) {
                                     </form>
                                 </div>
                                 </Grid>
-                                <Grid item>
+                                <Grid item style={{paddingBottom:"2%"}}>
                                 <div className="profileInfo_interests">
                                     <form noValidate autoComplete="off">
                                         <TextField 

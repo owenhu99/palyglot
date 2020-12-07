@@ -5,6 +5,8 @@ import React, { useEffect } from "react";
 import axios from "axios";
 import "../css/Chat.css";
 import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import { withStyles } from '@material-ui/core/styles';
 const lookup = require('safe-browse-url-lookup')({ apiKey: 'AIzaSyCnqThoiLedqZesnVf0KFQRHCbbcvNuWvQ' });
 
@@ -19,6 +21,8 @@ function Chat(props) {
     const [receiverName, setReceiverName] = React.useState("");
     const [imgLink, setImgLink] = React.useState("");
     const [useUppercaseAccents, setUseUppercaseAccents] = React.useState(false);
+    const [openDialog, setOpenDialog] = React.useState(false);
+    const [dialogMessage, setDialogMessage] = React.useState("");
 
     const lowercaseAccents = ["é", "è", "ê", "ë", "à", "â", "æ", "ë", "ù", "û", "ü", "ç", "ï", "î", "ô", "ÿ"];
     const uppercaseAccents = ["É", "È", "Ê", "Ë", "À", "Â", "Æ", "Ë", "Ù", "Û", "Ü", "Ç", "Ï", "Î", "Ô", "Ÿ"];
@@ -119,6 +123,15 @@ function Chat(props) {
         setInput("");
     }
 
+    const translateMessage = async (msg) => {
+        setDialogMessage(msg);
+        setOpenDialog(true);
+    }
+
+    const handleDialogClose = () => {
+        setOpenDialog(false);
+    }
+
     // check if the user currently does not have any active conversations.
     if (props.room === "-1") {
         return (
@@ -160,6 +173,10 @@ function Chat(props) {
     // else, render the messages for the current room.
     return (
         <div className="chat">
+            <Dialog open={openDialog} onClose={handleDialogClose}>
+                <DialogTitle id="simple-dialog-title">Translate</DialogTitle>
+                <p>{dialogMessage}</p>
+            </Dialog>
             <div className="chat_header">
                 <Avatar src={imgLink} />
                 <div className="chat_headerInfo">
@@ -178,16 +195,19 @@ function Chat(props) {
             <div className="chat_body">
                 {props.messages.map((message, i) => {
                     return (
-                        <p key={i} className={`chat_message ${message.from === currentUser.uid && "chat_receiver"}`}
-                        >
-                            <span className="chat_name">
-                                {getParticipantName(message.from)}
-                            </span>
-                            {message.text}
-                            <span className="chat_timestamp">
-                                {message.date}
-                            </span>
-                        </p>
+                        <div>
+                            <p key={i} className={`chat_message ${message.from === currentUser.uid && "chat_receiver"}`}
+                            >
+                                <span className="chat_name">
+                                    {getParticipantName(message.from)}
+                                </span>
+                                {message.text}
+                                <span className="chat_timestamp">
+                                    {message.date}
+                                </span>
+                                <a onClick={() => translateMessage(message.text)}><i class="fa fa-language translateButton" aria-hidden="true"></i></a>
+                            </p>
+                        </div>
                     )
                 })}
             </div>

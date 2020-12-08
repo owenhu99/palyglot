@@ -99,3 +99,18 @@
 .accent_button {
   text-transform: none;
 }
+
+.translateButton {
+  padding-left: 10px;
+  color: grey;
+}
+
+.translation {
+  text-align: center;
+  padding-bottom: 8%;
+}
+
+.languageSelect {
+  padding-bottom: 15%;
+  margin: auto;
+}

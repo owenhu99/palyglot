@@ -61,6 +61,8 @@ function ProfilePage() {
             variant="contained"
             color="primary" 
             size="large"
+            style={{transform: "scale(1.3)"}}
+            component={Link} to={''}>
             onClick={handleLogout}>
               Log Out
           </Button>

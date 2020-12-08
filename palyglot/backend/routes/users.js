@@ -27,7 +27,7 @@ router.post("/", async (req, res) => {
 // dev
 router.put("/updateInterests", async (req, res) => {
 	try {
-		const user = await User.findOneAndUpdate({userId: req.body.userId}, {"interests": req.body.interests});
+		const user = await User.findOneAndUpdate({ userId: req.body.userId }, { "interests": req.body.interests });
 		return res.send(user);
 	} catch (err) {
 		res.status(400).send(err);
@@ -35,9 +35,9 @@ router.put("/updateInterests", async (req, res) => {
 })
 
 /* PUT, update current user details */
-router.put('/me', auth, async(req, res) => {
+router.put('/me', auth, async (req, res) => {
 	try {
-		const user = await User.findOneAndUpdate({userId: req.userId}, req.body, {new: true})
+		const user = await User.findOneAndUpdate({ userId: req.userId }, req.body, { new: true })
 		if (!user) throw new Error("current user not found")
 		return res.send(user)
 	} catch (error) {
@@ -47,9 +47,9 @@ router.put('/me', auth, async(req, res) => {
 })
 
 /* GET, return logged in user pofile */
-router.get('/me', auth, async(req, res) => {
+router.get('/me', auth, async (req, res) => {
 	try {
-		const user = await User.findOne({userId: req.userId})
+		const user = await User.findOne({ userId: req.userId })
 		if (!user) throw new Error("current user not found")
 		res.send(user)
 	} catch (error) {
@@ -59,13 +59,22 @@ router.get('/me', auth, async(req, res) => {
 })
 
 /* DELETE, delete current user */
-router.delete('/me', auth, async(req, res) => {
+router.delete('/me', auth, async (req, res) => {
 	try {
-		const user = await User.findOneAndDelete({userId: req.userId})
+		const user = await User.findOneAndDelete({ userId: req.userId });
 		if (!user) throw new Error("current user not found")
 		res.send(user)
 	} catch (error) {
 		res.status(500).send(error)
+	}
+})
+
+router.get('/getUsers', auth, async (req, res) => {
+	try {
+		const users = await User.find({ userId: { $in: req.body.users } });
+		return res.send(users);
+	} catch (err) {
+		return res.status(400).send(err);
 	}
 })
 

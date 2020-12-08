@@ -2,17 +2,19 @@ var express = require('express');
 const Room = require('../models/Room');
 var router = express.Router();
 const User = require('../models/User');
+const auth = require('../middleware/auth')
 
 /* GET, returns list of all possible new matches for the current user. 
  * Sorting parameters must be passed in the request body and 
  * sortType must be passed in the request query. */
-router.get("/:userId", async (req, res) => {
+router.get("/", auth, async (req, res) => {
 
         // match users with same target language first, sort by interests
         // match target language of request with known languages of users next,
         // sort by number of common interests. append to the first query results.
         try {
-                const user = await User.findOne({ userId: req.params.userId });
+                const user = await User.findOne({ userId: req.userId });
+                if (!user) throw new Error("current user not found");
                 const target_languages = user.targetLanguages;
                 const interests = user.interests;
 
@@ -32,7 +34,7 @@ router.get("/:userId", async (req, res) => {
                                 { userId: { $nin: user.matches } },
                                 { userId: { $nin: user.matchInvites } },
                                 { userId: { $nin: user.sentMatches } },
-                                { userId: { $nin: [req.params.userId] } }
+                                { userId: { $nin: [req.userId] } }
                                 ]
                         });
                 
@@ -68,7 +70,7 @@ router.get("/:userId", async (req, res) => {
                                 { userId: { $nin: user.matches } },
                                 { userId: { $nin: user.matchInvites } },
                                 { userId: { $nin: user.sentMatches } },
-                                { userId: { $nin: [req.params.userId] } }
+                                { userId: { $nin: [req.userId] } }
                                 ]
                         });
 
@@ -103,24 +105,25 @@ router.get("/:userId", async (req, res) => {
 
 });
 
-router.post("/requestMatch", async (req, res) => {
+router.post("/requestMatch", auth, async (req, res) => {
         try {
-                const fromUserId = req.body.fromUser;
+                const fromUser = await User.findOne({ userId: req.userId });
+                if (!fromUser) throw new Error("current user not found");
                 const toUserId = req.body.toUser;
-                const fromUser = await User.findOne({ userId: fromUserId });
                 const toUser = await User.findOne({ userId: toUserId });
+                if (!toUser) throw new Error("target user not found");
                 // toUser has already sent an invite to fromUser, so create a match
                 if (fromUser.matchInvites.includes(toUserId)) {
                         fromUser.matchInvites.splice(
                                 fromUser.matchInvites.indexOf(toUserId), 1
                         );
                         toUser.sentMatches.splice(
-                                toUser.sentMatches.indexOf(fromUserId), 1
+                                toUser.sentMatches.indexOf(req.userId), 1
                         );
                         fromUser.matches.push(toUserId);
-                        toUser.matches.push(fromUserId);
+                        toUser.matches.push(req.userId);
                         // create a new room for the matched users
-                        const room = new Room({ "participants": [fromUserId, toUserId] });
+                        const room = new Room({ "participants": [req.userId, toUserId] });
                         await room.save();
                         fromUser.rooms.push(room["_id"]);
                         toUser.rooms.push(room["_id"]);
@@ -129,7 +132,7 @@ router.post("/requestMatch", async (req, res) => {
                         return res.json({ roomId: room["_id"] });
                 } else {
                         fromUser.sentMatches.push(toUserId);
-                        toUser.matchInvites.push(fromUserId);
+                        toUser.matchInvites.push(req.userId);
                         await fromUser.save();
                         await toUser.save();
                         return res.json({ msg: "match invite was sent" });
@@ -139,22 +142,23 @@ router.post("/requestMatch", async (req, res) => {
         }
 });
 
-router.post("/acceptMatch", async (req, res) => {
+router.post("/acceptMatch", auth, async (req, res) => {
         try {
-                const accepterId = req.body.accepter;
                 const senderId = req.body.sender;
-                const accepter = await User.findOne({ userId: accepterId });
+                const accepter = await User.findOne({ userId: req.userId });
+                if (!accepter) throw new Error("current user not found");
                 const sender = await User.findOne({ userId: senderId });
+                if (!sender) throw new Error("target user not found");
                 accepter.matchInvites.splice(
                         accepter.matchInvites.indexOf(senderId), 1
                 );
                 sender.sentMatches.splice(
-                        sender.sentMatches.indexOf(accepterId), 1
+                        sender.sentMatches.indexOf(req.userId), 1
                 );
                 accepter.matches.append(senderId);
-                sender.matches.append(accepterId);
+                sender.matches.append(req.userId);
                 // create a new room for the matched users
-                const room = new Room({ "participants": [accepterId, senderId] });
+                const room = new Room({ "participants": [req.userId, senderId] });
                 await room.save();
                 accepter.rooms.push(room["_id"]);
                 sender.rooms.push(room["_id"]);
@@ -166,18 +170,19 @@ router.post("/acceptMatch", async (req, res) => {
         }
 });
 
-router.post("/declineMatch", async (req, res) => {
+router.post("/declineMatch", auth, async (req, res) => {
         try {
-                const declinerId = req.body.decliner;
+                const decliner = await User.findOne({ userId: req.userId });
+                if (!decliner) throw new Error("current user not found");
                 const senderId = req.body.sender;
-                const decliner = await User.findOne({ userId: declinerId });
                 const sender = await User.findOne({ userId: senderId });
+                if (!sender) throw new Error("target user not found");
 
                 decliner.matchInvites.splice(
                         decliner.matchInvites.indexOf(senderId), 1
                 );
                 sender.sentMatches.splice(
-                        sender.sentMatches.indexOf(declinerId), 1
+                        sender.sentMatches.indexOf(req.userId), 1
                 );
                 sender.save();
                 decliner.save();

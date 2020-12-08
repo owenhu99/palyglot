@@ -100,7 +100,8 @@ export default function SignUp() {
     };
 
     const languages = ["English", "French", "Spanish",
-                       "Hindi", "Russian", "Mandarin"];
+                       "Italian", "Dutch", "Norwegian",
+                        "Portugese", "Swedish", "Mandarin"];
 
     const StyledButton = withStyles({
         root: {

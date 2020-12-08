@@ -169,7 +169,7 @@ function Chat(props) {
                         <MenuItem value={"no"}>Norwegian</MenuItem>
                         <MenuItem value={"pt"}>Portugese</MenuItem>
                         <MenuItem value={"sv"}>Swedish</MenuItem>
-                        <MenuItem value={"zh-cn"}>Chinese</MenuItem>
+                        <MenuItem value={"zh-cn"}>Mandarin</MenuItem>
                     </Select>
                 </Dialog>
                 <div className="chat_header">
@@ -225,7 +225,7 @@ function Chat(props) {
                         <MenuItem value={"no"}>Norwegian</MenuItem>
                         <MenuItem value={"pt"}>Portugese</MenuItem>
                         <MenuItem value={"sv"}>Swedish</MenuItem>
-                        <MenuItem value={"zh-cn"}>Chinese</MenuItem>
+                        <MenuItem value={"zh-cn"}>Mandarin</MenuItem>
                     </Select>
                 </div>
             </Dialog>

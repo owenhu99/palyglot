@@ -43,7 +43,7 @@ function Achievements() {
             <div className="achievementsBody">
                 <Grid className="achievementsBody_grid" container spacing={3}>
                     <Grid item xs={4}>
-                        <Paper className={classes.unlocked}>
+                        <Paper className={classes.locked}>
                             <Grid item className="achievementsIcon">
                                 <ImportContactsIcon style={{transform: "scale(1.3)"}}/>
                             </Grid>
@@ -54,7 +54,7 @@ function Achievements() {
                         </Paper>
                     </Grid>
                     <Grid item xs={4}>
-                        <Paper className={classes.unlocked}>
+                        <Paper className={classes.locked}>
                             <Grid item className="achievementsIcon">
                                 <PhotoCameraIcon style={{transform: "scale(1.3)"}}/>
                             </Grid>
@@ -65,7 +65,7 @@ function Achievements() {
                         </Paper>
                     </Grid>
                     <Grid item xs={4}>
-                        <Paper className={classes.unlocked}>
+                        <Paper className={classes.locked}>
                             <Grid item className="achievementsIcon">
                                 <PersonAddIcon style={{transform: "scale(1.3)"}}/>
                             </Grid>
@@ -76,7 +76,7 @@ function Achievements() {
                         </Paper>
                     </Grid>
                     <Grid item xs={4}>
-                        <Paper className={classes.unlocked}>
+                        <Paper className={classes.locked}>
                             <Grid item className="achievementsIcon">
                                 <GroupAddIcon style={{transform: "scale(1.3)"}}/>
                             </Grid>
@@ -98,7 +98,7 @@ function Achievements() {
                         </Paper>
                     </Grid>
                     <Grid item xs={4}>
-                        <Paper className={classes.unlocked}>
+                        <Paper className={classes.locked}>
                             <Grid item className="achievementsIcon">
                                 <SupervisedUserCircleIcon style={{transform: "scale(1.3)"}}/>
                             </Grid>

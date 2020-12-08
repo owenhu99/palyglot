@@ -49,15 +49,14 @@ function Profile(props) {
     }
 
     function submitInterestsChange() {
-        if (interests) {
-            var temp = interests.split(",").map((interest) => interest.trim());
+        var newInterests;
+        if (interests === undefined) {
+            newInterests = [];
         } else {
-            setMessage("Put Some Interests You Have!");
-            setOpen(true);
-            return
+            newInterests = interests.split(",").map((interest) => interest.trim());
         }
         currentUser.getIdToken(true).then((idToken) => {
-            axios.put("http://localhost:5000/users/me", {interests: temp}, {
+            axios.put("http://localhost:5000/users/me", {interests: newInterests}, {
                 headers: {
                     'Authorization': `Bearer ${idToken}`
                 }
@@ -82,12 +81,12 @@ function Profile(props) {
                             <div className="profilePicContainer">
                                 <input accept="image/*" id="enterNewPic" type="file" />
                                 <label htmlFor="enterNewPic">
-                                    { props.userDetails.profilePicture ?
+                                    { props.userDetails.profilePicture === undefined ? null :
                                         <img 
                                             className="profilePic" 
                                             src={props.userDetails.profilePicture}
                                             alt=""/>
-                                    : null }
+                                    }
                                 </label>
                             </div>
                         </Paper>
@@ -102,15 +101,15 @@ function Profile(props) {
                             <div className="profileInfo">
                                 
                                 <Grid item style={{paddingBottom:"2%"}}>
-                                    { props.userDetails.name ?
+                                    { props.userDetails.name === undefined ? null :
                                         <h3 style={{fontFamily: "Comfortaa, cursive", textTransform:"uppercase"}}>
                                             {props.userDetails.name}
                                         </h3>
-                                    : null }
+                                    }
                                 </Grid>
                                 <Grid item style={{paddingBottom:"4%"}}>
                                 <div className="profileInfo_bio">
-                                    { props.userDetails.bio ? 
+                                    { props.userDetails.bio === undefined ? null :
                                         <form noValidate autoComplete="off">
                                             <TextField 
                                                 className="profileInfo_bioEntry" 
@@ -135,12 +134,12 @@ function Profile(props) {
                                                     Save Changes
                                             </Button>
                                         </form>
-                                    : null }
+                                    }
                                 </div>
                                 </Grid>
                                 <Grid item style={{paddingBottom:"2%"}}>
                                 <div className="profileInfo_interests">
-                                    { props.userDetails.interests ? 
+                                    { props.userDetails.interests === undefined ? null :
                                         <form noValidate autoComplete="off">
                                             <TextField 
                                                 className="profileInfo_interestsEntry" 
@@ -152,7 +151,7 @@ function Profile(props) {
                                                 size= "small" 
                                                 fullWidth
                                                 inputProps={{ maxLength: 40 }}
-                                                defaultValue={props.userDetails.interests}
+                                                defaultValue={props.userDetails.interests.join(', ')}
                                                 value={interests}
                                                 onChange={handleInterestsChange}/>
                                             <Button 
@@ -163,7 +162,7 @@ function Profile(props) {
                                                     Save Changes
                                             </Button>
                                         </form>
-                                    : null }
+                                    }
                                 </div>
                                 </Grid>
                             </div>

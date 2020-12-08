@@ -129,13 +129,13 @@ router.post("/requestMatch", auth, async (req, res) => {
                         toUser.rooms.push(room["_id"]);
                         await fromUser.save();
                         await toUser.save();
-                        return res.json({ roomId: room["_id"] });
+                        return res.json({ msg: "Both of you have sent matches to eachother! Go to My Pals." });
                 } else {
                         fromUser.sentMatches.push(toUserId);
                         toUser.matchInvites.push(req.userId);
                         await fromUser.save();
                         await toUser.save();
-                        return res.json({ msg: "match invite was sent" });
+                        return res.json({ msg: "Match invite was sent." });
                 }
         } catch (err) {
                 return res.status(400).json({ message: err });
@@ -155,8 +155,8 @@ router.post("/acceptMatch", auth, async (req, res) => {
                 sender.sentMatches.splice(
                         sender.sentMatches.indexOf(req.userId), 1
                 );
-                accepter.matches.append(senderId);
-                sender.matches.append(req.userId);
+                accepter.matches.push(senderId);
+                sender.matches.push(req.userId);
                 // create a new room for the matched users
                 const room = new Room({ "participants": [req.userId, senderId] });
                 await room.save();

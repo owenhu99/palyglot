@@ -65,7 +65,7 @@ function Matchmaker() {
         }
       }).then((response) => {
           console.log(response);
-          setInfo(response.data.msg);
+          setInfo("Match invite has been sehnt");
       }, (error) => {
         console.log(error);
         setInfo("Whoops, match invite could not be sent.");

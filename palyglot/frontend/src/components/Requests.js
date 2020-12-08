@@ -57,7 +57,7 @@ function Requests() {
         }
       }).then((response) => {
           console.log(response);
-          setInfo(response.data.msg);
+          setInfo("response.data.msg");
       }, (error) => {
         console.log(error);
         setInfo("Whoops, match invite could not be accepted.");
@@ -70,7 +70,6 @@ function Requests() {
   }
 
   const acceptMatch = (userId) => {
-    console.log(userId)
     currentUser.getIdToken(true).then((idToken) => {
       axios.post("http://localhost:5000/matchmaking/acceptMatch", {
         sender: userId
@@ -80,7 +79,7 @@ function Requests() {
         }
       }).then((response) => {
           console.log(response);
-          setInfo(response.data.msg);
+          setInfo("Match invite has been accepted, go to My Pals.");
       }, (error) => {
         console.log(error);
         setInfo("Whoops, match invite could not be accepted.");

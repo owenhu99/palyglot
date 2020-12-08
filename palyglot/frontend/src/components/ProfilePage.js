@@ -4,6 +4,7 @@ import NavBar from "./NavBar"
 import Profile from "./Profile"
 import Achievements from "./Achievements"
 import Button from '@material-ui/core/Button';
+import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import axios from 'axios';
@@ -62,7 +63,7 @@ function ProfilePage() {
             color="primary" 
             size="large"
             style={{transform: "scale(1.3)"}}
-            component={Link} to={''}>
+            component={Link} to={''}
             onClick={handleLogout}>
               Log Out
           </Button>

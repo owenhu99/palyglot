@@ -4,9 +4,11 @@ import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
+import { useAuth } from '../contexts/AuthContext';
 const axios = require('axios').default;
 
 function Profile(props) {
+    const { currentUser } = useAuth();
     const [interests, setInterests] = useState(props.userDetails.interests);
     const [bio, setBio] = useState(props.userDetails.bio);
     
@@ -21,11 +23,27 @@ function Profile(props) {
      }
 
     function submitBioChange() {
-        axios.put("https://palyglot-backend.herokuapp.com/users/" + props.userDetails.userId, {bio: bio});
+        currentUser.getIdToken(true).then((idToken) => {
+            axios.put("http://localhost:5000/users/me", {bio: bio}, {
+                headers: {
+                    'Authorization': `Bearer ${idToken}`
+                }
+            });
+        }).catch((error) => {
+            console.log(error);
+        });
     }
 
     function submitInterestsChange() {
-        axios.put("https://palyglot-backend.herokuapp.com/users/" + props.userDetails.userId, {interests: interests});
+        currentUser.getIdToken(true).then((idToken) => {
+            axios.put("http://localhost:5000/users/me", {interests: interests}, {
+                headers: {
+                    'Authorization': `Bearer ${idToken}`
+                }
+            });
+        }).catch((error) => {
+            console.log(error);
+        });
     }
 
     return (

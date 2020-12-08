@@ -40,7 +40,7 @@ export default function SignUp() {
             setError("");
             setLoading(true);
             let signupresult = await signup(email, password);
-            await axios.post("https://palyglot-backend.herokuapp.com/users", {
+            await axios.post("http://localhost:5000/users", {
                 userId: signupresult.user.uid,
                 name: name,
                 email: email,
@@ -48,7 +48,7 @@ export default function SignUp() {
                 age: age,
                 knownLanguages: knownLanguages,
                 targetLanguages: targetLanguages
-              });
+            });
             history.push("/profile");
         } catch {
             setError("Failed to create an account");

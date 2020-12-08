@@ -4,6 +4,9 @@ import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
+import Snackbar from '@material-ui/core/Snackbar';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 import { useAuth } from '../contexts/AuthContext';
 const axios = require('axios').default;
 
@@ -11,6 +14,15 @@ function Profile(props) {
     const { currentUser } = useAuth();
     const [interests, setInterests] = useState(props.userDetails.interests);
     const [bio, setBio] = useState(props.userDetails.bio);
+    const [open, setOpen] = React.useState(false);
+    const [snackbarChangeMessage, setMessage] = React.useState("");
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+        setOpen(false);
+      };
     
     function handleBioChange(e){
          e.preventDefault();
@@ -32,11 +44,20 @@ function Profile(props) {
         }).catch((error) => {
             console.log(error);
         });
+        setMessage("Bio Has Been Changed!")
+        setOpen(true);
     }
 
     function submitInterestsChange() {
+        if (interests) {
+            var temp = interests.split(",").map((interest) => interest.trim());
+        } else {
+            setMessage("Put Some Interests You Have!");
+            setOpen(true);
+            return
+        }
         currentUser.getIdToken(true).then((idToken) => {
-            axios.put("http://localhost:5000/users/me", {interests: interests}, {
+            axios.put("http://localhost:5000/users/me", {interests: temp}, {
                 headers: {
                     'Authorization': `Bearer ${idToken}`
                 }
@@ -44,6 +65,8 @@ function Profile(props) {
         }).catch((error) => {
             console.log(error);
         });
+        setMessage("Interests Have Been Changed!");
+        setOpen(true);
     }
 
     return (
@@ -59,10 +82,12 @@ function Profile(props) {
                             <div className="profilePicContainer">
                                 <input accept="image/*" id="enterNewPic" type="file" />
                                 <label htmlFor="enterNewPic">
+                                    { props.userDetails.profilePicture ?
                                         <img 
                                             className="profilePic" 
                                             src={props.userDetails.profilePicture}
                                             alt=""/>
+                                    : null }
                                 </label>
                             </div>
                         </Paper>
@@ -75,63 +100,70 @@ function Profile(props) {
                             border="1px solid black" 
                             style={{padding: "25px", paddingRight:"8%"}}>
                             <div className="profileInfo">
+                                
                                 <Grid item style={{paddingBottom:"2%"}}>
-                                    <h3 style={{fontFamily: "Comfortaa, cursive", textTransform:"uppercase"}}>
-                                        {props.userDetails.name}
-                                    </h3>
+                                    { props.userDetails.name ?
+                                        <h3 style={{fontFamily: "Comfortaa, cursive", textTransform:"uppercase"}}>
+                                            {props.userDetails.name}
+                                        </h3>
+                                    : null }
                                 </Grid>
                                 <Grid item style={{paddingBottom:"4%"}}>
                                 <div className="profileInfo_bio">
-                                    <form noValidate autoComplete="off">
-                                        <TextField 
-                                            className="profileInfo_bioEntry" 
-                                            label="Bio" defaultValue={props.userDetails.bio} 
-                                            variant="outlined"
-                                            InputLabelProps={{
-                                                shrink: true,
-                                            }} 
-                                            multiline 
-                                            rows={3} 
-                                            rowsMax={3} 
-                                            size= "small"
-                                            fullWidth 
-                                            inputProps={{ maxLength: 200 }}
-                                            value={bio}
-                                            onChange={handleBioChange}/>
-                                        <Button 
-                                            variant="contained"
-                                            color="primary" 
-                                            onClick={submitBioChange}
-                                            size="small">
-                                                Save Changes
-                                        </Button>
-                                    </form>
+                                    { props.userDetails.bio ? 
+                                        <form noValidate autoComplete="off">
+                                            <TextField 
+                                                className="profileInfo_bioEntry" 
+                                                label="Bio" defaultValue={props.userDetails.bio} 
+                                                variant="outlined"
+                                                InputLabelProps={{
+                                                    shrink: true,
+                                                }} 
+                                                multiline 
+                                                rows={3} 
+                                                rowsMax={3} 
+                                                size= "small"
+                                                fullWidth 
+                                                inputProps={{ maxLength: 200 }}
+                                                value={bio}
+                                                onChange={handleBioChange}/>
+                                            <Button 
+                                                variant="contained"
+                                                color="primary" 
+                                                onClick={submitBioChange}
+                                                size="small">
+                                                    Save Changes
+                                            </Button>
+                                        </form>
+                                    : null }
                                 </div>
                                 </Grid>
                                 <Grid item style={{paddingBottom:"2%"}}>
                                 <div className="profileInfo_interests">
-                                    <form noValidate autoComplete="off">
-                                        <TextField 
-                                            className="profileInfo_interestsEntry" 
-                                            InputLabelProps={{
-                                                shrink: true,
-                                            }} 
-                                            label="Interests" 
-                                            variant="outlined"  
-                                            size= "small" 
-                                            fullWidth
-                                            inputProps={{ maxLength: 75 }}
-                                            defaultValue={props.userDetails.interests}
-                                            value={interests}
-                                            onChange={handleInterestsChange}/>
-                                        <Button 
-                                            variant="contained"
-                                            color="primary" 
-                                            onClick={submitInterestsChange}
-                                            size="small">
-                                                Save Changes
-                                        </Button>
-                                    </form>
+                                    { props.userDetails.interests ? 
+                                        <form noValidate autoComplete="off">
+                                            <TextField 
+                                                className="profileInfo_interestsEntry" 
+                                                InputLabelProps={{
+                                                    shrink: true,
+                                                }} 
+                                                label="Interests (List your interests seperated by commas)" 
+                                                variant="outlined"  
+                                                size= "small" 
+                                                fullWidth
+                                                inputProps={{ maxLength: 40 }}
+                                                defaultValue={props.userDetails.interests}
+                                                value={interests}
+                                                onChange={handleInterestsChange}/>
+                                            <Button 
+                                                variant="contained"
+                                                color="primary" 
+                                                onClick={submitInterestsChange}
+                                                size="small">
+                                                    Save Changes
+                                            </Button>
+                                        </form>
+                                    : null }
                                 </div>
                                 </Grid>
                             </div>
@@ -139,6 +171,23 @@ function Profile(props) {
                     </Grid>
                 </Grid>
             </div>
+                <Snackbar
+                    anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'left',
+                    }}
+                    open={open}
+                    autoHideDuration={6000}
+                    onClose={handleClose}
+                    message={snackbarChangeMessage}
+                    action={
+                    <React.Fragment>
+                        <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>
+                        <CloseIcon fontSize="small" />
+                        </IconButton>
+                    </React.Fragment>
+                    }
+                />
         </div>
     );
 }

@@ -56,7 +56,7 @@ function ProfilePage() {
       <NavBar/>
       <div className="pageBody" >
         <Profile userDetails={userDetails}/>
-        <Achievements />
+        <Achievements userDetails={userDetails}/>
         <div className="logOut">
           <Button 
             variant="contained"

@@ -1,4 +1,4 @@
-import React, { useState } from "react";import "../css/Achievements.css";
+import React from "react";import "../css/Achievements.css";
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -11,7 +11,6 @@ import ImportContactsIcon from '@material-ui/icons/ImportContacts';
 import WhatshotIcon from '@material-ui/icons/Whatshot';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
-const axios = require('axios').default;
 
 const useStyles = makeStyles((theme) => ({
     unlocked: {
@@ -31,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
       },
   }));
 
-function Achievements() {
+function Achievements(props) {
 
     const classes = useStyles();
 
@@ -43,12 +42,12 @@ function Achievements() {
             <div className="achievementsBody">
                 <Grid className="achievementsBody_grid" container spacing={3}>
                     <Grid item xs={4}>
-                        <Paper className={classes.locked}>
+                        <Paper className={props.userDetails.bio ? classes.unlocked : classes.locked}>
                             <Grid item className="achievementsIcon">
                                 <ImportContactsIcon style={{transform: "scale(1.3)"}}/>
                             </Grid>
                             <Grid item xs>
-                                <Typography><h4>Open Book</h4></Typography>
+                                <Typography style={{ fontWeight: "bold" }}>Open Book</Typography>
                                 <Typography>Let others get to know you by writing a bio.</Typography>
                             </Grid>
                         </Paper>
@@ -59,18 +58,18 @@ function Achievements() {
                                 <PhotoCameraIcon style={{transform: "scale(1.3)"}}/>
                             </Grid>
                             <Grid item xs>
-                                <Typography><h4>Photogenic</h4></Typography>  
+                                <Typography style={{ fontWeight: "bold" }}>Photogenic</Typography>  
                                 <Typography>Set up a Profile Picture.</Typography>
                             </Grid>
                         </Paper>
                     </Grid>
                     <Grid item xs={4}>
-                        <Paper className={classes.locked}>
+                        <Paper className={firstPal(props.userDetails.matches) ? classes.unlocked : classes.locked}>
                             <Grid item className="achievementsIcon">
                                 <PersonAddIcon style={{transform: "scale(1.3)"}}/>
                             </Grid>
                             <Grid item xs>
-                                <Typography><h4>First for Everything</h4></Typography>  
+                                <Typography style={{ fontWeight: "bold" }}>First for Everything</Typography>  
                                 <Typography>Match with your first Pal.</Typography>
                             </Grid>
                         </Paper>
@@ -81,7 +80,7 @@ function Achievements() {
                                 <GroupAddIcon style={{transform: "scale(1.3)"}}/>
                             </Grid>
                             <Grid item xs>
-                                <Typography><h4>Pal-pular</h4></Typography>
+                                <Typography style={{ fontWeight: "bold" }}>Pal-pular</Typography>
                                 <Typography>Message five Pals.</Typography>
                             </Grid>
                         </Paper>
@@ -92,7 +91,7 @@ function Achievements() {
                                 <SupervisorAccountIcon style={{transform: "scale(1.3)"}}/>
                             </Grid>
                             <Grid item xs>
-                                <Typography><h4>Language Tutor</h4></Typography>
+                                <Typography style={{ fontWeight: "bold" }}>Language Tutor</Typography>
                                 <Typography>Have a 3 day streak with someone in your known language.</Typography>
                             </Grid>
                         </Paper>
@@ -103,7 +102,7 @@ function Achievements() {
                                 <SupervisedUserCircleIcon style={{transform: "scale(1.3)"}}/>
                             </Grid>
                             <Grid item xs>
-                                <Typography><h4>Learn Something New Every Message</h4></Typography>
+                                <Typography style={{ fontWeight: "bold" }}>Learn Something New Every Message</Typography>
                                 <Typography>Have a 3 day streak with someone in your target language.</Typography>
                             </Grid>
                         </Paper>
@@ -114,7 +113,7 @@ function Achievements() {
                                 <WhatshotIcon style={{transform: "scale(1.3)", color: "#ffb061"}}/>
                             </Grid>
                             <Grid item xs>
-                                <Typography><h4>Building Habits</h4></Typography>
+                                <Typography style={{ fontWeight: "bold" }}>Building Habits</Typography>
                                 <Typography>Have a 21 day streak with a Pal.</Typography>
                             </Grid>
                         </Paper>
@@ -125,7 +124,7 @@ function Achievements() {
                                 <WhatshotIcon style={{transform: "scale(1.3)", color: "#ff8861"}}/>
                             </Grid>
                             <Grid item xs>
-                                <Typography><h4>Growing Friendship</h4></Typography>  
+                                <Typography style={{ fontWeight: "bold" }}>Growing Friendship</Typography>  
                                 <Typography>Have a 50 day streak with a Pal.</Typography>
                             </Grid>
                         </Paper>
@@ -136,7 +135,7 @@ function Achievements() {
                                 <WhatshotIcon style={{transform: "scale(1.3)", color: "#ff6161"}}/>
                             </Grid>
                             <Grid item xs>
-                                <Typography><h4>Pal for Life</h4></Typography>  
+                                <Typography style={{ fontWeight: "bold" }}>Pal for Life</Typography>  
                                 <Typography>Have a 100 day streak with a Pal.</Typography>
                             </Grid>
                         </Paper>
@@ -145,6 +144,10 @@ function Achievements() {
             </div>
         </div>
     );
+}
+
+function firstPal(matches) {
+    return Array.isArray(matches) && matches.length ? true : false;
 }
 
 export default Achievements;

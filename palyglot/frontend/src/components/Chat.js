@@ -2,7 +2,7 @@ import { Avatar, IconButton, Tooltip } from "@material-ui/core";
 import { AttachFile, InsertEmoticon, SearchOutlined } from "@material-ui/icons";
 import SettingsIcon from '@material-ui/icons/Settings';
 import { useAuth } from '../contexts/AuthContext';
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import axios from "axios";
 import Moment from 'react-moment';
 import "../css/Chat.css";
@@ -40,6 +40,14 @@ function Chat(props) {
           textTransform: 'none',
         },
       })(Button);
+
+    const messagesEndRef = useRef(null)
+
+    const scrollToBottom = () => {
+    messagesEndRef.current.scrollIntoView({ behavior: "smooth" })
+    }
+
+    useEffect(scrollToBottom, [props.messages]);
     
     useEffect(() => {
         if (props.room !== "-1") {
@@ -247,6 +255,7 @@ function Chat(props) {
                         </Tooltip>
                     )
                 })}
+                <div ref={messagesEndRef} />
             </div>
             <div className="accent_keyboard">
                 <Button onClick={() => setUseUppercaseAccents(!useUppercaseAccents)}>↑↓</Button>

@@ -113,26 +113,35 @@ router.post("/requestMatch", auth, async (req, res) => {
                 const toUser = await User.findOne({ userId: toUserId });
                 if (!toUser) throw new Error("target user not found");
                 // toUser has already sent an invite to fromUser, so create a match
-                if (fromUser.matchInvites.includes(toUserId)) {
-                        fromUser.matchInvites.splice(
-                                fromUser.matchInvites.indexOf(toUserId), 1
-                        );
-                        toUser.sentMatches.splice(
-                                toUser.sentMatches.indexOf(req.userId), 1
-                        );
-                        fromUser.matches.push(toUserId);
-                        toUser.matches.push(req.userId);
-                        // create a new room for the matched users
-                        const room = new Room({ "participants": [req.userId, toUserId] });
-                        await room.save();
-                        fromUser.rooms.push(room["_id"]);
-                        toUser.rooms.push(room["_id"]);
-                        await fromUser.save();
-                        await toUser.save();
-                        return res.json({ roomId: room["_id"] });
-                } else {
-                        fromUser.sentMatches.push(toUserId);
-                        toUser.matchInvites.push(req.userId);
+                let found = false;
+                for (let i = 0; i < fromUser.matchInvites.length; i++) {
+                        if (fromUser.matchInvites[i].userId === toUserId) {
+                                found = true;
+                                fromUser.matchInvites = fromUser.matchInvites.filter(
+                                        function(obj) {
+                                                return obj.userId !== toUserId;
+                                        }
+                                );
+                                toUser.sentMatches = toUser.sentMatches.filter(
+                                        function(obj) {
+                                                return obj.userId !== fromUserId;
+                                        }
+                                );
+                                toUser.matches.push(fromUser);
+                                fromUser.matches.push(toUser);
+                                const room = new Room({ "participants": [req.userId, toUserId] });
+                                await room.save();
+                                fromUser.rooms.push(room["_id"]);
+                                toUser.rooms.push(room["_id"]);
+                                await fromUser.save();
+                                await toUser.save();
+                                return res.json({ roomId: room["_id"] });
+                        }
+                }
+
+                if (!found) {
+                        fromUser.sentMatches.push(toUser);
+                        toUser.matchInvites.push(fromUser);
                         await fromUser.save();
                         await toUser.save();
                         return res.json({ msg: "match invite was sent" });
@@ -145,20 +154,21 @@ router.post("/requestMatch", auth, async (req, res) => {
 router.post("/acceptMatch", auth, async (req, res) => {
         try {
                 const senderId = req.body.sender;
-                const accepter = await User.findOne({ userId: req.userId });
+                const accepterId = req.body.accepter;
+                const accepter = await User.findOne({ userId: accepterId });
                 if (!accepter) throw new Error("current user not found");
                 const sender = await User.findOne({ userId: senderId });
                 if (!sender) throw new Error("target user not found");
-                accepter.matchInvites.splice(
-                        accepter.matchInvites.indexOf(senderId), 1
-                );
-                sender.sentMatches.splice(
-                        sender.sentMatches.indexOf(req.userId), 1
-                );
-                accepter.matches.append(senderId);
-                sender.matches.append(req.userId);
+                accepter.matchInvites = accepter.matchInvites.filter(function(obj) {
+                        return obj.userId !== senderId;
+                });
+                sender.sentMatches = sender.sentMatches.filter(function(obj) {
+                        return obj.userId !== accepterId;
+                })
+                accepter.matches.append(accepter);
+                sender.matches.append(sender);
                 // create a new room for the matched users
-                const room = new Room({ "participants": [req.userId, senderId] });
+                const room = new Room({ "participants": [accepterId, senderId] });
                 await room.save();
                 accepter.rooms.push(room["_id"]);
                 sender.rooms.push(room["_id"]);
@@ -172,18 +182,19 @@ router.post("/acceptMatch", auth, async (req, res) => {
 
 router.post("/declineMatch", auth, async (req, res) => {
         try {
-                const decliner = await User.findOne({ userId: req.userId });
+                const decliner = await User.findOne({ userId: req.body.decliner });
                 if (!decliner) throw new Error("current user not found");
+                const declinerId = req.body.decliner;
                 const senderId = req.body.sender;
                 const sender = await User.findOne({ userId: senderId });
                 if (!sender) throw new Error("target user not found");
 
-                decliner.matchInvites.splice(
-                        decliner.matchInvites.indexOf(senderId), 1
-                );
-                sender.sentMatches.splice(
-                        sender.sentMatches.indexOf(req.userId), 1
-                );
+                decliner.matchInvites = decliner.matchInvites.filter(function(obj) {
+                        return obj.userId !== senderId;
+                });
+                sender.sentMatches = sender.sentMatches.filter(function(obj) {
+                        return obj.userId !== declinerId;
+                });
                 sender.save();
                 decliner.save();
                 return res.json({ msg: "match invite declined successfully" });

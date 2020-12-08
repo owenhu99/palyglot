@@ -59,17 +59,17 @@ const UserSchema = new mongoose.Schema({
         default: []
     } ,
     sentMatches: {
-        type: [String],
+        type: [Object],
         required: false,
         default: []
     } ,
     matchInvites : {
-        type: [String],
+        type: [Object],
         required: false,
         default: []
     } ,
     matches : {
-        type: [String],
+        type: [Object],
         required: false,
         default: []
     }

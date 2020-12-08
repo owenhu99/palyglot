@@ -29,54 +29,70 @@ function Requests() {
 
   const classes = useStyles();
   const { currentUser } = useAuth();
-  const [requestIds, setRequestIds] = useState([]);
-  const [currRequest, setCurrRequest] = useState({name: "", gender: "", age: "", knownLanguages: [], interests: [], profilePicture: ""});
-  const [currRequestId, setCurrRequestId] = useState(0);
+  const [requests, setRequests] = useState([]);
+  const [currRequest, setCurrRequest] = useState(0);
   const [info, setInfo] = useState("");
   
   useEffect(() => {    
     currentUser.getIdToken(true).then((idToken) => {
-      axios.get("http://localhost:5000/users/me", {
+      axios.get("http://localhost:5000/users/getUsers", {
+        headers: {
+          'Authorization': `Bearer ${idToken}`
+        }
+      }).then((res) => {
+        setRequests(res.data);
+      });
+    }).catch((err) => {
+      console.log(err);
+    });
+  }, []);
+
+  const declineMatch = (userId) => {
+    currentUser.getIdToken(true).then((idToken) => {
+      axios.post("http://localhost:5000/matchmaking/declineMatch", {
+        sender: userId
+      }, {
         headers: {
           'Authorization': `Bearer ${idToken}`
         }
       }).then((response) => {
-          setRequestIds(response.data.matchInvites)
+          console.log(response);
+          setInfo(response.data.msg);
+      }, (error) => {
+        console.log(error);
+        setInfo("Whoops, match invite could not be accepted.");
       });
     }).catch((error) => {
       console.log(error);
     });
-  }, []);
 
-//   const dontMatchUser = () => {
-//     setCurrMatch(currMatch + 1);
-//     setInfo("");
-//   }
+    setCurrRequest(currRequest + 1);
+  }
 
-//   const matchUser = (toUserId) => {
-//     console.log("here")
-//     currentUser.getIdToken(true).then((idToken) => {
-//       axios.post("http://localhost:5000/matchmaking/requestMatch", {
-//         toUser: toUserId
-//       }, {
-//         headers: {
-//           'Authorization': `Bearer ${idToken}`
-//         }
-//       }).then((response) => {
-//           console.log(response);
-//           setInfo(response.data.msg);
-//       }, (error) => {
-//         console.log(error);
-//         setInfo("Whoops, match invite could not be sent.");
-//       });
-//     }).catch((error) => {
-//       console.log(error);
-//     });
+  const acceptMatch = (userId) => {
+    console.log(userId)
+    currentUser.getIdToken(true).then((idToken) => {
+      axios.post("http://localhost:5000/matchmaking/acceptMatch", {
+        sender: userId
+      }, {
+        headers: {
+          'Authorization': `Bearer ${idToken}`
+        }
+      }).then((response) => {
+          console.log(response);
+          setInfo(response.data.msg);
+      }, (error) => {
+        console.log(error);
+        setInfo("Whoops, match invite could not be accepted.");
+      });
+    }).catch((error) => {
+      console.log(error);
+    });
 
-//     setCurrMatch(currMatch + 1);
-//   }
+    setCurrRequest(currRequest + 1);
+  }
 
-  if (currRequestId >= requestIds.length) {
+  if (currRequest >= requests.length) {
     return (
       <div>
       <NavBar></NavBar>
@@ -95,14 +111,14 @@ function Requests() {
           <Card className={classes.root}>
             <div className="cardHeader">
               <Typography variant="h5" color="textPrimary" component="h5">
-                {currRequest.name}
+                {requests[currRequest].name}
               </Typography>
               <Typography variant="body2" color="textSecondary" component="p">
-                {currRequest.gender + ", " + currRequest.age}
+                {requests[currRequest].gender + ", " + requests[currRequest].age}
               </Typography>
               <Typography variant="body2" color="textSecondary" component="p">
-              {currRequest.knownLanguages.map(function(language, i) {
-                if (i == currRequest.knownLanguages.length - 1) {
+              {requests[currRequest].knownLanguages.map(function(language, i) {
+                if (i == requests[currRequest].knownLanguages.length - 1) {
                   return(
                     language
                   )
@@ -117,21 +133,21 @@ function Requests() {
             </div>
             <CardMedia
               className={classes.media}
-              image={currRequest.profilePicture}
+              image={requests[currRequest].profilePicture}
             />
             <CardContent>
               <Typography variant="body2" color="textPrimary" component="p">
                 Bio
               </Typography>
               <Typography variant="body2" color="textSecondary" component="p">
-                {currRequest.bio === "" ? "This user has not set their bio." : currRequest.bio}
+                {requests[currRequest].bio === "" ? "This user has not set their bio." : requests[currRequest].bio}
               </Typography>
               <Typography className="interests" variant="body2" color="textPrimary" component="p">
                 Interests
               </Typography>
               <Typography variant="body2" color="textSecondary" component="p">
-                {currRequest.interests.map(function(interest, i) {
-                    if (i == currRequest.interests.length - 1) {
+                {requests[currRequest].interests.map(function(interest, i) {
+                    if (i == requests[currRequest].interests.length - 1) {
                       return(
                         interest
                       )
@@ -145,10 +161,10 @@ function Requests() {
               </Typography>
             </CardContent>
             <CardActions disableSpacing>
-              <IconButton onClick={()=>console.log("clicked")} aria-label="send match">
+              <IconButton onClick={() => acceptMatch(requests[currRequest].userId)} aria-label="send match">
                 <CheckIcon />
               </IconButton>
-              <IconButton className={classes.clear} onClick={()=>console.log("clicked")} aria-label="dont match">
+              <IconButton className={classes.clear} onClick={() => declineMatch(requests[currRequest].userId)} aria-label="dont match">
                 <ClearIcon />
               </IconButton>
             </CardActions>

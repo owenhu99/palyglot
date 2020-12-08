@@ -71,10 +71,13 @@ router.delete('/me', auth, async (req, res) => {
 
 router.get('/getUsers', auth, async (req, res) => {
 	try {
-		const users = await User.find({ userId: { $in: req.body.users } });
+		const user = await User.findOne({ userId: req.userId })
+		if (!user) throw new Error("current user not found")
+		const users = await User.find({ userId: { $in: user.matchInvites } });
 		return res.send(users);
-	} catch (err) {
-		return res.status(400).send(err);
+	} catch (error) {
+		console.log(error)
+		return res.status(400).send(error)
 	}
 })
 

@@ -35,10 +35,17 @@ function Matchmaker() {
   const [info, setInfo] = useState("");
   
   useEffect(() => {    
-    axios.get("http://localhost:5000/matchmaking/" + currentUser.uid)
-    .then((response) => {
-        setMatches(response.data.matches);
-        console.log(response.data.matches);
+    currentUser.getIdToken(true).then((idToken) => {
+      axios.get("http://localhost:5000/matchmaking/", {
+        headers: {
+          'Authorization': `Bearer ${idToken}`
+        }
+      }).then((response) => {
+          setMatches(response.data.matches);
+          console.log(response.data.matches);
+      });
+    }).catch((error) => {
+      console.log(error);
     });
   }, []);
 
@@ -49,13 +56,22 @@ function Matchmaker() {
 
   const matchUser = (toUserId) => {
     console.log("here")
-    axios.post("http://localhost:5000/matchmaking/requestMatch", {fromUser: currentUser.uid, toUser: toUserId})
-    .then((response) => {
-        console.log(response);
-        setInfo(response.data.msg);
-    }, (error) => {
+    currentUser.getIdToken(true).then((idToken) => {
+      axios.post("http://localhost:5000/matchmaking/requestMatch", {
+        toUser: toUserId
+      }, {
+        headers: {
+          'Authorization': `Bearer ${idToken}`
+        }
+      }).then((response) => {
+          console.log(response);
+          setInfo(response.data.msg);
+      }, (error) => {
+        console.log(error);
+        setInfo("Whoops, match invite could not be sent.");
+      });
+    }).catch((error) => {
       console.log(error);
-      setInfo("Whoops, match invite could not be sent.");
     });
 
     setCurrMatch(currMatch + 1);

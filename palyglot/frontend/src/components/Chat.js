@@ -1,9 +1,10 @@
-import { Avatar, IconButton } from "@material-ui/core";
+import { Avatar, IconButton, Tooltip } from "@material-ui/core";
 import { AttachFile, InsertEmoticon, SearchOutlined } from "@material-ui/icons";
 import SettingsIcon from '@material-ui/icons/Settings';
 import { useAuth } from '../contexts/AuthContext';
 import React, { useEffect } from "react";
 import axios from "axios";
+import Moment from 'react-moment';
 import "../css/Chat.css";
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -62,7 +63,7 @@ function Chat(props) {
                 console.log(error);
             })
         }
-    })
+    }, [props.room])
 
     function getParticipantName(id) {
         if (id === sender) {
@@ -232,20 +233,18 @@ function Chat(props) {
             </div>
             <div className="chat_body">
                 {props.messages.map((message, i) => {
+                    
                     return (
-                        <div>
-                            <p key={i} className={`chat_message ${message.from === currentUser.uid && "chat_receiver"}`}
+                        <Tooltip title={<Moment format="YYYY-MM-DD HH:mm">{message.date}</Moment>} placement={message.from === currentUser.uid ? "left-end" : "right-end"}>
+                            <p key={i} className={`chat_message ${message.from === currentUser.uid ? "chat_receiver": "chat_sender"}`}
                             >
                                 <span className="chat_name">
                                     {getParticipantName(message.from)}
                                 </span>
                                 {message.text}
-                                <span className="chat_timestamp">
-                                    {message.date}
-                                </span>
                                 <a onClick={() => translateMessage(message.text)}><i class="fa fa-language translateButton" aria-hidden="true"></i></a>
                             </p>
-                        </div>
+                        </Tooltip>
                     )
                 })}
             </div>

@@ -21,7 +21,7 @@ export default function SignUp() {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [gender, setGender] = useState("");
-    const [age, setAge] = useState(18);
+    const [age, setAge] = useState("18");
     const [knownLanguages, setKnownLanguages] = useState([]);
     const [targetLanguages, setTargetLanguages] = useState([]);
     const { signup, currentUser } = useAuth();
@@ -36,6 +36,16 @@ export default function SignUp() {
             return setError("Passwords do not match.");
         }
 
+        var intAge = parseInt(age);
+
+        if (isNaN(intAge)) {
+            return setError("Invalid age entered.");
+        }
+
+        if (intAge < 18) {
+            return setError("You must be 18+ to use Palyglot.");
+        }
+
         try {
             setError("");
             setLoading(true);
@@ -45,7 +55,7 @@ export default function SignUp() {
                 name: name,
                 email: email,
                 gender: gender,
-                age: age,
+                age: intAge,
                 knownLanguages: knownLanguages,
                 targetLanguages: targetLanguages
             });
@@ -143,6 +153,19 @@ export default function SignUp() {
                                     value={email}
                                     onChange={handleEmailChange}
                                 />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField 
+                                        required
+                                        fullWidth
+                                        id="age"
+                                        variant="outlined"
+                                        margin="normal"
+                                        name="age"
+                                        label="Age"
+                                        value={age}
+                                        onChange={handleAgeChange}
+                                    />
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField 

@@ -81,7 +81,7 @@ function Matchmaker() {
     return (
       <div>
       <NavBar></NavBar>
-      <div class="matches">
+      <div class="nomatches">
         <h1>No more matches left.</h1>
       </div>
     </div>

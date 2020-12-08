@@ -13,3 +13,11 @@
 .interests {
     padding-top: 1%;
 }
+
+.nomatches {
+    text-align: center;
+    padding-top: 10%;
+    color: white;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;
+}

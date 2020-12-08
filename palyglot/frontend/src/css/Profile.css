@@ -32,16 +32,16 @@
 
 .profileBody {
   display: flex;
-  height: 45vh;
+  flex-grow: 1;
   width: 80vw;
-  /* background-color: lightpink; */
   padding-bottom: 30px;
 }
 
 .profilePicContainer {
-  display: flex;
-  flex: 0.4;
-  /* background-color: lightpink; */
+  width: 60%;
+  margin-top: 2%;
+  margin-left: 20%;
+  height: 100%;
 }
 
 .profilePicContainer > input {
@@ -53,11 +53,9 @@
   transition: 0.5s ease;
   backface-visibility: hidden;
   display: block;
-  width: 240px;
-  height: 240px;
+  width: 100%;
+  max-width: 100%;
   border-radius: 5px;
-  margin-left: 34%;
-  margin-top: 30px;
   border: 1px solid black;
 }
 
@@ -69,14 +67,12 @@
 .profileInfo {
   display: flex;
   flex-direction: column;
-  flex: 0.6;
   margin-top: 30px;
 }
 
-.profileInfo > h4 {
+.profileInfo > h3 {
   font-family: "Comfortaa", cursive;
   text-transform: uppercase;
-  margin-bottom: 2vh;
 }
 
 .profileInfo_bio {
@@ -85,28 +81,31 @@
 
 .profileInfo_bioEntry {
   font-family: "Comfortaa", cursive;
-  width: 500px;
+  width: 100%;
   overflow-wrap: normal;
-  margin-bottom: 5vh;
 }
 
 .profileInfo_bio > form > .MuiButton-root {
   font-family: "Comfortaa", cursive;
-  margin-top: 6px;
-  margin-left: 170px;
+  margin-top: 2%;
+  margin-left: 40%;
+  margin-right: 40%;
   margin-bottom: 15px;
   size: "small";
   box-shadow: none;
 }
 
 .profileInfo_interestsEntry {
-  width: 500px;
+  font-family: "Comfortaa", cursive;
+  width: 100%;
+  overflow-wrap: normal;
 }
 
 .profileInfo_interests > form > .MuiButton-root {
   font-family: "Comfortaa", cursive;
-  margin-top: 6px;
-  margin-left: 170px;
+  margin-top: 2%;
+  margin-left: 40%;
+  margin-right: 40%;
   size: "small";
   box-shadow: none;
 }

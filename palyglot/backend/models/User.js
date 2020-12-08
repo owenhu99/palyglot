@@ -15,12 +15,6 @@ const UserSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
-    tokens: [{
-        token: {
-            type: String,
-            required: true
-        }
-    }],
     name: {
         type: String,
         required: true
@@ -45,9 +39,9 @@ const UserSchema = new mongoose.Schema({
         default: ""
     },
     interests: {
-        type: String,
+        type: [String],
         required: false,
-        default: ""
+        default: []
     },
     knownLanguages: {
         type: [String],
@@ -59,12 +53,22 @@ const UserSchema = new mongoose.Schema({
         required: false,
         default: []
     },
+    rooms: {
+        type: [String],
+        required: false,
+        default: []
+    } ,
     sentMatches: {
         type: [String],
         required: false,
         default: []
     } ,
-    rooms: {
+    matchInvites : {
+        type: [String],
+        required: false,
+        default: []
+    } ,
+    matches : {
         type: [String],
         required: false,
         default: []
@@ -79,15 +83,6 @@ UserSchema.pre('save', async function (next) {
     }
     next()
 })
-
-UserSchema.methods.generateAuthToken = async function() {
-    // Generate an auth token for the user
-    const user = this
-    const token = jwt.sign({_id: user._id}, process.env.JWT_KEY)
-    user.tokens = user.tokens.concat({token})
-    await user.save()
-    return token
-}
 
 UserSchema.statics.findByCredentials = async (email, password) => {
     // Search for a user by email and password

@@ -2,41 +2,69 @@ var express = require('express');
 var router = express.Router();
 const Room = require('../models/Room');
 const User = require('../models/User')
+const auth = require('../middleware/auth')
 
 /* POST, creating a new room */
-router.post('/', async(req, res) => {
+router.post('/', auth, async(req, res) => {
     try {
-        const participants = req.body["participants"]
-
-        if (!await User.findOne({userId: participants[0]}) || 
-            !await User.findOne({userId: participants[1]}))
-        return res.status(400).send({error: "invalid userId"})
-
+        const targetUserId = req.body["targetUserId"]
+        // check that current user exists
+        if (!await User.findOne({userId: req.userId})) 
+            throw new Error("Current user not found")
+        // check that target user exists
+        if (!await User.findOne({userId: targetUserId}))
+            return res.status(400).send({error: "invalid userId"})
+        // check if a room already exists
         if (await Room.findOne({
             $or: [
-                { participants: [participants[0], participants[1]] },
-                { participants: [participants[1], participants[0]] }
+                { participants: [targetUserId, req.userId] },
+                { participants: [req.userId, targetUserId] }
             ]
         })) return res.status(400).send({error: "room already exists"})
-
-        const room = new Room(req.body)
+        // add new room
+        const room = new Room({"participants": [req.userId, targetUserId]})
         await room.save()
         await User.findOneAndUpdate(
-            { userId: participants[0] },
+            { userId: req.userId },
             { $addToSet: { rooms: room["_id"] } }
         )
         await User.findOneAndUpdate(
-            { userId: participants[1] },
+            { userId: targetUserId },
             { $addToSet: { rooms: room["_id"] } }
         )
-        res.send({roomId: room["_id"]})
+        res.send(room)
     } catch (error) {
         console.log(error)
         res.status(400).send(error)
     }
 })
 
-/* DELETE, delete a room */
+/* GET, get room by room _id and auth token*/
+router.get('/:roomId', auth, async(req, res) => {
+    try {
+        const room = await Room.findOne({_id: req.params.roomId})
+        if (!room.participants.includes(req.userId)) {
+            res.status(403).send('Unauthorized')
+        }
+        // Get
+        var secondUser;
+        if (room.participants[0] == req.userId) {
+            secondUser = room.participants[1]
+        } else {
+            secondUser = room.participants[0]
+        }
+        const user = await User.findOne({userId: secondUser})
+        if (!user) throw new Error("Second user not found")
+        res.send({room, user})
+    } catch (error) {
+        console.log(error)
+        res.status(400).send(error)
+    }
+})
+
+/* To be implemented: unmatch two users*/
+
+/* FOR DEV PURPOSES, TO BE REMOVED FOR DEPLOYMENT */
 router.delete('/:roomId', async(req, res) => {
     try {
         const room = await Room.findOneAndDelete({_id: req.params.roomId})
@@ -54,7 +82,7 @@ router.delete('/:roomId', async(req, res) => {
     }
 })
 
-/* GET, get all rooms */
+/* FOR DEV PURPOSES, TO BE REMOVED FOR DEPLOYMENT */
 router.get('/', async(req, res) => {
     try {
 		const rooms = await Room.find();
@@ -62,17 +90,6 @@ router.get('/', async(req, res) => {
 	} catch (err) {
 		res.json(err);
 	}
-})
-
-/* [TEMPORARY] GET, get room by room _id */
-router.get('/:roomId', async(req, res) => {
-    try {
-        const room = await Room.findOne({_id: req.params.roomId})
-        res.send(room)
-    } catch (error) {
-        console.log(error)
-        res.status(400).send(error)
-    }
 })
 
 module.exports = router;

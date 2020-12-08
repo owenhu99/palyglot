@@ -124,7 +124,7 @@ function Matchmaker() {
                 Bio
               </Typography>
               <Typography variant="body2" color="textSecondary" component="p">
-                {matches[currMatch].bio}
+                {matches[currMatch].bio === "" ? "This user has not set their bio." : matches[currMatch].bio}
               </Typography>
               <Typography className="interests" variant="body2" color="textPrimary" component="p">
                 Interests

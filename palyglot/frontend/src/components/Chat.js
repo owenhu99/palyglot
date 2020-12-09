@@ -1,5 +1,5 @@
 import { Avatar, IconButton, Tooltip } from "@material-ui/core";
-import { AttachFile, InsertEmoticon, SearchOutlined } from "@material-ui/icons";
+import {InsertEmoticon} from "@material-ui/icons";
 import SettingsIcon from '@material-ui/icons/Settings';
 import { useAuth } from '../contexts/AuthContext';
 import React, { useEffect, useRef } from "react";
@@ -274,7 +274,7 @@ function Chat(props) {
                 })}
             </div>
             <div className="chat_input">
-                <IconButton><InsertEmoticon /></IconButton>
+                {/* <IconButton><InsertEmoticon /></IconButton> */}
                 <form>
                     <input
                         value={input}

@@ -24,6 +24,12 @@ function Profile(props) {
         setOpen(false);
       };
     
+    function handleProfilePicClick(e){
+        e.preventDefault();
+        setMessage("Profile Pic Change Currently Disabled.")
+        setOpen(true);
+    }
+    
     function handleBioChange(e){
          e.preventDefault();
          setBio(e.target.value);
@@ -79,11 +85,12 @@ function Profile(props) {
                     <Grid item xs={5}>
                         <Paper style={{backgroundColor:"inherit"}}>
                             <div className="profilePicContainer">
-                                <input accept="image/*" id="enterNewPic" type="file" />
+                                {/* <input accept="image/*" id="enterNewPic" type="file" /> */}
                                 <label htmlFor="enterNewPic">
                                     { props.userDetails.profilePicture === undefined ? null :
                                         <img 
                                             className="profilePic" 
+                                            onClick = {handleProfilePicClick}
                                             src={props.userDetails.profilePicture}
                                             alt=""/>
                                     }

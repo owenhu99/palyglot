@@ -3,6 +3,7 @@
   flex-direction: column;
   flex: 0.7;
   border-right: 2px solid #ffd85f;
+  border-left: 3px solid #ffd85f;
 }
 
 .chat_header {
@@ -20,6 +21,7 @@
 
 .chat_headerInfo > h3 {
   margin-bottom: 3px;
+  font-family: "Comfortaa", cursive;
   font-weight: 500;
 }
 
@@ -67,11 +69,11 @@
   justify-content: space-between;
   align-items: center;
   height: 52px;
-  border-top: 1px solid #ffd85f;
+  border-top: 2px solid #ffd85f;
 }
 
 .accent_keyboard {
-  border-top: 1px solid #ffd85f;
+  border-top: 2px solid #ffd85f;
   margin: auto;
 }
 

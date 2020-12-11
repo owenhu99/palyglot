@@ -33,9 +33,7 @@ export default function ChatPage() {
 
         const channel = pusher.subscribe('messages');
         channel.bind('updated', function (data) {
-            console.log('updated');
             if (data.id === currentRoom) {
-                console.log(data);
                 if (Array.isArray(data.message)) {
                     setMessages([...messages, data.message[0]]);
                 } else {
@@ -48,7 +46,6 @@ export default function ChatPage() {
             channel.unbind_all();
             channel.unsubscribe();
             channel.disconnect();
-            console.log("waduhek");
         }
 
     }, [messages, currentRoom]);
@@ -64,7 +61,6 @@ export default function ChatPage() {
                 }
             })
             .then(res => {
-                console.log("rooms are " + res.data.rooms);
                 setRooms(res.data.rooms);
                 if (res.data.rooms.length > 0) {
                     setCurrentRoom(res.data.rooms[0]);

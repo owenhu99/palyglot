@@ -96,8 +96,6 @@ router.get("/", auth, async (req, res) => {
                 const matches = users_with_same_target_langs.concat(
                         users_with_same_known_langs
                 );
-
-                console.log(matches.length);
                 return res.json({ matches: matches });
         } catch (err) {
                 return res.status(400).send(err);
@@ -190,6 +188,18 @@ router.post("/declineMatch", auth, async (req, res) => {
         } catch (err) {
                 return res.status(400).json({ msg: err });
         }
+})
+
+router.get('/requests', auth, async (req, res) => {
+	try {
+		const user = await User.findOne({ userId: req.userId })
+		if (!user) throw new Error("current user not found")
+		const users = await User.find({ userId: { $in: user.matchInvites } });
+		return res.send(users);
+	} catch (error) {
+		console.log(error)
+		return res.status(400).send(error)
+	}
 })
 
 // returns the number of matching elements in arr1 and arr2

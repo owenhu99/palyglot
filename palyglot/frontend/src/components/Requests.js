@@ -35,7 +35,7 @@ function Requests() {
   
   useEffect(() => {    
     currentUser.getIdToken(true).then((idToken) => {
-      axios.get("http://localhost:5000/users/getUsers", {
+      axios.get("http://localhost:5000/matchmaking/requests", {
         headers: {
           'Authorization': `Bearer ${idToken}`
         }

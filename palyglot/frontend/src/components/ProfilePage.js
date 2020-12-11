@@ -14,18 +14,6 @@ function ProfilePage() {
   const [userDetails, setUserDetails] = useState({});
   const history = useHistory();
 
-  // useEffect(() => {
-  //   axios.get(process.env.REACT_APP_BACKEND_URL + "users", {
-  //     userId: currentUser.uid,
-  //     name: name,
-  //     email: email,
-  //     gender: gender,
-  //     age: age,
-  //     knownLanguages: knownLanguages,
-  //     targetLanguages: targetLanguages
-  //   });
-  // }, []);
-
   async function handleLogout() {
     try {
       await logout();
@@ -44,7 +32,6 @@ function ProfilePage() {
       })
       .then((response) => {
         setUserDetails(response.data);
-        //console.log(currentUser.getIdToken());
       });
     }).catch((error) => {
       console.log(error);

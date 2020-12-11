@@ -42,7 +42,6 @@ function Matchmaker() {
         }
       }).then((response) => {
           setMatches(response.data.matches);
-          console.log(response.data.matches);
       });
     }).catch((error) => {
       console.log(error);
@@ -55,7 +54,6 @@ function Matchmaker() {
   }
 
   const matchUser = (toUserId) => {
-    console.log("here")
     currentUser.getIdToken(true).then((idToken) => {
       axios.post("http://localhost:5000/matchmaking/requestMatch", {
         toUser: toUserId
@@ -64,7 +62,6 @@ function Matchmaker() {
           'Authorization': `Bearer ${idToken}`
         }
       }).then((response) => {
-          console.log(response);
           setInfo("Match invite has been sehnt");
       }, (error) => {
         console.log(error);

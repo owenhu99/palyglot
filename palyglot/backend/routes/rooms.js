@@ -62,34 +62,22 @@ router.get('/:roomId', auth, async(req, res) => {
     }
 })
 
-/* To be implemented: unmatch two users*/
-
 /* FOR DEV PURPOSES, TO BE REMOVED FOR DEPLOYMENT */
-router.delete('/:roomId', async(req, res) => {
-    try {
-        const room = await Room.findOneAndDelete({_id: req.params.roomId})
-        const participants = room["participants"]
-        for (var i = 0; i < participants.length; i++) {
-            await User.findOneAndUpdate(
-                {userId: participants[i]},
-                { $pull: {rooms: req.params.roomId}}
-            )
-        }
-        res.send()
-    } catch (error) {
-        console.log(error)
-        res.status(400).send(error)
-    }
-})
-
-/* FOR DEV PURPOSES, TO BE REMOVED FOR DEPLOYMENT */
-router.get('/', async(req, res) => {
-    try {
-		const rooms = await Room.find();
-		res.json(rooms);
-	} catch (err) {
-		res.json(err);
-	}
-})
+// router.delete('/:roomId', async(req, res) => {
+//     try {
+//         const room = await Room.findOneAndDelete({_id: req.params.roomId})
+//         const participants = room["participants"]
+//         for (var i = 0; i < participants.length; i++) {
+//             await User.findOneAndUpdate(
+//                 {userId: participants[i]},
+//                 { $pull: {rooms: req.params.roomId}}
+//             )
+//         }
+//         res.send()
+//     } catch (error) {
+//         console.log(error)
+//         res.status(400).send(error)
+//     }
+// })
 
 module.exports = router;

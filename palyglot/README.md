@@ -1,5 +1,7 @@
 # Palyglot
 
+Deployed application: https://frontendcsc301-298402.uc.r.appspot.com/
+
 ## Installation and Setup
 
 Navigate to `/backend` and install dependencies with `npm install`

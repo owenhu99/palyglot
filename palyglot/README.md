@@ -8,10 +8,14 @@ An env file is required to store the URL to the mongodb cluster as an environmen
 - Create a file `.env` under `/backend`
 - Add the line `MONGODB_URL=<URL>` where `<URL>` is the URL to the MongoDB cluster you have created
 
-A configuration file for Firebase Admin SDK is required
+A configuration file for Firebase Admin SDK is required.
 - Create a folder `config` under `/backend`
 - Generate a private key in your Firebase Console under Service accounts in settings
 - A JSON file will be generated, copy the file to `/backend/config` and rename it `fbServiceAccountKey.json`
+
+A configuration file for the Google Translate API is required.
+- Follow the instructions [here](https://cloud.google.com/translate/docs/setup) to create a project, then follow "Creating service accounts and keys" to generate a JSON credential file. Store this file in `/backend/config`.
+- Execute `export GOOGLE_APPLICATION_CREDENTIALS="config/<NAME-OF-JSON-FILE>"`, where you replace <NAME-OF-JSON-FILE> with the name of the generated credential file. Make sure to do this before you run the backend.
 
 Navigate to `/frontend` and install dependencies with `npm install`
 
@@ -35,4 +39,4 @@ REACT_APP_BACKEND_URL=<BACKEND_URL>
 
 ## Running the application
 
-Navgiate to `/backend` and `/frontend` and execute `npm start`, the URL to the web app will be displayed in the terminal
+Navigate to `/backend` and `/frontend` and execute `npm start`, the URL to the web app will be displayed in the terminal

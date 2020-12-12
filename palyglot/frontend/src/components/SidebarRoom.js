@@ -17,7 +17,7 @@ function SidebarRoom(props) {
     function getUserInfo() {
         /* Get info about the user this user is talking to in the current room */
         currentUser.getIdToken(true).then((idToken) => {
-            axios.get(`https://palyglot-backend.herokuapp.com/rooms/${props.room}`, {
+            axios.get(`http://localhost:5000/rooms/${props.room}`, {
                 headers: {
                     'Authorization': `Bearer ${idToken}`
                 }

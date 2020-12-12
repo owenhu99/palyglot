@@ -54,7 +54,7 @@ function Chat(props) {
     useEffect(() => {
         if (props.room !== "-1") {
             currentUser.getIdToken(true).then((idToken) => {
-                axios.get(`https://palyglot-backend.herokuapp.com/${props.room}`, {
+                axios.get(`http://localhost:5000/${props.room}`, {
                     headers: {
                         'Authorization': `Bearer ${idToken}`
                     }
@@ -110,7 +110,7 @@ function Chat(props) {
             if (checkMessagesNotMalicious() && input.replace(/\s/g, '').length) {
                 await axios({
                     method: 'post',
-                    url: `https://palyglot-backend.herokuapp.com/messages`,
+                    url: `http://localhost:5000/messages`,
                     headers: {
                         'Authorization': `Bearer ${idToken}`
                     },
@@ -129,7 +129,7 @@ function Chat(props) {
     }
 
     const translateMessage = async (msg) => {
-        axios.post("https://palyglot-backend.herokuapp.com/translate", {msg: msg, target: targetLanguage})
+        axios.post("http://localhost:5000/translate", {msg: msg, target: targetLanguage})
         .then((res) => {
             setDialogMessage(res.data.msg);
             setOpenDialog(true);

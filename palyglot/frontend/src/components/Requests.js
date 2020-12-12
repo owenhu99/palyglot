@@ -35,7 +35,7 @@ function Requests() {
   
   useEffect(() => {    
     currentUser.getIdToken(true).then((idToken) => {
-      axios.get("https://palyglot-backend.herokuapp.com/matchmaking/requests", {
+      axios.get("http://localhost:5000/matchmaking/requests", {
         headers: {
           'Authorization': `Bearer ${idToken}`
         }
@@ -49,7 +49,7 @@ function Requests() {
 
   const declineMatch = (userId) => {
     currentUser.getIdToken(true).then((idToken) => {
-      axios.post("https://palyglot-backend.herokuapp.com/matchmaking/declineMatch", {
+      axios.post("http://localhost:5000/matchmaking/declineMatch", {
         sender: userId
       }, {
         headers: {
@@ -71,7 +71,7 @@ function Requests() {
 
   const acceptMatch = (userId) => {
     currentUser.getIdToken(true).then((idToken) => {
-      axios.post("https://palyglot-backend.herokuapp.com/matchmaking/acceptMatch", {
+      axios.post("http://localhost:5000/matchmaking/acceptMatch", {
         sender: userId
       }, {
         headers: {

@@ -1,32 +1,41 @@
 import React, { useState, useEffect } from "react";
 import '../css/ProfilePage.css';
 import NavBar from "./NavBar"
-import Security from "./Security"
 import Profile from "./Profile"
+import Achievements from "./Achievements"
+import Button from '@material-ui/core/Button';
+import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import axios from 'axios';
 
 function ProfilePage() {
-  const { currentUser } = useAuth();
+  const { currentUser, logout } = useAuth();
   const [userDetails, setUserDetails] = useState({});
+  const history = useHistory();
 
-  // useEffect(() => {
-  //   axios.get(process.env.REACT_APP_BACKEND_URL + "users", {
-  //     userId: currentUser.uid,
-  //     name: name,
-  //     email: email,
-  //     gender: gender,
-  //     age: age,
-  //     knownLanguages: knownLanguages,
-  //     targetLanguages: targetLanguages
-  //   });
-  // }, []);
+  async function handleLogout() {
+    try {
+      await logout();
+      history.pushState('/login');
+    } catch {
+      console.log('Failed to log out.');
+    }
+  }
   
   useEffect(() => {
-    axios.get("https://palyglot-backend.herokuapp.com/users/" + currentUser.uid)
-    .then((response) => {
-      setUserDetails(response.data);
-    });
+    currentUser.getIdToken(true).then((idToken) => {
+      axios.get("http://localhost:5000/users/me", {
+        headers: {
+          'Authorization': `Bearer ${idToken}`
+        }
+      })
+      .then((response) => {
+        setUserDetails(response.data);
+      });
+    }).catch((error) => {
+      console.log(error);
+    })
   }, []);
 
   return (
@@ -34,6 +43,18 @@ function ProfilePage() {
       <NavBar/>
       <div className="pageBody" >
         <Profile userDetails={userDetails}/>
+        <Achievements userDetails={userDetails}/>
+        <div className="logOut">
+          <Button 
+            variant="contained"
+            color="primary" 
+            size="large"
+            style={{transform: "scale(1.3)"}}
+            component={Link} to={''}
+            onClick={handleLogout}>
+              Log Out
+          </Button>
+        </div>
       </div>
     </div>
   );

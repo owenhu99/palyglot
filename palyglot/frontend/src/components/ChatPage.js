@@ -33,9 +33,7 @@ export default function ChatPage() {
 
         const channel = pusher.subscribe('messages');
         channel.bind('updated', function (data) {
-            console.log('updated');
             if (data.id === currentRoom) {
-                console.log(data);
                 if (Array.isArray(data.message)) {
                     setMessages([...messages, data.message[0]]);
                 } else {
@@ -48,7 +46,6 @@ export default function ChatPage() {
             channel.unbind_all();
             channel.unsubscribe();
             channel.disconnect();
-            console.log("waduhek");
         }
 
     }, [messages, currentRoom]);
@@ -57,20 +54,31 @@ export default function ChatPage() {
         /* Fetch the rooms that the user is in. Place "focus" on the first room
          * and retrieve the messages for that room.
          */
-        axios.get(`https://palyglot-backend.herokuapp.com/users/${currentUser.uid}`)
+        currentUser.getIdToken(true).then((idToken) => {
+            axios.get(`http://localhost:5000/users/me`, {
+                headers: {
+                    'Authorization': `Bearer ${idToken}`
+                }
+            })
             .then(res => {
-                console.log("rooms are " + res.data.rooms);
                 setRooms(res.data.rooms);
                 if (res.data.rooms.length > 0) {
                     setCurrentRoom(res.data.rooms[0]);
                 }
                 if (res.data.rooms[0] !== "-1") {
-                    axios.get(`https://palyglot-backend.herokuapp.com/messages?roomId=${res.data.rooms[0]}`)
-                        .then(res => {
-                            setMessages(res.data);
-                        })
+                    axios.get(`http://localhost:5000/messages?roomId=${res.data.rooms[0]}`, {
+                        headers: {
+                            'Authorization': `Bearer ${idToken}`
+                        }
+                    })
+                    .then(res => {
+                        setMessages(res.data);
+                    })
                 }
             })
+        }).catch((error) => {
+            console.log(error);
+        })
     }
 
     function changeRoom(roomId) {
@@ -80,10 +88,18 @@ export default function ChatPage() {
     }
 
     function getRoomMessages(roomId) {
-        axios.get(`https://palyglot-backend.herokuapp.com/messages?roomId=${roomId}`)
+        currentUser.getIdToken(true).then((idToken) => {
+            axios.get(`http://localhost:5000/messages?roomId=${roomId}`, {
+                headers: {
+                    'Authorization': `Bearer ${idToken}`
+                }
+            })
             .then(res => {
                 setMessages(res.data);
-            })
+            })  
+        }).catch((error) => {
+            console.log(error);
+        })
     }
 
     return (

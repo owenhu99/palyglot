@@ -3,6 +3,7 @@
   flex-direction: column;
   flex: 0.7;
   border-right: 2px solid #ffd85f;
+  border-left: 3px solid #ffd85f;
 }
 
 .chat_header {
@@ -20,6 +21,7 @@
 
 .chat_headerInfo > h3 {
   margin-bottom: 3px;
+  font-family: "Comfortaa", cursive;
   font-weight: 500;
 }
 
@@ -42,6 +44,7 @@
   border-radius: 10px;
   background-color: #ffd966;
   margin-bottom: 30px;
+  white-space: nowrap;
 }
 
 .chat_receiver {
@@ -66,7 +69,12 @@
   justify-content: space-between;
   align-items: center;
   height: 52px;
-  border-top: 1px solid #ffd85f;
+  border-top: 2px solid #ffd85f;
+}
+
+.accent_keyboard {
+  border-top: 2px solid #ffd85f;
+  margin: auto;
 }
 
 .chat_input > .MuiSvgIcon-root {
@@ -89,4 +97,23 @@
 
 .chat_input > form > button {
   display: none;
+}
+
+.accent_button {
+  text-transform: none;
+}
+
+.translateButton {
+  padding-left: 10px;
+  color: grey;
+}
+
+.translation {
+  text-align: center;
+  padding-bottom: 8%;
+}
+
+.languageSelect {
+  padding-bottom: 15%;
+  margin: auto;
 }

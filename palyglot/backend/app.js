@@ -12,6 +12,8 @@ const Pusher = require('pusher');
 var usersRouter = require('./routes/users');
 var roomsRouter = require('./routes/rooms');
 var messagesRouter = require('./routes/messages');
+var translateRouter = require('./routes/translate');
+var matchmakingRouter = require('./routes/matchmaking');
 
 var app = express();
 
@@ -37,9 +39,11 @@ app.disable('etag');
 app.use('/users', usersRouter);
 app.use('/rooms', roomsRouter);
 app.use('/messages', messagesRouter);
+app.use('/translate', translateRouter);
+app.use('/matchmaking', matchmakingRouter);
 
 mongoose.connect(process.env.MONGODB_URL,
-    { useNewUrlParser: true, useUnifiedTopology: true },
+    { useNewUrlParser: true, useUnifiedTopology: true , useFindAndModify: false },
     () => console.log('Connected to MongoDB Database!')
 );
 

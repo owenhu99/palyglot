@@ -1,26 +1,33 @@
-const jwt = require('jsonwebtoken')
+const admin = require('firebase-admin')
+const serviceAccount = require("../config/fbServiceAccountKey.json")
 const User = require('../models/User')
+
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    databaseURL: "https://palyglot-dev.firebaseio.com"
+})
 
 const auth = async(req, res, next) => {
     try {
         const token = req.header('Authorization').replace('Bearer ', '')
-        const data = jwt.verify(token, process.env.JWT_KEY)
-        const user = await User.findOne({ _id: data._id, 'tokens.token': token })
-        if (!user) {
-            throw new Error()
+        if (token) {
+            admin.auth().verifyIdToken(token)
+                .then((decodedToken) => {
+                    req.userId = decodedToken.uid
+                    next()
+                }).catch(() => {
+                    res.status(403).send('Unauthorized')
+                });
+        } else {
+            res.status(403).send('Unauthorized')
         }
-        req.user = user
-        req.token = token
-        next()
-    } catch (error) {
-        res.status(401).send({ error: 'Not authorized to access this resource' })
+    } catch(error) {
+        res.status(400).send(error)
     }
-
 }
 module.exports = auth
 
 /**
  * Source citation:
- * https://medium.com/swlh/jwt-authentication-authorization-in-nodejs-express
- * -mongodb-rest-apis-2019-ad14ec818122
+ * https://itnext.io/how-to-use-firebase-auth-with-a-custom-node-backend-99a106376c8a
  */

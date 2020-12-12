@@ -1,0 +1,40 @@
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&display=swap");
+
+.achievements {
+  display: grid;
+  width: 80vw;
+  align-self: center;
+  place-items: center;
+  background-color: #fff9e6;
+  margin-top: 7vh;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.achievements_header {
+  display: flex;
+  width: 80vw;
+  border-bottom: 1px solid black;
+}
+
+.achievements_header > h2 {
+  font-family: "Comfortaa", cursive;
+  align-self: flex-start;
+}
+
+.achievementsBody {
+  display: flex;
+  flex-grow: 1;
+  width: 80vw;
+  padding-bottom: 12px;
+}
+
+.achievementsBody > .achievementsBody_grid {
+  margin-top: 13px;
+}
+
+.achievementsBody_grid > .MuiGrid-item {
+  text-align: "center";
+}

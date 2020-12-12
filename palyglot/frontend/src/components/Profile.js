@@ -42,7 +42,7 @@ function Profile(props) {
 
     function submitBioChange() {
         currentUser.getIdToken(true).then((idToken) => {
-            axios.put("https://backendcsc301.ue.r.appspot.com/users/me", {bio: bio}, {
+            axios.put("https://palyglot-backend.herokuapp.com/users/me", {bio: bio}, {
                 headers: {
                     'Authorization': `Bearer ${idToken}`
                 }
@@ -62,7 +62,7 @@ function Profile(props) {
             newInterests = interests.split(",").map((interest) => interest.trim());
         }
         currentUser.getIdToken(true).then((idToken) => {
-            axios.put("https://backendcsc301.ue.r.appspot.com/users/me", {interests: newInterests}, {
+            axios.put("https://palyglot-backend.herokuapp.com/users/me", {interests: newInterests}, {
                 headers: {
                     'Authorization': `Bearer ${idToken}`
                 }

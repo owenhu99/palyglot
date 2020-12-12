@@ -36,7 +36,7 @@ function Matchmaker() {
   
   useEffect(() => {    
     currentUser.getIdToken(true).then((idToken) => {
-      axios.get("https://backendcsc301.ue.r.appspot.com/matchmaking/", {
+      axios.get("https://palyglot-backend.herokuapp.com/matchmaking/", {
         headers: {
           'Authorization': `Bearer ${idToken}`
         }
@@ -55,7 +55,7 @@ function Matchmaker() {
 
   const matchUser = (toUserId) => {
     currentUser.getIdToken(true).then((idToken) => {
-      axios.post("https://backendcsc301.ue.r.appspot.com/matchmaking/requestMatch", {
+      axios.post("https://palyglot-backend.herokuapp.com/matchmaking/requestMatch", {
         toUser: toUserId
       }, {
         headers: {

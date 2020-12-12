@@ -62,7 +62,7 @@ function Matchmaker() {
           'Authorization': `Bearer ${idToken}`
         }
       }).then((response) => {
-          setInfo("Match invite has been sehnt");
+          setInfo("Match invite has been sent.");
       }, (error) => {
         console.log(error);
         setInfo("Whoops, match invite could not be sent.");
@@ -99,8 +99,24 @@ function Matchmaker() {
                 {matches[currMatch].gender + ", " + matches[currMatch].age}
               </Typography>
               <Typography variant="body2" color="textSecondary" component="p">
+                {"Known: "}
               {matches[currMatch].knownLanguages.map(function(language, i) {
                 if (i == matches[currMatch].knownLanguages.length - 1) {
+                  return(
+                    language
+                  )
+                } else {
+                  return(
+                    language + ", "
+                  )
+                }
+              })
+              }
+              </Typography>
+              <Typography variant="body2" color="textSecondary" component="p">
+                {"Target: "}
+              {matches[currMatch].targetLanguages.map(function(language, i) {
+                if (i == matches[currMatch].targetLanguages.length - 1) {
                   return(
                     language
                   )

@@ -17,7 +17,7 @@ function SidebarRoom(props) {
     function getUserInfo() {
         /* Get info about the user this user is talking to in the current room */
         currentUser.getIdToken(true).then((idToken) => {
-            axios.get(`http://localhost:5000/rooms/${props.room}`, {
+            axios.get(`https://backendcsc301.ue.r.appspot.com/rooms/${props.room}`, {
                 headers: {
                     'Authorization': `Bearer ${idToken}`
                 }

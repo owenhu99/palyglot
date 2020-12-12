@@ -25,7 +25,7 @@ function ProfilePage() {
   
   useEffect(() => {
     currentUser.getIdToken(true).then((idToken) => {
-      axios.get("http://localhost:5000/users/me", {
+      axios.get("https://backendcsc301.ue.r.appspot.com/users/me", {
         headers: {
           'Authorization': `Bearer ${idToken}`
         }

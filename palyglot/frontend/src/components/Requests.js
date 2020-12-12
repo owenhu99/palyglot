@@ -35,7 +35,7 @@ function Requests() {
   
   useEffect(() => {    
     currentUser.getIdToken(true).then((idToken) => {
-      axios.get("http://localhost:5000/matchmaking/requests", {
+      axios.get("https://backendcsc301.ue.r.appspot.com/matchmaking/requests", {
         headers: {
           'Authorization': `Bearer ${idToken}`
         }
@@ -49,7 +49,7 @@ function Requests() {
 
   const declineMatch = (userId) => {
     currentUser.getIdToken(true).then((idToken) => {
-      axios.post("http://localhost:5000/matchmaking/declineMatch", {
+      axios.post("https://backendcsc301.ue.r.appspot.com/matchmaking/declineMatch", {
         sender: userId
       }, {
         headers: {
@@ -71,7 +71,7 @@ function Requests() {
 
   const acceptMatch = (userId) => {
     currentUser.getIdToken(true).then((idToken) => {
-      axios.post("http://localhost:5000/matchmaking/acceptMatch", {
+      axios.post("https://backendcsc301.ue.r.appspot.com/matchmaking/acceptMatch", {
         sender: userId
       }, {
         headers: {
